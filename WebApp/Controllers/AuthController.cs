@@ -4,6 +4,7 @@ namespace WebApp.Controllers
 {
     public class AuthController : Controller
     {
+
         public IActionResult SignUp()
         {
             ViewData["Title"] = "Sign up";
