@@ -1,0 +1,20 @@
+﻿.sign-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 1rem;
+    background-color: white;
+    padding-top: 2rem;
+    h1
+        
+
+{
+    font-size: 2.5rem;
+}
+
+}
+
+.sign-bg {
+    width: 100vw;
+    height: 100vh;
+}

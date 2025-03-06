@@ -13,12 +13,10 @@
 </head>
 <body>
     <div class="wrapper">
-        <header>
-            @await Html.PartialAsync("Partials/Navbar/_NavbarPartial")
-        </header>
-        @await Html.PartialAsync("Partials/Sidebar/_SidebarPartial")
-        <main>
-            @RenderBody()
+        <main class="sign-bg">
+            <div class="sign-container">
+                @RenderBody()
+            </div>
         </main>
     </div>
     <script src="~/js/site.js" asp-append-version="true"></script>

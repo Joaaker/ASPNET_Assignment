@@ -1,10 +1,10 @@
-﻿<div class="sign-container">
-	<h1>Create Account</h1>
-	<button>PARTIAL Sign Up With Google</button>
-	@await Html.PartialAsync("Partials/_OrDivider")
+﻿@{
+	Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<h1>Create Account</h1>
+<button>PARTIAL Sign Up With Google</button>
+@await Html.PartialAsync("Partials/_OrDivider")
 
 
-	<button class="btn btn-blue">Create Account</button>
-
-</div>
-
+<button class="btn btn-blue">Create Account</button>
