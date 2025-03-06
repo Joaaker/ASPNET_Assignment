@@ -9,7 +9,7 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Views\Admin\" />
-    <Folder Include="wwwroot\Images\" />
+    <Folder Include="Views\Shared\Partials\Projects\" />
   </ItemGroup>
 
 </Project>

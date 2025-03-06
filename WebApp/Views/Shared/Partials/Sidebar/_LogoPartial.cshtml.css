@@ -1,0 +1,10 @@
+﻿.logo-container {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+}
+
+.logo-text {
+    font-family: "Comfortaa", sans-serif;
+    margin: 0 .8rem; 
+}
