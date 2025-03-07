@@ -1,12 +1,13 @@
-﻿<div class="card-container">
+﻿<article class="project-card">
 	<div class="project-image">
 		@* Dynamic Project Image here *@
+		<img src="@Url.Content("~/Images/ProjectImage.svg")" alt="My Image" />
 	</div>
-	<h2 class="project-name">Project Name</h2>
+	<h2 class="project-title">Project Name</h2>
 	<h3 class="project-client">Client Name</h3>
 	@await Html.PartialAsync("Partials/_EditButtonDots")
 	<p class="project-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</p>
-	<div class="time-left">
+	<div class="deadline">
 		<i class="fa-regular fa-clock"></i>
 		<p>dynamic time</p>
 		<p>left</p>
@@ -15,4 +16,4 @@
 		@* Dynamic avatar images here *@
 		<i class="fa-solid fa-user-tie"></i>
 	</div>
-</div>
+</article>

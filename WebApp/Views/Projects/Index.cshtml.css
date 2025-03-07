@@ -16,3 +16,7 @@
     border-bottom: 3px solid var(--blue-accent);
 
 }
+
+section {
+    padding: 1rem 0;
+}

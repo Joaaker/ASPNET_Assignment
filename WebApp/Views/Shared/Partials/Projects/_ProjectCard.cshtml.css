@@ -1,0 +1,51 @@
+﻿.project-card {
+    display: grid;
+    grid-template-areas:
+        "image title dots"
+        "image client ."
+        "description description description"
+        "deadline deadline members";
+    gap: 1rem;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    background-color: white;
+    width: 280px;
+    height: 350px;
+}
+
+.project-image{
+    grid-area: image;
+}
+
+.project-title {
+    grid-area: title;
+    display: flex;
+    color: var(--headline);
+    font-size: 1.1rem;
+}
+.project-client {
+    grid-area: client;
+    display: flex;
+    color: var(--gray-800);
+    font-size: .9rem;
+}
+
+.project-description {
+    grid-area: description;
+}
+
+.deadline {
+    grid-area: deadline;
+    display: flex;
+    align-items: center;
+}
+    .deadline > p{
+        margin: 0;
+
+    }
+
+.project-members {
+    grid-area: members;
+    display: flex;
+    align-items: center;
+}

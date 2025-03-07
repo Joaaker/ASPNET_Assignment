@@ -1,7 +1,6 @@
 ﻿.wrapper {
     height: 100dvh;
-
-
+    background-color: var(--gray-200);
 }
 
 main{
@@ -13,6 +12,8 @@ main{
 h1{
     font-weight: 700;
 }
+
+
 
 
 
