@@ -1,20 +1,28 @@
-﻿.wrapper{
-    display: grid;
+﻿.wrapper {
+    height: 100dvh;
+}
 
 
-    aside{
-        
-        grid-column: 1 / 2;
-        grid-row: 1 / 5;
-    }
+/*Computer*/
+@media (min-width: 1340px) {
+    .wrapper {
+        display: grid;
+        grid-template-columns: minmax(50px, 270px) 1fr;
+        grid-template-rows: minmax(50px, auto) 1fr;
+        grid-template-areas: "side top" "side main";
 
-    header {
-        grid-column: 2 / 10;
-        grid-row: 1 / 2;
-    }
+        aside{
+            grid-area: side;
+            border-right: 1px solid #E3E5E8;
+        }
 
-    main {
-        grid-column: 2 / 10;
-        grid-row: 2 / 5;
+        header {
+            grid-area: top;
+            border-bottom: 1px solid #E3E5E8;
+        }
+
+        main {
+            grid-area: main;
+        }
     }
 }
