@@ -80,7 +80,7 @@ body {
 }
 
 
-.btn {
+.btn-base {
     border-radius: 14px;
     font-weight: 500;
     display: flex;
@@ -98,7 +98,8 @@ body {
 
 .btn-blue {
     background-color: var(--blue-accent);
-    color: white;
+    color: var(--white-100);
+    border: 1px solid var(--white-100);
 }
     .btn-blue:hover {
         background-color: #3a9cf8;
@@ -109,7 +110,9 @@ body {
     .btn-blue:active {
         background-color: #298ff0;
     }
-
+    .btn-blue > i {
+        margin-right: .5rem;
+    }
 
 a {
     text-decoration: none; 
@@ -124,6 +127,10 @@ a {
     }
 
 
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+}
 
 
 

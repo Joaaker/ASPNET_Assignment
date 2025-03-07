@@ -2,15 +2,21 @@
 	@await Html.PartialAsync("Partials/Sidebar/_LogoPartial")
 	<nav>
 		<a asp-controller="Projects" asp-action="Index">
-			<div class="nav-link @((ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty) == "Projects" ? "active" : "" )">
+			<div class="navigation-link @((ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty) == "Projects" ? "active" : "" )">
 				<i class="fa-solid fa-briefcase"></i>
 				<p>Projects</p>
 			</div>
 		</a>
 		<a asp-controller="Members" asp-action="Index">
-			<div class="nav-link @((ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty) == "Members" ? "active" : "" )">
+			<div class="navigation-link @((ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty) == "Members" ? "active" : "" )">
 				<i class="fa-solid fa-users"></i>
 				<p>Team Members</p>
+			</div>
+		</a>
+		<a asp-controller="Clients" asp-action="Index">
+			<div class="navigation-link @((ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty) == "Clients" ? "active" : "" )">
+				<i class="fa-solid fa-handshake"></i>
+				<p>Clients</p>
 			</div>
 		</a>
 	</nav>

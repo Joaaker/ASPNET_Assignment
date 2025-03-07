@@ -1,6 +1,19 @@
 ﻿.wrapper {
     height: 100dvh;
+
+
 }
+
+main{
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+}
+
+h1{
+    font-weight: 700;
+}
+
 
 
 /*Computer*/

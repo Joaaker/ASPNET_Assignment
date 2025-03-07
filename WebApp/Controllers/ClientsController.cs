@@ -2,7 +2,7 @@
 
 namespace WebApp.Controllers
 {
-    public class ClientController : Controller
+    public class ClientsController : Controller
     {
         public IActionResult Index()
         {

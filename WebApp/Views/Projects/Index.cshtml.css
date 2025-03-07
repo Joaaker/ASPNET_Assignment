@@ -1,0 +1,18 @@
+﻿.menu {
+    width: 100%;
+    border-bottom: 1px solid #E3E5E8;
+}
+.status-btn {
+    background: transparent;
+    border: none;
+    appearance: none;
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--gray-800);
+}
+
+.status-btn.selected {
+    color: var(--blue-accent);
+    border-bottom: 3px solid var(--blue-accent);
+
+}

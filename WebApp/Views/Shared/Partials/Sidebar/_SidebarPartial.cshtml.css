@@ -10,24 +10,27 @@
     
 }
 
-.nav-link {
+.navigation-link {
     display: flex;
     padding: 1rem;
     align-items: center;
+    text-align: center;
     border-radius: 16px;
 }
-    .nav-link:active, .active{
+    .navigation-link:active, .active {
         background-color: var(--blue-accent-opacity);
     }
-    .nav-link > i {
+    .navigation-link > i {
         margin-right: 1rem;
     }
-    .nav-link > i, .nav-link > p {
+    .navigation-link > i, .navigation-link > p {
         font-weight: 600;
         font-size: 1rem;
         color: var(--headline);
     }
-    .nav-link:active > i, .nav-link:active > p, .active > i, .active > p{
+    .navigation-link:active > i, .navigation-link:active > p, .active > i, .active > p {
         color: var(--blue-accent);
     }
-    
+p{
+    margin: 0;
+}    

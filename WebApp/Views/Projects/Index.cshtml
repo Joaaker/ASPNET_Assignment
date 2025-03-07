@@ -1,1 +1,18 @@
-﻿
+﻿<div class="top-bar">
+	<h1>Projects</h1>
+	<button class="btn-base btn-blue">
+		<i class="fa-solid fa-plus"></i>
+		Add Project
+	</button>
+</div>
+<div class="menu">
+	<div class="btn-container">
+		<button class="status-btn selected">ALL [8]</button>
+		<button class="status-btn">STARTED [4]</button>
+		<button class="status-btn">COMPLETED [4]</button>
+	</div>
+</div>
+<section>
+	@* for each project..  display project card or something like that *@
+	@await Html.PartialAsync("Partials/Projects/_ProjectCard")
+</section>
