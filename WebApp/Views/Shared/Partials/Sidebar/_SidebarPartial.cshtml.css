@@ -1,3 +1,33 @@
 ﻿aside{
+    display: flex;
+    flex-direction: column;
     max-width: 17rem;
 }
+
+.sidebar > nav{
+    max-width: 15rem;
+    margin: 0 1rem;
+    
+}
+
+.nav-link {
+    display: flex;
+    padding: 1rem;
+    align-items: center;
+    border-radius: 16px;
+}
+    .nav-link:active, .active{
+        background-color: var(--blue-accent-opacity);
+    }
+    .nav-link > i {
+        margin-right: 1rem;
+    }
+    .nav-link > i, .nav-link > p {
+        font-weight: 600;
+        font-size: 1rem;
+        color: var(--headline);
+    }
+    .nav-link:active > i, .nav-link:active > p, .active > i, .active > p{
+        color: var(--blue-accent);
+    }
+    

@@ -1,7 +1,17 @@
 ﻿<aside class="sidebar">
 	@await Html.PartialAsync("Partials/Sidebar/_LogoPartial")
 	<nav>
-		@await Html.PartialAsync("Partials/Sidebar/_MembersNavigation")
-		@await Html.PartialAsync("Partials/Sidebar/_ProjectsNavigation")
+		<a asp-controller="Projects" asp-action="Index">
+			<div class="nav-link @((ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty) == "Projects" ? "active" : "" )">
+				<i class="fa-solid fa-briefcase"></i>
+				<p>Projects</p>
+			</div>
+		</a>
+		<a asp-controller="Members" asp-action="Index">
+			<div class="nav-link @((ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty) == "Members" ? "active" : "" )">
+				<i class="fa-solid fa-users"></i>
+				<p>Team Members</p>
+			</div>
+		</a>
 	</nav>
 </aside>
