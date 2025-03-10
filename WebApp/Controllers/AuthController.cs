@@ -17,7 +17,7 @@ namespace WebApp.Controllers
             ViewData["Title"] = "Sign in";
             return View();
         }
-        public IActionResult AuthSignOut()
+        public new IActionResult SignOut()
         {
             return RedirectToAction("SignIn", "Auth");
         }
