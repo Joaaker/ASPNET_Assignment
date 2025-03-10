@@ -15,6 +15,6 @@ div {
 }
 
 span {
-    color: var(--gray-800);
+    color: var(--status-btn-text);
     font-size: 2rem;
 }

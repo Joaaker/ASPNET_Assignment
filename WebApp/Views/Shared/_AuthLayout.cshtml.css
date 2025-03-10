@@ -3,18 +3,16 @@
     flex-direction: column;
     align-items: center;
     border-radius: 1rem;
-    background-color: white;
+    background-color: var(--card-background);
     padding-top: 2rem;
-    h1
-        
-
-{
+}
+    .sign-container > h1 {
     font-size: 2.5rem;
-}
+    }
 
-}
 
 .sign-bg {
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
 }

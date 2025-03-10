@@ -4,19 +4,19 @@
 		<a asp-controller="Projects" asp-action="Index">
 			<div class="navigation-link @((ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty) == "Projects" ? "active" : "" )">
 				<i class="fa-solid fa-briefcase"></i>
-				<p>Projects</p>
+				<span>Projects</span>
 			</div>
 		</a>
 		<a asp-controller="Members" asp-action="Index">
 			<div class="navigation-link @((ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty) == "Members" ? "active" : "" )">
 				<i class="fa-solid fa-users"></i>
-				<p>Team Members</p>
+				<span>Team Members</span>
 			</div>
 		</a>
 		<a asp-controller="Clients" asp-action="Index">
 			<div class="navigation-link @((ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty) == "Clients" ? "active" : "" )">
 				<i class="fa-solid fa-handshake"></i>
-				<p>Clients</p>
+				<span>Clients</span>
 			</div>
 		</a>
 	</nav>

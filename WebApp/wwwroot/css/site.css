@@ -14,6 +14,8 @@
     --gray-600: #C6C8CC;
     --gray-700: #9E9E9E;
     --gray-800: #637085;
+    --dark-border: #232324;
+    --dark-background: #151517;
     --dark-100: #1A1926;
     --dark-200: #1C1D1F;
     --dark-300: #202123;
@@ -38,8 +40,22 @@
     --text: var(--dark-400);
     --headline: var(--dark-100);
     --background: var(--white-200);
-    --border: var(--gray-500);
+    --card-background: var(--white-100);
     --auth-background: var(--gray-100);
+    --status-btn-text: var(--gray-800);
+    --border: var(--gray-300);
+    --link-text: var(--dark-400);
+}
+
+.dark {
+    --text: var(--gray-100);
+    --headline: var(--white-100);
+    --background: var(--dark-background);
+    --card-background: var(--gray-700);
+    --auth-background: var(--dark-background);
+    --status-btn-text: var(--gray-700);
+    --border: var(--dark-border);
+    --link-text: var(--gray-700);
 }
 
 
@@ -79,6 +95,15 @@ body {
     border-width: 0;
 }
 
+h1, h2, h3, h4, h5, h6, h7, h8 {
+    color: var(--headline);
+}
+
+p {
+    color: var(--text);
+}
+
+
 
 .btn-base {
     border-radius: 14px;
@@ -113,6 +138,10 @@ body {
     .btn-blue > i {
         margin-right: .5rem;
     }
+
+.dark .btn-blue {
+    border-color: var(--blue-accent);
+}
 
 a {
     text-decoration: none; 
@@ -159,7 +188,7 @@ a {
     }
 
     .sign-bg {
-        background-color: var(--gray-100);
+        background-color: var(--auth-background);
         padding: 20%;
     }
 

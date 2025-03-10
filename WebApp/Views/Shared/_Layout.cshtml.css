@@ -1,6 +1,6 @@
 ﻿.wrapper {
     height: 100dvh;
-    background-color: var(--gray-200);
+    background-color: var(--background);
 }
 
 main{
@@ -24,15 +24,16 @@ h1{
         grid-template-columns: minmax(50px, 270px) 1fr;
         grid-template-rows: minmax(50px, auto) 1fr;
         grid-template-areas: "side top" "side main";
-
-        aside{
+    
+        aside
+        {
             grid-area: side;
-            border-right: 1px solid #E3E5E8;
+            border-right: 1px solid var(--border);
         }
 
         header {
             grid-area: top;
-            border-bottom: 1px solid #E3E5E8;
+            border-bottom: 1px solid var(--border);
         }
 
         main {

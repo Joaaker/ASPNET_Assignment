@@ -12,25 +12,21 @@
 
 .navigation-link {
     display: flex;
+    gap: 1rem;
     padding: 1rem;
     align-items: center;
     text-align: center;
     border-radius: 16px;
+
 }
     .navigation-link:active, .active {
         background-color: var(--blue-accent-opacity);
     }
-    .navigation-link > i {
-        margin-right: 1rem;
-    }
-    .navigation-link > i, .navigation-link > p {
+    .navigation-link > i, .navigation-link > span {
         font-weight: 600;
         font-size: 1rem;
-        color: var(--headline);
+        color: var(--link-text);
     }
-    .navigation-link:active > i, .navigation-link:active > p, .active > i, .active > p {
+    .navigation-link:active > i, .navigation-link:active > span, .active > i, .active > span {
         color: var(--blue-accent);
     }
-p{
-    margin: 0;
-}    

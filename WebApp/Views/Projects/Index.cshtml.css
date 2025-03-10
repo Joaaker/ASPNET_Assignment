@@ -1,14 +1,15 @@
 ﻿.menu {
     width: 100%;
-    border-bottom: 1px solid #E3E5E8;
+    border-bottom: 1px solid var(--border);
 }
+
 .status-btn {
     background: transparent;
     border: none;
     appearance: none;
     cursor: pointer;
     font-weight: 700;
-    color: var(--gray-800);
+    color: var(--status-btn-text);
 }
 
 .status-btn.selected {
@@ -19,4 +20,9 @@
 
 section {
     padding: 1rem 0;
+}
+
+.btn-container{
+    display: flex;
+    gap: 1.3rem;
 }
