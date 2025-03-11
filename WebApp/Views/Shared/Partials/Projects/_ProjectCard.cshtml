@@ -3,9 +3,11 @@
 		@* Dynamic Project Image here *@
 		<img src="@Url.Content("~/Images/ProjectImage.svg")" alt="My Image" />
 	</div>
-	<h2 class="project-title">Project Name</h2>
-	<h3 class="project-client">Client Name</h3>
-	@await Html.PartialAsync("Partials/_EditButtonDots")
+	<div class="title-client">
+		<h2 class="project-title">Project Name</h2>
+		<h3 class="project-client">Client Name</h3>
+	</div>
+	@await Html.PartialAsync("Partials/Projects/_MoreOptions")
 	<p class="project-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</p>
 	<div class="deadline">
 		<i class="fa-regular fa-clock"></i>
@@ -14,6 +16,6 @@
 	</div>
 	<div class="project-members">
 		@* Dynamic avatar images here *@
-		<i class="fa-solid fa-user-tie"></i>
+		<img src="@Url.Content("~/Images/tinyAvatar.svg")" alt="My Image" />
 	</div>
 </article>

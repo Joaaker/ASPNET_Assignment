@@ -1,37 +1,49 @@
-﻿.project-card {
+﻿
+.project-card {
     display: grid;
     grid-template-areas:
-        "image title dots"
-        "image client ."
+        "image title-client dots-btn"
         "description description description"
         "deadline deadline members";
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto 1fr auto;
     gap: 1rem;
     border-radius: 1rem;
     padding: 1.5rem;
-    background-color: var(--card-background);
-    width: 280px;
-    height: 350px;
+    background-color: var(--bright-background);
+    min-width: 350px;
+    max-width: 350px;
+    min-height: 276px;
+    max-height: 276px;
+    box-sizing: border-box;
 }
 
 .project-image{
     grid-area: image;
 }
 
+.title-client {
+    grid-area: title-client;
+    display: flex;
+    flex-direction: column;
+}
+
 .project-title {
-    grid-area: title;
     display: flex;
     color: var(--headline);
     font-size: 1.1rem;
+    overflow: hidden;
 }
 .project-client {
-    grid-area: client;
     display: flex;
     color: var(--status-btn-text);
     font-size: .9rem;
+    overflow: hidden;
 }
 
 .project-description {
     grid-area: description;
+    overflow: hidden;
 }
 
 .deadline {
@@ -48,4 +60,5 @@
     grid-area: members;
     display: flex;
     align-items: center;
+    overflow: hidden;
 }

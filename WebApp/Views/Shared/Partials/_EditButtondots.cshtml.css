@@ -1,20 +1,21 @@
 ﻿.edit-dots {
+    display: flex;
     text-decoration: none;
     border: none;
     user-select: none;
     cursor: pointer;
     transition: all 200ms;
     background-color: transparent;
+    align-self: center;
 }
 
-div {
+.circle-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-
+    align-items: flex-end;
+    gap: .2rem;
 }
 
-span {
-    color: var(--status-btn-text);
-    font-size: 2rem;
+i {
+    font-size: .2rem;
 }

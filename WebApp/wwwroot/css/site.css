@@ -50,7 +50,8 @@
     --text: var(--dark-400);
     --headline: var(--dark-100);
     --background: var(--white-200);
-    --card-background: var(--white-100);
+    --card-background: var(--white-200);
+    --bright-background: var(--white-100);
     --auth-background: var(--gray-100);
     --status-btn-text: var(--gray-800);
     --border: var(--gray-300);
@@ -62,6 +63,7 @@
     --text: var(--gray-100);
     --headline: var(--white-100);
     --background: var(--dark-background);
+    --bright-background: var(--gray-600);
     --card-background: var(--gray-700);
     --auth-background: var(--dark-background);
     --status-btn-text: var(--gray-700);
