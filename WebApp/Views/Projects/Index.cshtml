@@ -1,6 +1,6 @@
 ﻿<div class="top-bar">
 	<h1>Projects</h1>
-	<button class="btn-base btn-blue">
+    <button class="btn-base btn-blue" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
 		<i class="fa-solid fa-plus"></i>
 		<span>Add Project</span>
 	</button>
@@ -16,3 +16,23 @@
 	@* for each project..  display project card or something like that *@
 	@await Html.PartialAsync("Partials/Projects/_ProjectCard")
 </section>
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Project</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-base btn-blue">Create</button>
+            </div>
+        </div>
+    </div>
+</div>

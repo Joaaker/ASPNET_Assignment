@@ -1,18 +1,41 @@
-﻿.sign-container {
+﻿main {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.sign-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: 1rem;
     background-color: var(--card-background);
-    padding-top: 2rem;
+    padding: 4rem 4rem 1rem;
 }
     .sign-container > h1 {
     font-size: 2.5rem;
     }
 
+@media (max-width: 1339px) {
+    .sign-container {
+        width: 100vw;
+        width: 100dvw;
+        height: 100vh;
+        height: 100dvh;
+    }
+}
 
-.sign-bg {
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
+
+@media (min-width: 1340px) {
+    .sign-container {
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+        border-radius: 1rem;
+    }
+
+    .sign-bg {
+        background-color: var(--auth-background);
+        width: 100vw;
+        width: 100dvw;
+        height: 100vh;
+        height: 100dvh;
+    }
 }

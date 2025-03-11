@@ -6,6 +6,7 @@ namespace WebApp.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["Title"] = "Members";
             return View();
         }
     }

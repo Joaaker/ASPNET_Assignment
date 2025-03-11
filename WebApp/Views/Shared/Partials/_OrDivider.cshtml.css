@@ -2,17 +2,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 20px 0;
-    
+    margin: 1.2rem 0;
+    width: 100%;
+}
     hr{
     flex: 1;
     border: none;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--auth-background);
     margin: 0 10px;
     }
 
     span {
     font-weight: bold;
-    color: #555;
+    color: var(--border-two);
     }
-}
