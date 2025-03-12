@@ -1,0 +1,31 @@
+﻿<div class="btn-group">
+    <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fa-solid fa-gear"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+        <li>
+            <div class="user-information">
+                <div class="user-avatar">
+
+                </div>
+                <span class="user-name">Tommy Mattin-Lassei</span>
+            </div>
+        </li>
+        <li>
+            <div class="dark-mode-container">
+                <i class="fa-solid fa-gear"></i>
+                <span>Dark Mode</span>
+                @await Html.PartialAsync("Partials/Navbar/_DarkModeToggleButton")
+            </div>
+        </li>
+        <li class="divider">
+            <hr />
+        </li>
+        <li>
+            <button class="dropdown-item log-out" type="button">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span class="log-out">Log Out</span>
+            </button>
+        </li>
+    </ul>
+</div>

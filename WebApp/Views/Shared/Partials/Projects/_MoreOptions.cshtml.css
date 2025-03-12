@@ -1,5 +1,4 @@
-﻿
-.btn-group > button {
+﻿.btn-group > button {
     display: flex;
     justify-content: center;
     border: none;
@@ -7,9 +6,6 @@
     border-radius: 12px;
     width: 40px;
     height: 40px;
-}
-button {
-    
 }
 
 .btn-group > button.show {
@@ -35,9 +31,30 @@ ul > li > button {
     border-radius: 12px;
 }
 
+    .divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: .4rem 0;
+        width: 100%;
+    }
+
+    .divider > hr {
+        flex: 1;
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 0 10px;
+    }
+
+
     ul > li > button > .delete {
         color: var(--red);
+    
     }
+    button.dropdown-item.delete:hover {
+        background-color: var(--error-background-color);
+    }
+
 
 ul > li > button > i {
     font-size: .8rem;

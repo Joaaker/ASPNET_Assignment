@@ -18,11 +18,34 @@
 
 }
 
-section {
+.project-section {
+    display: grid;
+    grid-template-columns: auto;
+    gap: 1.8rem;
     padding: 1rem 0;
+    justify-content: center;
 }
 
 .btn-container{
     display: flex;
     gap: 1.3rem;
+}
+
+
+/*Tablets*/
+@media (min-width: 768px) {
+    .project-section {
+        grid-template-columns: auto auto;
+    }
+    
+}
+
+
+
+/*Computers*/
+@media (min-width: 1440px) {
+    .project-section {
+        grid-template-columns: auto auto auto;
+        justify-content: space-evenly;
+    }
 }

@@ -9,13 +9,15 @@
 	</div>
 	@await Html.PartialAsync("Partials/Projects/_MoreOptions")
 	<p class="project-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</p>
-	<div class="deadline">
-		<i class="fa-regular fa-clock"></i>
-		<p>dynamic time</p>
-		<p>left</p>
-	</div>
-	<div class="project-members">
-		@* Dynamic avatar images here *@
-		<img src="@Url.Content("~/Images/tinyAvatar.svg")" alt="My Image" />
+	<div class="deadline-members">
+		<div class="deadline">
+			<i class="fa-regular fa-clock"></i>
+			<span class="dynamic-time">5 days</span>
+			<span>left</span>
+		</div>
+		<div class="project-members">
+			@* Dynamic avatar images here. for each ,*@
+			<img src="@Url.Content("~/Images/tinyAvatar.svg")" alt="My Image" />
+		</div>
 	</div>
 </article>

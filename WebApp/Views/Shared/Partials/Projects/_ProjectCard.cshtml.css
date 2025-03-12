@@ -4,7 +4,7 @@
     grid-template-areas:
         "image title-client dots-btn"
         "description description description"
-        "deadline deadline members";
+        "deadline-members deadline-members deadline-members";
     grid-template-columns: auto 1fr auto;
     grid-template-rows: auto 1fr auto;
     gap: 1rem;
@@ -46,19 +46,42 @@
     overflow: hidden;
 }
 
+.deadline-members {
+    grid-area: deadline-members;
+    display: flex;
+    justify-content: space-between;
+}
+
 .deadline {
-    grid-area: deadline;
     display: flex;
     align-items: center;
+    gap: 5px;
+    padding: .5rem .8rem;
+    border-radius: 12px;
+    background-color: var(--card-background);
 }
-    .deadline > p{
+    .deadline > i {
+        
+    }
+    .deadline > span{
         margin: 0;
+        font-weight: 500;
 
     }
 
-.project-members {
-    grid-area: members;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-}
+
+    .deadline.near {
+        background-color: var(--error-background-color);
+    }
+        .deadline.near > i {
+            color: var(--error-text-color);
+        }
+        .deadline.near > span {
+            color: var(--error-text-color);
+        }
+
+        .project-members {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
