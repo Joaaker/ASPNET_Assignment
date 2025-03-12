@@ -57,6 +57,8 @@
     --border: var(--gray-300);
     --border-two: var(--gray-700);
     --link-text: var(--dark-400);
+    --icon-color: var(--gray-700);
+    --bell-color: var(--dark-100);
 }
 
 .dark {
@@ -70,6 +72,8 @@
     --border: var(--dark-border);
     --link-text: var(--gray-700);
     --border-two: var(--gray-800);
+    --icon-color: var(--gray-800);
+    --bell-color: var(--gray-400);
 }
 
 

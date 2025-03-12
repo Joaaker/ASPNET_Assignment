@@ -1,24 +1,24 @@
 ﻿<div class="btn-group">
     <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fa-solid fa-gear"></i>
+        @await Html.PartialAsync("Partials/Navbar/_Cogwheel")
     </button>
     <ul class="dropdown-menu dropdown-menu-end">
         <li>
             <div class="user-information">
                 <div class="user-avatar">
-
+                    <img src="@Url.Content("~/Images/tinyAvatar.svg")" alt="My Image" />
                 </div>
                 <span class="user-name">Tommy Mattin-Lassei</span>
             </div>
         </li>
         <li>
             <div class="dark-mode-container">
-                <i class="fa-solid fa-gear"></i>
+                @await Html.PartialAsync("Partials/Navbar/_Cogwheel")
                 <span>Dark Mode</span>
                 @await Html.PartialAsync("Partials/Navbar/_DarkModeToggleButton")
             </div>
         </li>
-        <li class="divider">
+        <li class="li-divider">
             <hr />
         </li>
         <li>

@@ -12,13 +12,21 @@ nav {
 }
 
 .notification-bell {
+    display: flex;
+    align-items: center;
     margin: 0 8px;
-    font-size: 1.2rem;
 }
 
+    .notification-bell > i {
+        color: var(--bell-color);
+        font-size: 1.1rem;
+    }
+
+
 .settings {
+    display: flex;
+    align-items: center;
     margin: 0 8px;
-    font-size: 1.2rem;
     color: grey;
 }
 

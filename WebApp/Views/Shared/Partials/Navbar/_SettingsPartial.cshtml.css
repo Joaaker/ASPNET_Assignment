@@ -2,8 +2,8 @@
     border: none;
     background-color: transparent;
     border-radius: 12px;
-    width: 40px;
-    height: 40px;
+    width: 26px;
+    height: 26px;
 }
 
 .btn-group > .dropdown-toggle::after {
@@ -18,25 +18,51 @@ ul.dropdown-menu.dropdown-menu-end.show {
     background-color: var(--bright-background);
     min-width: 250px;
 }
+li{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.li-divider{
+    display: block;
+}
+
+li > button {
+    border-radius: 12px;
+    padding: .7rem 1rem;
+}
+
+li > div {
+    border-radius: 12px;
+    padding: .7rem 1rem;
+}
 
 
 .user-information {
     display: flex;
+    align-items: center;
+    gap: .8rem;
+    background-color: var(--gray-100);
 }
 
 .dark-mode-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
+    gap: .3rem;
 }
-    .dark-mode-container > span{
-        display: flex;
-    }
-
-    button.log-out {
+    .dark-mode-container > span {
         display: flex;
         align-items: center;
     }
-    
-    i{
+
+button.log-out {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+    button.log-out > i {
+        color: var(--icon-color);
         font-size: 1.1rem;
     }

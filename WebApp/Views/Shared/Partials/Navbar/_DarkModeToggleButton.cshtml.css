@@ -3,7 +3,10 @@
     align-items: center;
     font-size: 1rem;
     font-weight: 600;
-    margin: 1rem 1.25rem;
+    margin-right: 0;
+    margin-left: auto;
+    width: 100%;
+
 }
 
 .toggle-checkbox {
