@@ -1,0 +1,22 @@
+﻿.cogwheel-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.cogwheel-container > .cogwheel {
+    position: relative;
+    z-index: 100;
+    color: var(--icon-color);
+    font-size: 1.1rem;
+}
+    .cogwheel-container > i > .inner-color {
+        position: absolute;
+        font-size: .5rem;
+        color: var(--headline);
+        top: 4px;
+        left: 4px;
+        z-index: -1;
+
+    }
