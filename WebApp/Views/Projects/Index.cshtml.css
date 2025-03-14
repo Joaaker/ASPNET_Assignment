@@ -33,7 +33,7 @@
 }
 
 
-/*Tablets*/
+/*Tablet*/
 @media (min-width: 768px) {
     .project-section {
         grid-template-columns: auto auto;
@@ -43,7 +43,7 @@
 
 
 
-/*Computers*/
+/*Computer*/
 @media (min-width: 1440px) {
     .project-section {
         grid-template-columns: auto auto auto;

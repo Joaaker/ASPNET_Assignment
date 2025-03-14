@@ -169,6 +169,20 @@ p {
     border-color: var(--blue-accent);
 }
 
+.btn-close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    color: var(--text);
+    text-decoration: none;
+    border: none;
+    user-select: none;
+    cursor: pointer;
+    transition: all 200ms;
+}
+
+
 a {
     text-decoration: none; 
     cursor: pointer; 

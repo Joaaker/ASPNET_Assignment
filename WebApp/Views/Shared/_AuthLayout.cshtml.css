@@ -22,10 +22,10 @@ main {
 
 @media (max-width: 1339px) {
     .sign-container {
-        width: 100vw;
-        width: 100dvw;
-        height: 100vh;
-        height: 100dvh;
+        min-width: 100vw;
+        min-width: 100dvw;
+        min-height: 100vh;
+        min-height: 100dvh;
     }
 }
 
@@ -38,9 +38,9 @@ main {
 
     .sign-bg {
         background-color: var(--auth-background);
-        width: 100vw;
-        width: 100dvw;
-        height: 100vh;
-        height: 100dvh;
+        min-width: 100vw;
+        min-width: 100dvw;
+        min-height: 100vh;
+        min-height: 100dvh;
     }
 }
