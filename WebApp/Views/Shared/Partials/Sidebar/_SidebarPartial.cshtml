@@ -1,23 +1,22 @@
-﻿<aside class="sidebar">
-	@await Html.PartialAsync("Partials/Sidebar/_LogoPartial")
-	<nav>
-		<a asp-controller="Projects" asp-action="Index">
-			<div class="navigation-link @((ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty) == "Projects" ? "active" : "" )">
-				<i class="fa-solid fa-briefcase"></i>
-				<span>Projects</span>
-			</div>
-		</a>
-		<a asp-controller="Members" asp-action="Index">
-			<div class="navigation-link @((ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty) == "Members" ? "active" : "" )">
-				<i class="fa-solid fa-users"></i>
-				<span>Team Members</span>
-			</div>
-		</a>
-		<a asp-controller="Clients" asp-action="Index">
-			<div class="navigation-link @((ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty) == "Clients" ? "active" : "" )">
-				<i class="fa-solid fa-handshake"></i>
-				<span>Clients</span>
-			</div>
-		</a>
-	</nav>
-</aside>
+﻿
+@await Html.PartialAsync("Partials/Sidebar/_LogoPartial")
+<nav>
+	<a asp-controller="Projects" asp-action="Index">
+		<div class="navigation-link @((ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty) == "Projects" ? "active" : "" )">
+			<i class="fa-solid fa-briefcase"></i>
+			<span>Projects</span>
+		</div>
+	</a>
+	<a asp-controller="Members" asp-action="Index">
+		<div class="navigation-link @((ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty) == "Members" ? "active" : "" )">
+			<i class="fa-solid fa-users"></i>
+			<span>Team Members</span>
+		</div>
+	</a>
+	<a asp-controller="Clients" asp-action="Index">
+		<div class="navigation-link @((ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty) == "Clients" ? "active" : "" )">
+			<i class="fa-solid fa-handshake"></i>
+			<span>Clients</span>
+		</div>
+	</a>
+</nav>

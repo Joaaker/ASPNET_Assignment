@@ -17,5 +17,6 @@
 }
 
 i {
+    color: var(--edit-dots);
     font-size: .2rem;
 }
