@@ -37,6 +37,11 @@
     .expandable-menu > .search-account-nav {
         justify-self: end;
     }
+
+.notification-center{
+    display: flex;
+    align-items: center;
+}
 /*Computer*/
 @media (min-width: 1340px) {
     .hamburger-navbar {

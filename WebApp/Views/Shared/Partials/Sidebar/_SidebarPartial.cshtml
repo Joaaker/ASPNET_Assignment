@@ -1,5 +1,4 @@
-﻿
-@await Html.PartialAsync("Partials/Sidebar/_LogoPartial")
+﻿@await Html.PartialAsync("Partials/Sidebar/_LogoPartial")
 <nav>
 	<a asp-controller="Projects" asp-action="Index">
 		<div class="navigation-link @((ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty) == "Projects" ? "active" : "" )">

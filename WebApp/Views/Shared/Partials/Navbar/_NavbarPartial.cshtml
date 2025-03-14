@@ -4,12 +4,8 @@
 	<input type="text" placeholder="Search anything.."/>
 </div>
 <div class="account-group">
-	@* VID notification >>> class = notification-active PÅ Button*@
-	<button class="notification-bell">
-		<i class="fa-solid fa-bell bell">
-			<i class="fa-solid fa-circle notification-circle"></i>
-		</i>
-	</button>
+	@await Html.PartialAsync("Partials/Navbar/_NotificationBell")
+
 	<div class="settings">
 		@await Html.PartialAsync("Partials/Navbar/_SettingsPartial")
 	</div>

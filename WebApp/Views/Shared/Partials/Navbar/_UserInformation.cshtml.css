@@ -1,0 +1,12 @@
+﻿.user-information {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    background-color: var(--user-background);
+    border-radius: 12px;
+    padding: .7rem 1rem;
+}
+
+    .user-information > span {
+        color: var(--headline);
+    }

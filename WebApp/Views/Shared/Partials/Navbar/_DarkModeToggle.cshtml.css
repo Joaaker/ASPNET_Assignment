@@ -1,4 +1,31 @@
-﻿.dark-mode-toggle {
+﻿
+.dark-mode-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px;
+    padding: .7rem 1rem;
+
+}
+
+.cog-span {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-right: 36px;
+}
+
+    .cog-span > span {
+        display: flex;
+        align-items: center;
+        min-width: 90px;
+        color: var(--headline);
+    }
+
+
+
+
+.dark-mode-toggle {
     display: flex;
     align-items: center;
     font-size: 1rem;
