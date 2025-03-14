@@ -1,0 +1,13 @@
+﻿<nav class="hamburger-navbar">
+    <button id="hamburgerBtn">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+</nav>
+<div class="expandable-menu" id="menu">
+    <nav class="page-navigation">
+        @await Html.PartialAsync("Partials/Sidebar/_SidebarPartial")
+    </nav>
+    <nav class="search-account-nav">
+        @await Html.PartialAsync("Partials/Navbar/_NavbarPartial")
+    </nav>
+</div>
