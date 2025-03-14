@@ -16,9 +16,15 @@
 <body class="light">
     <div class="wrapper">
         <header>
-            @await Html.PartialAsync("Partials/Navbar/_NavbarPartial")
+            <nav class="top-nav">
+                @await Html.PartialAsync("Partials/Navbar/_NavbarPartial")
+            </nav>
+            @await Html.PartialAsync("Partials/_HamburgerMenu")
         </header>
-        @await Html.PartialAsync("Partials/Sidebar/_SidebarPartial")
+        <aside class="sidebar">
+            @await Html.PartialAsync("Partials/Sidebar/_SidebarPartial")
+        </aside>
+        
         <main>
             @RenderBody()
         </main>

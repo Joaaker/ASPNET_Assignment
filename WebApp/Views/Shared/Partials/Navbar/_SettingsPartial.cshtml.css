@@ -15,7 +15,7 @@ ul.dropdown-menu.dropdown-menu-end.show {
     padding: .5rem;
     border-radius: 12px;
     border: none;
-    background-color: var(--bright-background);
+    background-color: var(--background);
     min-width: 250px;
 }
 li{
@@ -43,19 +43,35 @@ li > div {
     display: flex;
     align-items: center;
     gap: .8rem;
-    background-color: var(--gray-100);
+    background-color: var(--user-background);
 }
+    .user-information > span {
+        color: var(--headline);
+    }
+
 
 .dark-mode-container {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: .3rem;
+
 }
-    .dark-mode-container > span {
+    .cog-span {
         display: flex;
         align-items: center;
+        gap: 1rem;
+        margin-right: 36px;
     }
+        .cog-span > span {
+            display: flex;
+            align-items: center;
+            min-width: 90px;
+            color: var(--headline);
+        }
+
+
+
+
 
 button.log-out {
     display: flex;
@@ -66,3 +82,9 @@ button.log-out {
         color: var(--icon-color);
         font-size: 1.1rem;
     }
+    button.log-out > span {
+        color: var(--headline);
+    }
+
+
+

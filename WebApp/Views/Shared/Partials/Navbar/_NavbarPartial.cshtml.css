@@ -1,44 +1,62 @@
 ﻿
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-}
 
-.account-group {
-    display: flex;
-    align-items: center;
-}
+/*Computer*/
+@media (min-width: 1340px) {
 
-.notification-bell {
-    display: flex;
-    align-items: center;
-    margin: 0 8px;
-}
 
-    .notification-bell > i {
-        color: var(--bell-color);
-        font-size: 1.1rem;
+
+    .account-group {
+        display: flex;
+        align-items: center;
     }
 
 
-.settings {
-    display: flex;
-    align-items: center;
-    margin: 0 8px;
-    color: grey;
-}
+
+    .notification-bell {
+        display: flex;
+        border: none;
+        align-items: center;
+        margin: 0 8px;
+        background-color: transparent;
+    }
+
+        .notification-bell > .bell {
+            position: relative;
+            color: var(--bell-color);
+            font-size: 1.1rem;
+        }
+
+            .notification-bell > .bell > .notification-circle {
+                display: none;
+                position: absolute;
+                color: var(--red);
+                font-size: .5rem;
+                top: 0px;
+                left: 9px;
+            }
+
+    .notification-active > .bell > .notification-circle {
+        display: flex;
+    }
 
 
-.separator {
-    display: inline-block;
-    width: 1px;
-    height: 24px;
-    margin: 0 .5rem;
-    background-color: var(--border);
-}
+    .settings {
+        display: flex;
+        align-items: center;
+        margin: 0 8px;
+        color: grey;
+    }
 
-.avatar-image {
-    margin: 0 8px;
+
+    .separator {
+        display: inline-block;
+        width: 1px;
+        height: 24px;
+        margin: 0 .5rem;
+        background-color: var(--border);
+    }
+
+    .avatar-image {
+        margin: 0 8px;
+    }
 }

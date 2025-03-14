@@ -50,7 +50,7 @@
     --text: var(--dark-400);
     --headline: var(--dark-100);
     --background: var(--white-200);
-    --card-background: var(--white-200);
+    --card-background: var(--white-100);
     --bright-background: var(--white-100);
     --auth-background: var(--gray-100);
     --status-btn-text: var(--gray-800);
@@ -59,6 +59,9 @@
     --link-text: var(--dark-400);
     --icon-color: var(--gray-700);
     --bell-color: var(--dark-100);
+    --user-background: var(--gray-100);
+    --deadline-bg: var(--gray-200);
+    --edit-dots: var(--gray-800);
 }
 
 .dark {
@@ -66,7 +69,7 @@
     --headline: var(--white-100);
     --background: var(--dark-background);
     --bright-background: var(--gray-600);
-    --card-background: var(--gray-700);
+    --card-background: var(--dark-300);
     --auth-background: var(--dark-background);
     --status-btn-text: var(--gray-700);
     --border: var(--dark-border);
@@ -74,6 +77,9 @@
     --border-two: var(--gray-800);
     --icon-color: var(--gray-800);
     --bell-color: var(--gray-400);
+    --user-background: var(--dark-400);
+    --deadline-bg: var(--dark-600);
+    --edit-dots: var(--gray-700);
 }
 
 
@@ -98,8 +104,8 @@ body {
 }
 
 .wrapper {
-    width: 100vw;
     height: 100vh;
+    height: 100dvh;
 }
 
 .sr-only {
@@ -278,6 +284,12 @@ form .field-validation-error {
 .modal-footer > .btn-base {
     width: 100%;
 }
+
+
+
+
+
+
 /*Mobile only*/
 @media (max-width: 767px) {
 }
@@ -293,11 +305,30 @@ form .field-validation-error {
 }
 
 
-
 /*Computer*/
 @media (min-width: 1340px) {
     .auth-form {
         width: 430px;
     }
 
+    .wrapper {
+        display: grid;
+        grid-template-columns: minmax(50px, 270px) 1fr;
+        grid-template-rows: minmax(50px, auto) 1fr;
+        grid-template-areas: "side top" "side main";
+    }
+
+        .wrapper > aside {
+            grid-area: side;
+            border-right: 1px solid var(--border);
+        }
+
+        .wrapper > header {
+            grid-area: top;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .wrapper > main {
+            grid-area: main;
+        }
 }

@@ -13,8 +13,11 @@
         </li>
         <li>
             <div class="dark-mode-container">
-                @await Html.PartialAsync("Partials/Navbar/_Cogwheel")
-                <span>Dark Mode</span>
+                <div class="cog-span">
+                    @await Html.PartialAsync("Partials/Navbar/_Cogwheel")
+                    <span>Dark Mode</span>
+                </div>
+                
                 @await Html.PartialAsync("Partials/Navbar/_DarkModeToggleButton")
             </div>
         </li>
