@@ -183,10 +183,14 @@ p {
     transition: all 200ms;
 }
 
+.btn-submit{
+    width: 100%;
+}
+
 
 a {
-    text-decoration: none; 
-    cursor: pointer; 
+    text-decoration: none;
+    cursor: pointer;
 }
     a:visited {
         color: inherit; 
