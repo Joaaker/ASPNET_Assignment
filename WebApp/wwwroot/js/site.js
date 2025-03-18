@@ -60,8 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const modalTarget = button.getAttribute('data-target')
             const modal = document.querySelector(modalTarget)
 
-            if (modal)
+            if (modal) {
                 modal.style.display = 'flex';
+                document.body.classList.add('modal-open');
+            }
+
         })
     })
 
@@ -73,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const modal = button.closest('.modal-container')
             if (modal) {
                 modal.style.display = 'none'
+                document.body.classList.remove('modal-open');
 
                 //Clear Formdata
             }

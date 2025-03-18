@@ -10,7 +10,7 @@ main{
     overflow: hidden;
 }
 
-aside {
+.sidebar{
     display: none;
 }
 
@@ -32,8 +32,9 @@ aside {
         justify-content: space-between;
         align-items: center;
         padding: 1rem;
+        min-height: 5rem; 
     }
-    aside {
+    .sidebar {
         display: flex;
         flex-direction: column;
         max-width: 17rem;

@@ -1,0 +1,37 @@
+﻿@model AddClientForm
+
+
+<div id="add-client-modal" class="modal-container">
+	<div class="content-modal">
+		<div class="header-modal">
+			<h3> Add Client</h3>
+			<button class="btn-close" type="button" data-close="true"></button>
+
+
+		</div>
+		<form novalidate asp-action="Index" method="post" asp-controller="Clients">
+            <div class="mb-3">
+                <label asp-for="ClientName" class="form-label"></label>
+                <div class="field-group">
+                    <input asp-for="ClientName" class="form-control text-input">
+                    <span asp-validation-for="ClientName"></span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <div class="field-group">
+                    <input asp-for="Email" class="form-control text-input">
+                    <span asp-validation-for="Email"></span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Phone" class="form-label"></label>
+                <div class="field-group">
+                    <input asp-for="Phone" class="form-control text-input">
+                    <span asp-validation-for="Phone"></span>
+                </div>
+            </div>
+			<button class="btn-base btn-blue btn-submit" type="submit">Create</button>
+		</form>
+	</div>
+</div>

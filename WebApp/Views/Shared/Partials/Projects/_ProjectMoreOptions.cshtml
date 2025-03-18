@@ -1,0 +1,29 @@
+﻿
+<div class="btn-group">
+    <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        @await Html.PartialAsync("Partials/Components/_EditButtonDots")
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+        <li>
+            <button class="dropdown-item" type="button">
+                <i class="fa-solid fa-pen"></i>
+                <span>Edit</span>
+            </button>
+        </li>
+        <li>
+            <button class="dropdown-item" type="button">
+                <i class="fa-solid fa-user-plus"></i>
+                <span>Add Member</span>
+            </button>
+        </li>
+        <li class="divider">
+            <hr/>
+        </li>
+        <li>
+            <button class="dropdown-item delete" type="button">
+                <i class="fa-solid fa-trash delete"></i>
+                <span class="delete">Delete Project</span>
+            </button>
+        </li>
+    </ul>
+</div>

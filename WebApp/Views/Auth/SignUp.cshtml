@@ -6,7 +6,7 @@
 <form class="auth-form" method="post" asp-controller="Auth" asp-action="SignUp" novalidate>
     <h1>Create Account</h1>
     <button>PARTIAL Sign Up With Google</button>
-    @await Html.PartialAsync("Partials/_OrDivider")
+    @await Html.PartialAsync("Partials/Components/_OrDivider")
 
     <div class="mb-3">
         <label asp-for="FullName" class="form-label"></label>

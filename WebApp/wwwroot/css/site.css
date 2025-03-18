@@ -102,6 +102,7 @@ body {
     font-optical-sizing: auto;
     font-style: normal;
     font-size: 1rem;
+    overflow-x: hidden;
 }
 
 .wrapper {
@@ -217,13 +218,13 @@ a {
     width: 270px;
 
 }
-    .auth-form > h1 {
-        text-align: center;
-    }
+.auth-form > h1 {
+    text-align: center;
+}
 
-    .auth-form > input {
-        text-align: center;
-    }
+.auth-form > input {
+    text-align: center;
+}
 
 .mb-3 {
     display: flex;
@@ -233,27 +234,10 @@ a {
 
 .mb-5 {
     display: flex;
-
     flex-direction: column;
     gap: .5rem;
 }
 
-
-.auth-redirect {
-    display: flex;
-    gap: .3rem;
-}
-
-
-    .auth-text {
-        color: var(--headline);
-        font-weight: 500;
-    }
-
-    .a-text {
-        color: var(--blue-accent);
-        font-weight: 500;
-    }
 
 .text-input {
     width: 100%;
@@ -297,9 +281,29 @@ form .field-validation-error {
         font-size: 1em;
         font-weight: 900;
     }
+    
+.auth-redirect {
+    display: flex;
+    gap: .3rem;
+}
 
+.auth-text {
+    color: var(--headline);
+    font-weight: 500;
+}
+
+.a-text {
+    color: var(--blue-accent);
+    font-weight: 500;
+}
 
 /*Modal*/
+
+/* Body scroll lock when Modal is open */
+body.modal-open {
+    overflow: hidden;
+}
+
 .modal-container {
     display: none;
     justify-content: center;
@@ -310,24 +314,35 @@ form .field-validation-error {
     left: 0;
     right: 0;
     bottom: 0;
+    z-index: 10;
 }
 
+
     .modal-container > .content-modal {
+        display: flex;
+        flex-direction: column;
         background-color: var(--card-background);
         box-shadow: 0 4px 4px 3px rgba(196, 196, 196, 0.1);
         border-radius: 16px;
         padding: 2rem;
+        width: 100%;
+        max-width: 530px;
     }
 
-        .modal-content > .header-modal {
+        .content-modal > .header-modal {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
+            width: 100%;
         }
+.header-modal > h3 {
+    margin: 0;
+}
 
-        .content-modal > form {
-        }
+.content-modal > form {
+    
+}
 
 
 
@@ -347,6 +362,37 @@ form .field-validation-error {
     .auth-form {
         width: 400px;
     }
+}
+
+/*Tablet*/
+@media (min-width: 768px) {
+
+    /* Modal form for mobile / tablet   */
+    .modal-container > .content-modal {
+        padding: 7rem;
+        min-width: 500px;
+
+    }
+}
+
+/* Mobile / Tablet only */
+@media (max-width: 1339px) {
+
+    /* Modal form for mobile / tablet   */
+    .modal-container {
+        background-color: var(--white-100);
+       
+    }
+
+        .modal-container > .content-modal {
+            justify-content: center;
+            align-items: center;
+            border-radius: 0;
+            min-height: 100vh;
+            min-height: 100dvh;
+            min-width: 100dvw;
+            min-width: 100vw;
+        }
 }
 
 
@@ -376,4 +422,10 @@ form .field-validation-error {
         .wrapper > main {
             grid-area: main;
         }
+
+
+    .modal-container > .content-modal {
+        padding: 2rem;
+        min-width: 530px;
+    }
 }

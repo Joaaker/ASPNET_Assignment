@@ -1,7 +1,7 @@
 ﻿.hamburger-navbar {
     display: flex;
     flex-direction: row-reverse;
-    padding: 1rem;
+    padding: 1rem 3rem;
     width: 100%;
 }
 
