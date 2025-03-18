@@ -1,13 +1,39 @@
-﻿namespace Business.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Business.Models;
 
 public class AddProjectForm
 {
+    [Display(Name = "Project Name", Prompt = "Project name")]
+    [Required(ErrorMessage = "Required")]
     public string ProjectName { get; set; } = null!;
-    public string? ClientName { get; set; }
+
+
+    [Display(Name = "Description", Prompt = "Type something")]
     public string? Description { get; set; }
+
+
+    [Display(Name = "Start Date")]
+    [Required(ErrorMessage = "Required")]
     public DateOnly StartDate { get; set; }
+
+
+    [Display(Name = "End Date")]
     public DateOnly? EndDate { get; set; }
-    public int MemberId { get; set; }
+
+
+    [Display(Name = "Budget", Prompt = "0")]
     public int Budget { get; set; }
 
+
+    [Display(Name = "Client Name", Prompt = "Select a client")]
+    [Required(ErrorMessage = "Required")]
+    public int ClientId { get; set; }
+
+
+    public int ImageId { get; set; }
+
+
+    [Display(Name = "Members", Prompt = "Select project members")]
+    public List<int> MembersIds { get; set; } = [];
 }
