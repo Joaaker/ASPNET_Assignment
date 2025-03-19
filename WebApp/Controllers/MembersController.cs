@@ -1,13 +1,52 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Models;
+using Microsoft.AspNetCore.Mvc;
 
-namespace WebApp.Controllers
+namespace WebApp.Controllers;
+
+public class MembersController : Controller
 {
-    public class MembersController : Controller
+    public IActionResult Index()
     {
-        public IActionResult Index()
+        ViewData["Title"] = "Members";
+
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Add(AddMemberForm formData)
+    {
+        if (!ModelState.IsValid)
         {
-            ViewData["Title"] = "Members";
-            return View();
+            var errors = ModelState
+                .Where(x => x.Value?.Errors.Count > 0)
+                .ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value?.Errors.Select(x => x.ErrorMessage).ToArray()
+                    );
+
+            return BadRequest(new { success = false, errors });
         }
+
+        //Send Data to Service
+        return Ok(new { success = true });
+    }
+
+    [HttpPost]
+    public IActionResult Edit(AddMemberForm formData)
+    {
+        if (!ModelState.IsValid)
+        {
+            var errors = ModelState
+                .Where(x => x.Value?.Errors.Count > 0)
+                .ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value?.Errors.Select(x => x.ErrorMessage).ToArray()
+                    );
+
+            return BadRequest(new { success = false, errors });
+        }
+
+        //Send Data to Service
+        return Ok(new { success = true });
     }
 }
