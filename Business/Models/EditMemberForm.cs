@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace Business.Models;
 
-public class AddMemberForm
+public class EditMemberForm
 {
+    public int Id { get; set; }
+
     [Display(Name = "Project Image", Prompt = "Select a image")]
     [DataType(DataType.Upload)]
     public IFormFile? MemberImage { get; set; }
