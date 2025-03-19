@@ -1,15 +1,17 @@
-﻿@model AddClientForm
+﻿@model EditClientForm
 
 
 <div id="add-client-modal" class="modal-container">
-	<div class="content-modal">
-		<div class="header-modal">
-			<h3> Add Client</h3>
-			<button class="btn-close" type="button" data-close="true"></button>
+    <div class="content-modal">
+        <div class="header-modal">
+            <h3> Add Client</h3>
+            <button class="btn-close" type="button" data-close="true"></button>
 
 
-		</div>
-        <form novalidate asp-action="Add" method="post" asp-controller="Clients" class="modal-form">
+        </div>
+        <form novalidate asp-action="Edit" method="post" asp-controller="Clients" class="modal-form">
+            <input asp-for="Id" readonly type="hidden" />
+
             <div class="mb-3">
                 <label asp-for="ClientName" class="form-label"></label>
                 <div class="field-group">
@@ -31,7 +33,7 @@
                     <span asp-validation-for="Phone"></span>
                 </div>
             </div>
-			<button class="btn-base btn-blue btn-submit" type="submit">Create</button>
-		</form>
-	</div>
+            <button class="btn-base btn-blue btn-submit" type="submit">Create</button>
+        </form>
+    </div>
 </div>

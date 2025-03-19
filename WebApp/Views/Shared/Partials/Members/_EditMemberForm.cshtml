@@ -1,0 +1,20 @@
+﻿@model EditMemberForm
+
+<div id="add-member-modal" class="modal-container">
+	<div class="content-modal">
+		<div class="header-modal">
+			<h3> Add Member</h3>
+			<button class="btn-close" type="button" data-close="true"></button>
+
+
+		</div>
+		<form novalidate asp-action="AddMember" method="post" asp-controller="Members" class="modal-form">
+			<div class="image-previewer circle">
+				<img src="" class="image-preview" />
+				<input asp-for="MemberImage" accept="image/*" class="hide" />
+			</div>
+
+			<button class="btn-base btn-blue btn-submit" type="submit">Save</button>
+		</form>
+	</div>
+</div>

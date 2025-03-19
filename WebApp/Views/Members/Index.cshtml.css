@@ -1,0 +1,26 @@
+﻿.member-section {
+    display: grid;
+    grid-template-columns: auto;
+    gap: 1.8rem;
+    padding: 1rem 0;
+    justify-content: center;
+
+}
+
+
+/*Tablet*/
+@media (min-width: 768px) {
+    .member-section {
+        grid-template-columns: auto auto;
+    }
+}
+
+
+
+/*Computer*/
+@media (min-width: 1440px) {
+    .member-section {
+        grid-template-columns: auto auto auto;
+        justify-content: space-evenly;
+    }
+}

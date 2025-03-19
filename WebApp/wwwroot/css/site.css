@@ -25,6 +25,7 @@
     --dark-border: #232324;
     --dark-background: #151517;
     --dark-100: #1A1926;
+    --dark-100-60: #1A192699;
     --dark-200: #1C1D1F;
     --dark-300: #202123;
     --dark-400: #28263B;
@@ -131,6 +132,10 @@ p {
     color: var(--text);
 }
 
+.hide {
+    display: none;
+}
+
 
 
 .btn-base {
@@ -206,7 +211,68 @@ a {
     display: flex;
     justify-content: space-between;
 }
+/* More options button */
+.btn-group > button {
+    display: flex;
+    justify-content: center;
+    border: none;
+    background-color: transparent;
+    border-radius: 12px;
+    width: 40px;
+    height: 40px;
+}
 
+    .btn-group > button.show {
+        background-color: var(--auth-background);
+    }
+
+.btn-group > .dropdown-toggle::after {
+    content: none;
+}
+
+ul.dropdown-menu.dropdown-menu-end.show {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: .5rem;
+    border-radius: 12px;
+    border: none;
+    background-color: var(--bright-background);
+}
+
+ul > li > button {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    border-radius: 12px;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: .4rem 0;
+    width: 100%;
+}
+
+    .divider > hr {
+        flex: 1;
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 0 10px;
+    }
+
+
+ul > li > button > .delete {
+    color: var(--red);
+}
+
+button.dropdown-item.delete:hover {
+    background-color: var(--error-background-color);
+}
+
+
+ul > li > button > i {
+    font-size: .8rem;
+}
 
 /*FORM*/
 .auth-form {
@@ -296,12 +362,49 @@ form .field-validation-error {
     color: var(--blue-accent);
     font-weight: 500;
 }
+/* Image-previewer */
+.image-previewer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed var(--border);
+    height: 150px;
+    width: 150px;
+    margin: 2rem auto;
+    cursor: pointer;
+    overflow: hidden;   
+}
+    .image-previewer::after {
+        content: '\f030';
+        font-family: 'Font Awesome 6 Free';
+        font-style: normal;
+        font-weight: 900;
+        background-color: var(--dark-100-60);
+        color: var(--white-100);
+        padding: 1rem;
+        border-radius: 50%;
+        position: relative;
+        bottom: 0;
+    }
+    .image-previewer.selected::after {
+        content: '\f044';
+        position: absolute;
+        bottom: 5px;
+    }
+    .image-previewer.circle{
+        border-radius: 50%;
+    }
+    .image-previewer.square {
+        border-radius: 16px;
+    }
+
+
 
 /*Modal*/
-
 /* Body scroll lock when Modal is open */
-body.modal-open {
+body.modal-open{
     overflow: hidden;
+    overflow-y: hidden;
 }
 
 .modal-container {
@@ -327,7 +430,13 @@ body.modal-open {
         padding: 2rem;
         width: 100%;
         max-width: 530px;
+        max-height: 90vh;
+        overflow-y: auto; 
+        -webkit-overflow-scrolling: touch;
     }
+        .modal-container > .content-modal::-webkit-scrollbar-track {
+            border-radius: 16px; 
+        }
 
         .content-modal > .header-modal {
             display: flex;
@@ -340,8 +449,13 @@ body.modal-open {
     margin: 0;
 }
 
+.modal-form .field-validation-error {
+    top: 7px;
+    right: 7px;
+    border-radius: 10px;
+}
+
 .content-modal > form {
-    
 }
 
 

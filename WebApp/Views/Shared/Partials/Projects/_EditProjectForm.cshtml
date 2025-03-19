@@ -1,4 +1,4 @@
-﻿@model AddProjectForm
+﻿@model EditProjectForm
 
 <div id="add-project-modal" class="modal-container">
 	<div class="content-modal">
@@ -11,9 +11,9 @@
 		<form novalidate asp-action="AddProject" method="post" asp-controller="Projects" class="modal-form">
 			<div class="image-previewer circle">
 				<img src="" class="image-preview" />
-				<input asp-for="ProjectImage" accept="image/*" class="hide"/>
+				<input asp-for="ProjectImage" accept="image/*" class="hide" />
 			</div>
-			
+
 			<button class="btn-base btn-blue btn-submit" type="submit">Create</button>
 		</form>
 	</div>
