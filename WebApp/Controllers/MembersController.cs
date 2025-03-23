@@ -1,8 +1,10 @@
-﻿using Business.Models;
+﻿using Domain.Models;  
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Controllers;
 
+//[Authorize]
 public class MembersController : Controller
 {
     public IActionResult Index()

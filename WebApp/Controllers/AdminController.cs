@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace WebApp.Controllers
+namespace WebApp.Controllers;
+
+public class AdminController : Controller
 {
-    public class AdminController : Controller
+    [Route("admin-panel")]
+    public IActionResult SignIn()
     {
-        [Route("admin-panel")]
-        public IActionResult SignIn()
-        {
-            ViewData["Title"] = "Admin Sign In";
-            return View();
-        }
+        ViewData["Title"] = "Admin Sign In";
+        return View();
     }
 }

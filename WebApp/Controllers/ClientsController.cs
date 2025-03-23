@@ -1,9 +1,10 @@
-﻿using Business.Models;
+﻿using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebApp.Controllers;
 
+//[Authorize]
 public class ClientsController : Controller
 {
     public IActionResult Index()
