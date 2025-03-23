@@ -1,13 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Business.Models;
+namespace Domain.Models;
 
-public class SignUpFormModel
+public class SignInForm
 {
-    [Display(Name = "Full Name", Prompt = "Your full name")]
-    [Required(ErrorMessage = "Required")]
-    public string FullName { get; set; } = null!;
-
     [Display(Name = "Email", Prompt = "Your email address")]
     [DataType(DataType.EmailAddress)]
     [Required(ErrorMessage = "Required")]
@@ -20,12 +16,5 @@ public class SignUpFormModel
     [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$", ErrorMessage = "Invalid")]
     public string Password { get; set; } = null!;
 
-    [Display(Name = "Confirm Password", Prompt = "Confirm your password")]
-    [DataType(DataType.Password)]
-    [Required(ErrorMessage = "Required")]
-    [Compare(nameof(Password), ErrorMessage = "Invalid")]
-    public string ConfirmPassword { get; set; } = null!;
-
-    [Required(ErrorMessage = "Required")]
-    public bool TermsAndConditions { get; set; }
+    public bool? RememberMe { get; set; } 
 }

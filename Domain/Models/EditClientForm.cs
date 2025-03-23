@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Business.Models;
+namespace Domain.Models;
 
-public class AddClientForm
+public class EditClientForm
 {
+    public int Id { get; set; }
+
     [Display(Name = "Client Name", Prompt = "Client name")]
     [Required(ErrorMessage = "Required")]
     public string ClientName { get; set; } = null!;
