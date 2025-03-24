@@ -1,3 +1,5 @@
+using Business.Interfaces;
+using Business.Services;
 using Data.Contexts;
 using Data.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -6,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\ProjectsVS\\ASPNET_Assignment\\Data\\Databases\\alpha_database.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=True")));
+
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddIdentity<MemberEntity, IdentityRole>(options =>
     {
@@ -30,15 +35,12 @@ var app = builder.Build();
 app.UseHsts();
 app.UseHttpsRedirection();
 app.UseRouting();
-
 app.UseAuthorization();
-
 app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Auth}/{action=SignUp}")
     .WithStaticAssets();
-
 
 app.Run();

@@ -4,6 +4,7 @@ namespace Domain.Models;
 
 public class SignUpForm
 {
+    //FullName här med First / Last Name i Member page?
     [Display(Name = "Full Name", Prompt = "Your full name")]
     [Required(ErrorMessage = "Required")]
     public string FullName { get; set; } = null!;
@@ -26,6 +27,7 @@ public class SignUpForm
     [Compare(nameof(Password), ErrorMessage = "Invalid")]
     public string ConfirmPassword { get; set; } = null!;
 
-    [Required(ErrorMessage = "Required")]
+    [Display(Name = "Terms and Conditions", Prompt = "I accept the terms and conditions")]
+    [Range(typeof(bool), "true", "true", ErrorMessage = "You must accept the terms and conditions to use this site.")]
     public bool TermsAndConditions { get; set; }
 }
