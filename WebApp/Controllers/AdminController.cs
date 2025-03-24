@@ -5,9 +5,8 @@ namespace WebApp.Controllers;
 public class AdminController : Controller
 {
     [Route("admin-panel")]
-    public IActionResult SignIn()
+    public IActionResult AdminSignIn()
     {
-        ViewData["Title"] = "Admin Sign In";
         return View();
     }
 }

@@ -1,6 +1,7 @@
 ﻿@model SignUpForm
 @{
-    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+    Layout = "~/Views/Shared/_Auth_Layout.cshtml";
+    ViewData["Title"] = "Sign up";
 }
 
 <form class="auth-form" method="post" asp-controller="Auth" asp-action="SignUp" novalidate>

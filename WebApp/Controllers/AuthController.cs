@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Domain.Models;
+using Business.Interfaces;
+using System.Threading.Tasks;
 
 namespace WebApp.Controllers;
 
-public class AuthController : Controller
+public class AuthController(IAuthService authService) : Controller
 {
+    private readonly IAuthService _authService = authService;
+
     public IActionResult SignUp()
     {
-        ViewData["Title"] = "Sign up";
-
         var formData = new SignUpForm();
         return View(formData);
     }
@@ -27,15 +29,23 @@ public class AuthController : Controller
     [Route("sign-in")]
     public IActionResult SignIn()
     {
-        ViewData["Title"] = "Sign in";
         return View();
     }
 
     [Route("sign-in")]
     [HttpPost]
-    public IActionResult SignIn(SignInForm form)
+    public async Task<IActionResult> SignIn(SignInForm form)
     {
-        ViewData["Title"] = "Sign in";
+        if (!ModelState.IsValid)
+        {
+            ViewBag.ErrorMessage = "Email or password is not correct";
+            return View(form);
+        }
+
+        var result = await _authService.LogInAsync(form);
+        if (result)
+            return RedirectToAction("Index", "Projects");
+            
         return View();
     }
 

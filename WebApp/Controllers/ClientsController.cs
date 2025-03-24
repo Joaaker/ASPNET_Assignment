@@ -9,7 +9,6 @@ public class ClientsController : Controller
 {
     public IActionResult Index()
     {
-        ViewData["Title"] = "Clients";
 
         return View();
     }

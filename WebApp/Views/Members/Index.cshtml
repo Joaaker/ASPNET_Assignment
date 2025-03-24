@@ -1,4 +1,9 @@
-﻿@await Html.PartialAsync("Partials/Members/_AddMemberForm")
+﻿@{
+    ViewData["Title"] = "Members";
+}
+
+
+@await Html.PartialAsync("Partials/Members/_AddMemberForm")
 
 <div class="top-bar">
 	<h1>Team Members</h1>
