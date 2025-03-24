@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.ViewModels;
 
-public class AddProjectViewModel
+public class EditProjectViewModel
 {
+    public int Id { get; set; }
+
     [Display(Name = "Project Image", Prompt = "Select a image")]
     [DataType(DataType.Upload)]
     public IFormFile? ProjectImage { get; set; }
