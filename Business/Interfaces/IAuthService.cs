@@ -1,9 +1,8 @@
-﻿using Domain.Models;
+﻿using Business.Dtos;
 
-namespace Business.Interfaces
+namespace Business.Interfaces;
+
+public interface IAuthService
 {
-    public interface IAuthService
-    {
-        Task<bool> LogInAsync(SignInForm signInForm);
-    }
+    Task<bool> LogInAsync(SignInDto signInForm);
 }

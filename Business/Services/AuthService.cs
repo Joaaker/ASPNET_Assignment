@@ -1,6 +1,6 @@
-﻿using Business.Interfaces;
+﻿using Business.Dtos;
+using Business.Interfaces;
 using Data.Entities;
-using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Business.Services;
@@ -9,7 +9,7 @@ public class AuthService(SignInManager<MemberEntity> signInManager) : IAuthServi
 {
     private readonly SignInManager<MemberEntity> _signInManager = signInManager;
 
-    public async Task<bool> LogInAsync(SignInForm signInForm)
+    public async Task<bool> LogInAsync(SignInDto signInForm)
     {
         var result = await _signInManager.PasswordSignInAsync(signInForm.Email, signInForm.Password, false, false);
         return result.Succeeded;
