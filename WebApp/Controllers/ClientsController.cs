@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.ViewModels;
 
 namespace WebApp.Controllers;
 
@@ -14,7 +15,7 @@ public class ClientsController : Controller
     }
 
     [HttpPost]
-    public IActionResult Add(AddClientForm formData)
+    public IActionResult Add(ClientsViewModel formData)
     {
         if (!ModelState.IsValid)
         {
@@ -33,7 +34,7 @@ public class ClientsController : Controller
     }
 
     [HttpPost]
-    public IActionResult Edit(AddClientForm formData)
+    public IActionResult Edit(ClientsViewModel formData)
     {
         if (!ModelState.IsValid)
         {

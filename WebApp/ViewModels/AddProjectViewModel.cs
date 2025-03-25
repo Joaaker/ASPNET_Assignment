@@ -24,7 +24,8 @@ public class AddProjectViewModel
 
 
     [Display(Name = "End Date")]
-    public DateOnly? EndDate { get; set; }
+    [Required(ErrorMessage = "Required")]
+    public DateOnly EndDate { get; set; }
 
 
     [Display(Name = "Budget", Prompt = "0")]

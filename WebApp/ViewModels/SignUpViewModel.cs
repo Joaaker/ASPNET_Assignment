@@ -3,10 +3,13 @@
 namespace WebApp.ViewModels;
 public class SignUpViewModel
 {
-    //FullName här med First / Last Name i Member page?
-    [Display(Name = "Full Name", Prompt = "Your full name")]
+    [Display(Name = "First Name", Prompt = "Your first name")]
     [Required(ErrorMessage = "Required")]
-    public string FullName { get; set; } = null!;
+    public string FirstName { get; set; } = null!;
+
+    [Display(Name = "Last Name", Prompt = "Your last name")]
+    [Required(ErrorMessage = "Required")]
+    public string LastName { get; set; } = null!;
 
     [Display(Name = "Email", Prompt = "Your email address")]
     [DataType(DataType.EmailAddress)]

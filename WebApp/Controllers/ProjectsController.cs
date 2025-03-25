@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.ViewModels;
 
 namespace WebApp.Controllers;
 
@@ -14,7 +15,7 @@ public class ProjectsController : Controller
     }
 
     [HttpPost]
-    public IActionResult Add(AddProjectForm formData)
+    public IActionResult Add(ProjectsViewModel formData)
     {
         if (!ModelState.IsValid)
         {
@@ -33,7 +34,7 @@ public class ProjectsController : Controller
     }
 
     [HttpPost]
-    public IActionResult Edit(AddProjectForm formData)
+    public IActionResult Edit(Project formData)
     {
         if (!ModelState.IsValid)
         {

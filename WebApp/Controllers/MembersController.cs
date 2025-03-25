@@ -1,6 +1,7 @@
 ﻿using Domain.Models;  
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.ViewModels;
 
 namespace WebApp.Controllers;
 
@@ -14,7 +15,7 @@ public class MembersController : Controller
     }
 
     [HttpPost]
-    public IActionResult Add(AddMemberForm formData)
+    public IActionResult Add(MembersViewModel formData)
     {
         if (!ModelState.IsValid)
         {
@@ -33,7 +34,7 @@ public class MembersController : Controller
     }
 
     [HttpPost]
-    public IActionResult Edit(AddMemberForm formData)
+    public IActionResult Edit(MembersViewModel formData)
     {
         if (!ModelState.IsValid)
         {

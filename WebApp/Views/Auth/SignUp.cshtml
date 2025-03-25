@@ -1,4 +1,4 @@
-﻿@model SignUpForm
+﻿@model SignUpViewModel
 @{
     Layout = "~/Views/Shared/_Auth_Layout.cshtml";
     ViewData["Title"] = "Sign up";
@@ -9,13 +9,23 @@
     <button>PARTIAL Sign Up With Google</button>
     @await Html.PartialAsync("Partials/Components/_OrDivider")
 
-    <div class="mb-3">
-        <label asp-for="FullName" class="form-label"></label>
-        <div class="field-group">
-            <input asp-for="FullName" class="form-control text-input">
-            <span asp-validation-for="FullName"></span>
+    <div class="name-container">
+        <div class="mb-3">
+            <label asp-for="FirstName" class="form-label"></label>
+            <div class="field-group">
+                <input asp-for="FirstName" class="form-control text-input">
+                <span asp-validation-for="FirstName"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="LastName" class="form-label"></label>
+            <div class="field-group">
+                <input asp-for="LastName" class="form-control text-input">
+                <span asp-validation-for="LastName"></span>
+            </div>
         </div>
     </div>
+
     <div class="mb-3">
         <label asp-for="Email" class="form-label"></label>
         <div class="field-group">
@@ -23,6 +33,7 @@
             <span asp-validation-for="Email"></span>
         </div>
     </div>
+
     <div class="mb-3">
         <label asp-for="Password" class="form-label"></label>
         <div class="field-group">
@@ -30,6 +41,7 @@
             <span asp-validation-for="Password"></span>
         </div>
     </div>
+
     <div class="mb-5">
         <label asp-for="ConfirmPassword" class="form-label"></label>
         <div class="field-group">
@@ -37,6 +49,7 @@
             <span asp-validation-for="ConfirmPassword"></span>
         </div>
     </div>
+
     <div class="form-check">
       <input asp-for="TermsAndConditions" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
         <label asp-for="TermsAndConditions" class="form-check-label" for="flexCheckDefault">
@@ -46,6 +59,7 @@
         </a>
       </label>
     </div>
+
     <button type="submit" class="btn-base btn-blue">Create Account</button>
 </form>
 <div class="auth-redirect">
