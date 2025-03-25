@@ -4,6 +4,7 @@ using Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250325062132_Added DateOFBirth in MemberEntity")]
+    partial class AddedDateOFBirthinMemberEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,31 +24,6 @@ namespace Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Data.Entities.ClientEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClientName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Clients");
-                });
 
             modelBuilder.Entity("Data.Entities.MemberAdressEntity", b =>
                 {
@@ -144,94 +122,6 @@ namespace Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("Data.Entities.ProjectEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("Budget")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly>("EndDate")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly>("StartDate")
-                        .HasColumnType("date");
-
-                    b.Property<int>("StatusId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("StatusId");
-
-                    b.ToTable("Projects");
-                });
-
-            modelBuilder.Entity("Data.Entities.ProjectMemberJunctionEntity", b =>
-                {
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ProjectId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ProjectMembers");
-                });
-
-            modelBuilder.Entity("Data.Entities.StatusEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("StatusName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Statuses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            StatusName = "Not started"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            StatusName = "Started"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            StatusName = "Completed"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -378,44 +268,6 @@ namespace Data.Migrations
                     b.Navigation("Member");
                 });
 
-            modelBuilder.Entity("Data.Entities.ProjectEntity", b =>
-                {
-                    b.HasOne("Data.Entities.ClientEntity", "Client")
-                        .WithMany("Projects")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Data.Entities.StatusEntity", "Status")
-                        .WithMany("Projects")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Client");
-
-                    b.Navigation("Status");
-                });
-
-            modelBuilder.Entity("Data.Entities.ProjectMemberJunctionEntity", b =>
-                {
-                    b.HasOne("Data.Entities.ProjectEntity", "Project")
-                        .WithMany("ProjectMembers")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Entities.MemberEntity", "Member")
-                        .WithMany("Projects")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Member");
-
-                    b.Navigation("Project");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -467,26 +319,9 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Data.Entities.ClientEntity", b =>
-                {
-                    b.Navigation("Projects");
-                });
-
             modelBuilder.Entity("Data.Entities.MemberEntity", b =>
                 {
                     b.Navigation("Address");
-
-                    b.Navigation("Projects");
-                });
-
-            modelBuilder.Entity("Data.Entities.ProjectEntity", b =>
-                {
-                    b.Navigation("ProjectMembers");
-                });
-
-            modelBuilder.Entity("Data.Entities.StatusEntity", b =>
-                {
-                    b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618
         }
