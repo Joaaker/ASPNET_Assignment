@@ -1,7 +1,7 @@
 ﻿@model SignInViewModel
 @{
-	Layout = "~/Views/Shared/_Auth_Layout.cshtml";
-	ViewData["Title"] = "Sign in";
+    Layout = "~/Views/Shared/_Auth_Layout.cshtml";
+    ViewData["Title"] = "Sign in";
 }
 
 <h1>Login</h1>
@@ -35,9 +35,14 @@
     <button type="submit" class="btn-base btn-blue">Create Account</button>
 
 </form>
-
+@if (!string.IsNullOrEmpty(ViewBag?.ErrorMessage))
+{
+    <div class="sign-in-error">
+        @ViewBag?.ErrorMessage
+    </div>
+}
 <div class="auth-redirect">
-    <p class="auth-text">Don't have an account?</p>
+    <span class="auth-text">Don't have an account?</span>
     <a asp-controller="Auth" asp-action="SignUp">
         <span class="a-text">Sign Up</span>
     </a>

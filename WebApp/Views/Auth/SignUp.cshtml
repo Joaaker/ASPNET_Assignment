@@ -4,7 +4,7 @@
     ViewData["Title"] = "Sign up";
 }
 
-<form class="auth-form" method="post" asp-controller="Auth" asp-action="SignUp" novalidate>
+<form class="auth-form" method="post" asp-controller="Auth" asp-action="SignUp" novalidate enctype="multipart/form-data">
     <h1>Create Account</h1>
     <button>PARTIAL Sign Up With Google</button>
     @await Html.PartialAsync("Partials/Components/_OrDivider")
@@ -51,7 +51,7 @@
     </div>
 
     <div class="form-check">
-      <input asp-for="TermsAndConditions" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+      <input asp-for="TermsAndConditions" class="form-check-input" type="checkbox" id="flexCheckDefault">
         <label asp-for="TermsAndConditions" class="form-check-label" for="flexCheckDefault">
         <span>I accept</span>
             <a asp-controller="Auth" asp-action="TermsAndConditions">
@@ -63,7 +63,7 @@
     <button type="submit" class="btn-base btn-blue">Create Account</button>
 </form>
 <div class="auth-redirect">
-    <p class="auth-text">Already have an account?</p>
+    <span class="auth-text">Already have an account?</span>
     <a asp-controller="Auth" asp-action="SignIn">
         <span class="a-text">Login</span>
     </a>

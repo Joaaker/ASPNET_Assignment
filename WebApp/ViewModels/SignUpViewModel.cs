@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Domain.Dtos;
 
 namespace WebApp.ViewModels;
 public class SignUpViewModel
@@ -32,4 +33,20 @@ public class SignUpViewModel
     [Display(Name = "Terms and Conditions", Prompt = "I accept the terms and conditions")]
     [Range(typeof(bool), "true", "true", ErrorMessage = "You must accept the terms and conditions to use this site.")]
     public bool TermsAndConditions { get; set; }
+
+   
+
+
+    public static implicit operator MemberRegistrationFormDto(SignUpViewModel model)
+    {
+        return model == null
+            ? null!
+            : new MemberRegistrationFormDto
+            {
+                Email = model.Email,
+                Password = model.Password,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+            };
+    }
 }

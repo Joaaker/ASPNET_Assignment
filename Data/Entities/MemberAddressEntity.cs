@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Entities;
 
-public class MemberAdressEntity
+public class MemberAddressEntity
 {
     [Key, ForeignKey("Member")]
     public string UserId { get; set; } = null!;

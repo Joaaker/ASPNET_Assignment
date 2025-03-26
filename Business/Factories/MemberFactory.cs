@@ -1,14 +1,34 @@
-﻿namespace Business.Factories;
+﻿using Data.Entities;
+using Domain.Dtos;
+using Domain.Models;
+
+namespace Business.Factories;
 
 public class MemberFactory
 {
-    public string FirstName { get; set; } = null!;
-    public string LastName { get; set; } = null!;
-    public string Email { get; set; } = null!;
-    public string Password { get; set; } = null!;
-    public string? PhoneNumber { get; set; }
+    public static MemberEntity CreateEntity(MemberRegistrationFormDto registrationForm) => new()
+    {
+        UserName = registrationForm.Email,
+        Email = registrationForm.Email,
+        FirstName = registrationForm.FirstName,
+        LastName = registrationForm.LastName,
+        JobTitle = registrationForm.JobTitle,
+        DateOfBirth = registrationForm.DateOfBirth,
 
-    public string? JobTitle { get; set; }
-    public string? MemberAddress { get; set; }
-    public string? DateOfBirth { get; set; }
+
+    };
+
+    public static Member CreateModel(MemberEntity memberEntity) => new()
+    {
+        Id = memberEntity.Id,
+        Email = memberEntity.Email!,
+        FirstName = memberEntity.FirstName,
+        LastName = memberEntity.LastName,
+        PhoneNumber = memberEntity.PhoneNumber,
+        JobTitle = memberEntity.JobTitle,
+        DateOfBirth = memberEntity.DateOfBirth,
+        StreetName = memberEntity.Address?.StreetName,
+        PostalCode = memberEntity.Address?.PostalCode,
+        City = memberEntity.Address?.City
+    };
 }

@@ -18,7 +18,7 @@ public class MemberEntity : IdentityUser
     public DateOnly? DateOfBirth { get; set; }
 
     [ProtectedPersonalData]
-    public virtual MemberAdressEntity? Address { get; set; }
+    public virtual MemberAddressEntity? Address { get; set; }
 
     public ICollection<ProjectMemberJunctionEntity> Projects { get; set; } = [];
 }

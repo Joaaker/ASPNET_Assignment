@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Domain.Models;
 using Business.Interfaces;
-using System.Threading.Tasks;
 using WebApp.ViewModels;
 using Domain.Dtos;
 
+
 namespace WebApp.Controllers;
 
-public class AuthController(IAuthService authService) : Controller
+public class AuthController(IAuthService authService, IMemberService memberService) : Controller
 {
     private readonly IAuthService _authService = authService;
+    private readonly IMemberService _memberService = memberService;
 
     public IActionResult SignUp()
     {
@@ -18,12 +18,18 @@ public class AuthController(IAuthService authService) : Controller
     }
 
     [HttpPost]
-    public IActionResult SignUp(SignUpViewModel formData)
+    public async Task<IActionResult> SignUp(SignUpViewModel form)
     {
-        if (!ModelState.IsValid)
-            return View(formData);
+        if (ModelState.IsValid)
+        {
+            MemberRegistrationFormDto dto = form;
 
-        return View();
+            var result = await _memberService.CreateMemberAsync(dto);
+            if (result)
+                return RedirectToAction("Index", "Projects");
+        }
+
+        return View(form);
     }
 
 
@@ -33,6 +39,7 @@ public class AuthController(IAuthService authService) : Controller
     {
         return View();
     }
+
 
     [Route("sign-in")]
     [HttpPost]

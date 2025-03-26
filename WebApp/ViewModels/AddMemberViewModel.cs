@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Domain.Dtos;
 using Microsoft.AspNetCore.Http;
 
 namespace WebApp.ViewModels;
 
 public class AddMemberViewModel
 {
-    [Display(Name = "Project Image", Prompt = "Select a image")]
+    [Display(Name = "Member Image", Prompt = "Select a image")]
     [DataType(DataType.Upload)]
     public IFormFile? MemberImage { get; set; }
 
@@ -31,11 +32,38 @@ public class AddMemberViewModel
     [Required(ErrorMessage = "Required")]
     public string JobTitle { get; set; } = null!;
 
-    [Display(Name = "Address", Prompt = "Enter address")]
+    [Display(Name = "Street Name", Prompt = "Enter street name")]
     [Required(ErrorMessage = "Required")]
-    public string Address { get; set; } = null!;
+    public string StreetName { get; set; } = null!;
+
+    [Display(Name = "Postal Code", Prompt = "Enter postal code")]
+    [Required(ErrorMessage = "Required")]
+    public string PostalCode { get; set; } = null!;
+
+    [Display(Name = "City", Prompt = "Enter city")]
+    [Required(ErrorMessage = "Required")]
+    public string City { get; set; } = null!;
 
     [Display(Name = "Date of Birth")]
     [Required(ErrorMessage = "Required")]
     public DateOnly DateOfBirth { get; set; }
+
+
+    public static implicit operator MemberRegistrationFormDto(AddMemberViewModel model)
+    {
+        return model == null
+            ? null!
+            : new MemberRegistrationFormDto
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                PhoneNumber = model.Phone,
+                JobTitle = model.JobTitle,
+                StreetName = model.StreetName,
+                PostalCode = model.PostalCode,
+                City = model.City,
+                DateOfBirth = model.DateOfBirth,
+            };
+    }
 }

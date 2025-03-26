@@ -10,5 +10,7 @@ public class Member
     public string? PhoneNumber { get; set; }
     public string? JobTitle{ get; set; }
     public DateOnly? DateOfBirth { get; set; }
-    public int? MemberAddressId { get; set; }
+    public string? StreetName { get; set; }
+    public string? PostalCode { get; set; }
+    public string? City { get; set; }
 }

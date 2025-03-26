@@ -1,4 +1,5 @@
-﻿using Business.Interfaces;
+﻿using Business.Factories;
+using Business.Interfaces;
 using Data.Entities;
 using Domain.Dtos;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +15,5 @@ public class AuthService(SignInManager<MemberEntity> signInManager) : IAuthServi
         var result = await _signInManager.PasswordSignInAsync(signInForm.Email, signInForm.Password, false, false);
         return result.Succeeded;
     }
-
 
 }
