@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Business.Dtos;
+namespace Domain.Dtos;
 
 public class ProjectRegistrationDto 
 {

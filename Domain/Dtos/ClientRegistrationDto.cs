@@ -1,5 +1,5 @@
 ﻿
-namespace Business.Dtos;
+namespace Domain.Dtos;
 
 class ClientRegistrationDto
 {

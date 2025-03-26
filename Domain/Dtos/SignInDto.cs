@@ -1,4 +1,4 @@
-﻿namespace Business.Dtos;
+﻿namespace Domain.Dtos;
 
 public class SignInDto
 {

@@ -3,7 +3,7 @@ using Domain.Models;
 using Business.Interfaces;
 using System.Threading.Tasks;
 using WebApp.ViewModels;
-using Business.Dtos;
+using Domain.Dtos;
 
 namespace WebApp.Controllers;
 
@@ -43,7 +43,7 @@ public class AuthController(IAuthService authService) : Controller
         if (ModelState.IsValid)
         {
             SignInDto dto = form;
-            var result = await _authService.LogInAsync(form);
+            var result = await _authService.LogInAsync(dto);
             if (result)
                 return Redirect(returnUrl);
         }

@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Business.Dtos;
+using Domain.Dtos;
 
 namespace WebApp.ViewModels;
 
@@ -22,7 +22,7 @@ public class SignInViewModel
     public static implicit operator SignInDto(SignInViewModel model)
     {
         return model == null
-            ? null
+            ? null!
             : new SignInDto
             {
                 Email = model.Email,

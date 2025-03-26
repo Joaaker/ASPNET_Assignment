@@ -1,6 +1,6 @@
-﻿using Business.Dtos;
-using Business.Interfaces;
+﻿using Business.Interfaces;
 using Data.Entities;
+using Domain.Dtos;
 using Microsoft.AspNetCore.Identity;
 
 namespace Business.Services;

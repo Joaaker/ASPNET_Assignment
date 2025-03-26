@@ -1,4 +1,4 @@
-﻿using Business.Dtos;
+﻿using Domain.Dtos;
 
 namespace Business.Interfaces;
 
