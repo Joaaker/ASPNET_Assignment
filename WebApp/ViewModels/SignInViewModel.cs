@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Business.Dtos;
 
 namespace WebApp.ViewModels;
 
@@ -16,5 +17,16 @@ public class SignInViewModel
     [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$", ErrorMessage = "Invalid")]
     public string Password { get; set; } = null!;
 
-    public bool? RememberMe { get; set; } 
+    public bool RememberMe { get; set; }
+
+    public static implicit operator SignInDto(SignInViewModel model)
+    {
+        return model == null
+            ? null
+            : new SignInDto
+            {
+                Email = model.Email,
+                Password = model.Password,
+            };
+    }
 }

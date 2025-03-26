@@ -3,6 +3,7 @@ using Domain.Models;
 using Business.Interfaces;
 using System.Threading.Tasks;
 using WebApp.ViewModels;
+using Business.Dtos;
 
 namespace WebApp.Controllers;
 
@@ -33,24 +34,31 @@ public class AuthController(IAuthService authService) : Controller
         return View();
     }
 
-    //[Route("sign-in")]
-    //[HttpPost]
-    //public async Task<IActionResult> SignIn(SignInViewModel form)
-    //{
-    //    if (!ModelState.IsValid)
-    //    {
-    //        ViewBag.ErrorMessage = "Email or password is not correct";
-    //        return View(form);
-    //    }
+    [Route("sign-in")]
+    [HttpPost]
+    public async Task<IActionResult> Login(SignInViewModel form, string returnUrl = "~/Projects/Index")
+    {
+        ViewBag.ErrorMessage = null;
 
-    //    //Convert INTO DTO with IMPLICIT
-    //    ////var result = await _authService.LogInAsync(form);
-    //    //if (result)
-    //    //    return RedirectToAction("Index", "Projects");
-            
-    //    return View();
-    //}
+        if (ModelState.IsValid)
+        {
+            SignInDto dto = form;
+            var result = await _authService.LogInAsync(form);
+            if (result)
+                return Redirect(returnUrl);
+        }
 
+        ViewBag.ErrorMessage = "Incorrect email or password.";
+        return View(form);
+    }
+
+
+
+    [Route("terms-and-conditions")]
+    public IActionResult TermsAndConditions()
+    {
+        return View();
+    }
 
     public new IActionResult SignOut()
     {
