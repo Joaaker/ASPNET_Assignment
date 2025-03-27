@@ -5,7 +5,7 @@ using WebApp.ViewModels;
 
 namespace WebApp.Controllers;
 
-//[Authorize]
+[Authorize(Roles = "Admin")]
 public class ClientsController : Controller
 {
     public IActionResult Index()

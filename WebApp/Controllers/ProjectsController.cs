@@ -5,7 +5,7 @@ using WebApp.ViewModels;
 
 namespace WebApp.Controllers;
 
-//[Authorize]
+[Authorize]
 public class ProjectsController : Controller
 {
     public IActionResult Index()

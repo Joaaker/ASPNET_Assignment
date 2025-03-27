@@ -5,7 +5,7 @@ using WebApp.ViewModels;
 
 namespace WebApp.Controllers;
 
-//[Authorize]
+[Authorize(Roles = "Admin")]
 public class MembersController : Controller
 {
     public IActionResult Index()

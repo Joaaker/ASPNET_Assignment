@@ -26,7 +26,7 @@ public class AuthController(IAuthService authService, IMemberService memberServi
 
             var result = await _memberService.CreateMemberAsync(dto);
             if (result)
-                return RedirectToAction("Index", "Projects");
+                return RedirectToAction("SignIn", "Auth");
         }
 
         return View(form);
@@ -67,8 +67,9 @@ public class AuthController(IAuthService authService, IMemberService memberServi
         return View();
     }
 
-    public new IActionResult SignOut()
+    public async Task<IActionResult> LogOut()
     {
+        await _authService.LogOutAsync();
         return RedirectToAction("SignIn", "Auth");
     }
 }
