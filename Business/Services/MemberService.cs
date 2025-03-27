@@ -30,33 +30,36 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
     public async Task<bool> CreateMemberAsync(MemberRegistrationFormDto signUpForm)
     {
         if (signUpForm is null)
-            return false;
+            throw new Exception("Sign up form cannot be null.");
 
-        await _memberRepository.BeginTransactionAsync();
+        if (signUpForm.RoleName != "Admin" && signUpForm.RoleName != "User")
+            throw new Exception("Invalid role specified.");
 
         try
         {
+            await _memberRepository.BeginTransactionAsync();
+
             if (!string.IsNullOrWhiteSpace(signUpForm.StreetName) &&
                 !string.IsNullOrWhiteSpace(signUpForm.PostalCode) &&
                 !string.IsNullOrWhiteSpace(signUpForm.City))
             {
                 var memberAddressEntity = MemberAddressFactory.CreateEntity(signUpForm);
                 await _memberAddressRepository.AddAsync(memberAddressEntity);
-
                 bool saveAddressResult = await _memberAddressRepository.SaveAsync();
                 if (saveAddressResult == false)
-                    throw new InvalidOperationException("Failed to save member address.");
+                    throw new Exception("Failed to save member address.");
             }
 
             var memberEntity = MemberFactory.CreateEntity(signUpForm);
 
             var userCreationResult = await _userManager.CreateAsync(memberEntity, signUpForm.Password ?? "BytMig123!");
             if (!userCreationResult.Succeeded)
-            {
-                var errors = string.Join(", ", userCreationResult.Errors.Select(e => e.Description));
-                throw new InvalidOperationException($"Failed to create user: {errors}");
-            }
+                throw new Exception("Failed to create user");
 
+            var addToRoleResult = await _userManager.AddToRoleAsync(memberEntity, signUpForm.RoleName);
+            if (!addToRoleResult.Succeeded)
+                throw new Exception("Failed to add role to user");
+            
             await _memberRepository.CommitTransactionAsync();
             return true;
         }

@@ -16,4 +16,8 @@ public class AuthService(SignInManager<MemberEntity> signInManager) : IAuthServi
         return result.Succeeded;
     }
 
+    public async Task LogOutAsync()
+    {
+        await _signInManager.SignOutAsync();
+    }
 }

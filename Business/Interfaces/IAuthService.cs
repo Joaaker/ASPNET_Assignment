@@ -6,4 +6,5 @@ public interface IAuthService
 {
     Task<bool> LogInAsync(SignInDto signInForm);
 
+    Task LogOutAsync();
 }
