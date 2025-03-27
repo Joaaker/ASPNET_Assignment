@@ -25,7 +25,7 @@ public class SignInViewModel
             ? null!
             : new SignInDto
             {
-                Email = model.Email,
+                Email = model.Email.ToLower(),
                 Password = model.Password,
             };
     }

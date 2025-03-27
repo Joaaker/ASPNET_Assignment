@@ -2,14 +2,15 @@
 
 public class Project
 {
-    public string Id { get; set; } = null!;
+    public int Id { get; set; }
     //Project Image? 
     //public IFormFile? ProjectImage { get; set; }
-    public string ProjectName { get; set; } = null!;
+    public string Title { get; set; } = null!;
     public string? Description { get; set; }
     public DateOnly StartDate { get; set; }
     public DateOnly EndDate { get; set; }
     public int? Budget { get; set; }
     public string ClientName { get; set; } = null!;
-    public ICollection<int> MembersIds { get; set; } = [];
+    public string StatusName { get; set; } = null!;
+    public ICollection<Member> Members { get; set; } = [];
 }
