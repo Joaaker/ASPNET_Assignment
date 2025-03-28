@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Business.Factories;
 using Business.Interfaces;
+using Business.Models;
 using Data.Entities;
 using Data.Interfaces;
 using Domain.Dtos;
@@ -18,19 +18,26 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
     private readonly IMemberRepository _memberRepository = memberRepsoitory;
 
 
-    public async Task<IEnumerable<Member>> GetAllMembers()
+    public async Task<IResponseResult> GetAllMembers()
     {
-        var memberEntities = await _userManager.Users.ToListAsync();
-        var members = memberEntities.Select(MemberFactory.CreateModel);
-
-        return members;
+        try
+        {
+            var memberEntities = await _userManager.Users.ToListAsync();
+            var members = memberEntities.Select(MemberFactory.CreateModel).ToList();
+            return ResponseResult<IEnumerable<Member>>.Ok(members);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return ResponseResult.Error("Error retrieving members");
+        }
     }
 
 
-    public async Task<bool> CreateMemberAsync(MemberRegistrationFormDto signUpForm)
+    public async Task<IResponseResult> CreateMemberAsync(MemberRegistrationFormDto signUpForm)
     {
         if (signUpForm is null)
-            throw new Exception("Sign up form cannot be null.");
+            return ResponseResult.BadRequest("Invalid form");
 
         if (signUpForm.RoleName != "Admin" && signUpForm.RoleName != "User")
             throw new Exception("Invalid role specified.");
@@ -61,13 +68,13 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
             }
 
             await _memberRepository.CommitTransactionAsync();
-            return true;
+            return ResponseResult.Ok();
         }
         catch (Exception ex)
         {
             await _memberRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error in CreateMemberAsync: {ex.Message}");
-            return false;
+            return ResponseResult.Error("Error creating employee");
         }
     }
 }

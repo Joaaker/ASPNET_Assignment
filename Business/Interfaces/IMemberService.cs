@@ -5,7 +5,7 @@ namespace Business.Interfaces;
 
 public interface IMemberService
 {
-    Task<IEnumerable<Member>> GetAllMembers();
+    Task<IResponseResult> GetAllMembers();
 
-    Task<bool> CreateMemberAsync(MemberRegistrationFormDto signUpForm);
+    Task<IResponseResult> CreateMemberAsync(MemberRegistrationFormDto signUpForm);
 }

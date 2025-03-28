@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Member>
+﻿@model IEnumerable<MembersViewModel>
 @{
     ViewData["Title"] = "Members";
 }
@@ -14,10 +14,8 @@
     </button>
 </div>
 <section class="member-section">
-    @foreach (var meber in Model)
-    {
-        @await Html.PartialAsync("Partials/Members/_MemberCard")
-        
-    }
+
+    @foreach (var member in Model)
+        @await Html.PartialAsync("Partials/Members/_MemberCard", member)
 
 </section>

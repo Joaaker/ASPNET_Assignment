@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Business.Interfaces;
+using Business.Models;
 using Domain.Dtos;
 using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -14,27 +16,23 @@ public class MembersController(IMemberService memberService) : Controller
     private readonly IMemberService _memberService = memberService;
     public async Task<IActionResult> Index()
     {
-        // Anropa service-lagret och hämta response-resultatet.
-        var members = await _memberService.GetAllMembers();
-
-        if (!response.Success)
+        var result = await _memberService.GetAllMembers();
+        if (!result.Success)
         {
-            // Hantera fel, exempelvis genom att lägga till ett modellfel eller visa en felvy.
-            ModelState.AddModelError(string.Empty, response.ErrorMessage);
-            // Här kan du exempelvis returnera en tom lista eller en särskild felvy.
-            return View(new List<MembersViewModel>());
+            // Hantera fel, exempelvis genom att visa en felvy med felmeddelande
+            return View("Error", result.ErrorMessage);
         }
 
-  
-
-        // Mappa varje Member till en MembersViewModel med hjälp av den implicita operatorn.
-        var membersViewModels = members.Select(m => (MembersViewModel)m).ToList();
-
-        return View(membersViewModels);
+        // Vi antar att result är av typen ResponseResult<IEnumerable<Member>>
+        var members = ((ResponseResult<IEnumerable<Member>>)result).Data;
+        // Använder den implicita operatorn för att konvertera varje Member till en MembersViewModel
+        IEnumerable<MembersViewModel> model = members.Select(m => (MembersViewModel)m).ToList();
+        return View(model);
     }
 
+
     [HttpPost]
-    public async Task<IActionResult> Add(MembersViewModel form)
+    public async Task<IActionResult> Add(AddMemberViewModel form)
     {
         if (!ModelState.IsValid)
         {
@@ -59,7 +57,7 @@ public class MembersController(IMemberService memberService) : Controller
     }
 
     [HttpPost]
-    public IActionResult Edit(MembersViewModel formData)
+    public IActionResult Edit(EditMemberViewModel formData)
     {
         if (!ModelState.IsValid)
         {
