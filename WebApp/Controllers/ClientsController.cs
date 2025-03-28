@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Business.Interfaces;
+using Domain.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.ViewModels;
@@ -6,8 +7,10 @@ using WebApp.ViewModels;
 namespace WebApp.Controllers;
 
 [Authorize(Roles = "Admin")]
-public class ClientsController : Controller
+public class ClientsController(IClientService clientService) : Controller
 {
+    private readonly IClientService _clientService = clientService;
+
     public IActionResult Index()
     {
 
@@ -15,7 +18,7 @@ public class ClientsController : Controller
     }
 
     [HttpPost]
-    public IActionResult Add(ClientsViewModel formData)
+    public async Task<IActionResult> Add(AddClientViewModel formData)
     {
         if (!ModelState.IsValid)
         {
@@ -24,12 +27,19 @@ public class ClientsController : Controller
                 .ToDictionary(
                     kvp => kvp.Key,
                     kvp => kvp.Value?.Errors.Select(x => x.ErrorMessage).ToArray()
-                    );
+                );
 
             return BadRequest(new { success = false, errors });
         }
 
-        //Send Data to Service
+        ClientRegistrationDto registrationDto = formData;
+
+        IResponseResult result = await _clientService.CreateClientAsync(registrationDto);
+
+        if (!result.Success)
+            return StatusCode(result.StatusCode, new { success = false, message = result.ErrorMessage });
+        
+
         return Ok(new { success = true });
     }
 

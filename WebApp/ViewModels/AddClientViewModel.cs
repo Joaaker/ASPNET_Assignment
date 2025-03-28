@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Domain.Dtos;
 
 namespace WebApp.ViewModels;
 
@@ -17,4 +18,17 @@ public class AddClientViewModel
     [Display(Name = "Phone", Prompt = "Client phone number")]
     [Required(ErrorMessage = "Required")]
     public string Phone { get; set; } = null!;
+
+
+    public static implicit operator ClientRegistrationDto(AddClientViewModel model)
+    {
+        return model == null
+            ? null!
+            : new ClientRegistrationDto
+            {
+                ClientName = model.ClientName,
+                Email = model.Email,
+                Phone = model.Phone
+            };
+    }
 }

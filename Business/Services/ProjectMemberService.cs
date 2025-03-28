@@ -12,7 +12,7 @@ public class ProjectMemberService(IProjectMemberRepository projectMemberReposito
 
     public async Task<IResponseResult> DeleteProjectServiceAsync(int projectId, string memberId)
     {
-        //Transactions are handled in ProjectService.UpdateProjectAsync
+        //Transactions are handled in ProjectService.UpdateProjectAsync()
         try
         {
             var projectServiceJunctionEntity = await _projectMemberRepository.GetAsync(
@@ -40,7 +40,7 @@ public class ProjectMemberService(IProjectMemberRepository projectMemberReposito
     {
         if (currentMemberIds == null || newMemberIds == null)
             return ResponseResult.BadRequest("Invalid update ProjectService input");
-        //Transactions are handled in ProjectService.UpdateProjectAsync
+        //Transactions are handled in ProjectService.UpdateProjectAsync()
         try
         {
             if (currentMemberIds.SequenceEqual(newMemberIds))
