@@ -13,8 +13,7 @@ public class AuthController(IAuthService authService, IMemberService memberServi
 
     public IActionResult SignUp()
     {
-        var formData = new SignUpViewModel();
-        return View(formData);
+        return View();
     }
 
     [HttpPost]
@@ -25,8 +24,10 @@ public class AuthController(IAuthService authService, IMemberService memberServi
             MemberRegistrationFormDto dto = form;
 
             var result = await _memberService.CreateMemberAsync(dto);
-            if (result)
+            if (result.Success)
                 return RedirectToAction("SignIn", "Auth");
+
+            //Handle error?
         }
 
         return View(form);

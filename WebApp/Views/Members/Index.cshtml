@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Member>
+@{
     ViewData["Title"] = "Members";
 }
 
@@ -6,19 +7,17 @@
 @await Html.PartialAsync("Partials/Members/_AddMemberForm")
 
 <div class="top-bar">
-	<h1>Team Members</h1>
-	<button class="btn-base btn-blue" type="button" data-modal="true" data-target="#add-member-modal">
-		<i class="fa-solid fa-plus"></i>
-		<span>Add Team Member</span>
-	</button>
+    <h1>Team Members</h1>
+    <button class="btn-base btn-blue" type="button" data-modal="true" data-target="#add-member-modal">
+        <i class="fa-solid fa-plus"></i>
+        <span>Add Team Member</span>
+    </button>
 </div>
 <section class="member-section">
-    @* for each member..  display member card or something like that *@
-    @await Html.PartialAsync("Partials/Members/_MemberCard")
-    @await Html.PartialAsync("Partials/Members/_MemberCard")
-    @await Html.PartialAsync("Partials/Members/_MemberCard")
-    @await Html.PartialAsync("Partials/Members/_MemberCard")
-    @await Html.PartialAsync("Partials/Members/_MemberCard")
-    @await Html.PartialAsync("Partials/Members/_MemberCard")
-    @await Html.PartialAsync("Partials/Members/_MemberCard")
+    @foreach (var meber in Model)
+    {
+        @await Html.PartialAsync("Partials/Members/_MemberCard")
+        
+    }
+
 </section>

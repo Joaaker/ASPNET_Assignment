@@ -1,4 +1,4 @@
-﻿@model AddMemberViewModel
+﻿@model MembersViewModel
 
 <div id="add-member-modal" class="modal-container">
 	<div class="content-modal">
@@ -14,7 +14,7 @@
                 <input asp-for="MemberImage" accept="image/*" class="hide" />
             </div>
 
-			<div class="name-container">
+            <div class="_field-container">
 
                 <div class="mb-3">
                     <label asp-for="FirstName" class="form-label"></label>
@@ -66,25 +66,33 @@
                 </div>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="PostalCode" class="form-label"></label>
-                <div class="field-group">
-                    <input asp-for="PostalCode" class="form-control text-input">
-                    <span asp-validation-for="PostalCode"></span>
+
+            <div class="_field-container">
+                <div class="mb-3">
+                    <label asp-for="City" class="form-label"></label>
+                    <div class="field-group">
+                        <input asp-for="City" class="form-control text-input">
+                        <span asp-validation-for="City"></span>
+                    </div>
                 </div>
+                <div class="mb-3">
+                    <label asp-for="PostalCode" class="form-label"></label>
+                    <div class="field-group">
+                        <input asp-for="PostalCode" class="form-control text-input">
+                        <span asp-validation-for="PostalCode"></span>
+                    </div>
+                </div>
+
+
             </div>
 
-            <div class="mb-3">
-                <label asp-for="City" class="form-label"></label>
-                <div class="field-group">
-                    <input asp-for="City" class="form-control text-input">
-                    <span asp-validation-for="City"></span>
-                </div>
-            </div>
-              
-            <div class="mb-3">
-                @* DATE OF BIRTH HERE *@
 
+            <div class="mb-3">
+                <label asp-for="DateOfBirth" class="form-label"></label>
+                <div class="field-group">
+                    <input asp-for="DateOfBirth" class="form-control" type="date" value="1990-01-01">
+                    <span asp-validation-for="DateOfBirth"></span>
+                </div>
             </div>
 
 			<button class="btn-base btn-blue btn-submit" type="submit">Add Member</button>

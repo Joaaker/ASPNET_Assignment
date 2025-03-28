@@ -39,17 +39,6 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
         {
             await _memberRepository.BeginTransactionAsync();
 
-            if (!string.IsNullOrWhiteSpace(signUpForm.StreetName) &&
-                !string.IsNullOrWhiteSpace(signUpForm.PostalCode) &&
-                !string.IsNullOrWhiteSpace(signUpForm.City))
-            {
-                var memberAddressEntity = MemberAddressFactory.CreateEntity(signUpForm);
-                await _memberAddressRepository.AddAsync(memberAddressEntity);
-                bool saveAddressResult = await _memberAddressRepository.SaveAsync();
-                if (saveAddressResult == false)
-                    throw new Exception("Failed to save member address.");
-            }
-
             var memberEntity = MemberFactory.CreateEntity(signUpForm);
 
             var userCreationResult = await _userManager.CreateAsync(memberEntity, signUpForm.Password ?? "BytMig123!");
@@ -59,7 +48,18 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
             var addToRoleResult = await _userManager.AddToRoleAsync(memberEntity, signUpForm.RoleName);
             if (!addToRoleResult.Succeeded)
                 throw new Exception("Failed to add role to user");
-            
+
+            if (!string.IsNullOrWhiteSpace(signUpForm.StreetName) &&
+                !string.IsNullOrWhiteSpace(signUpForm.PostalCode) &&
+                !string.IsNullOrWhiteSpace(signUpForm.City))
+            {
+                var memberAddressEntity = MemberAddressFactory.CreateEntity(signUpForm, memberEntity.Id);
+                await _memberAddressRepository.AddAsync(memberAddressEntity);
+                bool saveAddressResult = await _memberAddressRepository.SaveAsync();
+                if (saveAddressResult == false)
+                    throw new Exception("Failed to save member address.");
+            }
+
             await _memberRepository.CommitTransactionAsync();
             return true;
         }
