@@ -77,4 +77,24 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
             return ResponseResult.Error("Error creating employee");
         }
     }
+
+    public async Task<IResponseResult> GetMemberById(string id)
+    {
+        try
+        {
+            var memberEntity = await _memberRepository.GetAsync(x => x.Id == id);
+            if (memberEntity == null)
+            {
+                return ResponseResult<Member>.Error("Member not found");
+            }
+
+            var member = MemberFactory.CreateModel(memberEntity);
+            return ResponseResult<Member>.Ok(member);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return ResponseResult.Error("Error retrieving member");
+        }
+    }
 }

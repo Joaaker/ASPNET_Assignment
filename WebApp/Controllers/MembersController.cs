@@ -26,7 +26,7 @@ public class MembersController(IMemberService memberService) : Controller
         // Vi antar att result är av typen ResponseResult<IEnumerable<Member>>
         var members = ((ResponseResult<IEnumerable<Member>>)result).Data;
         // Använder den implicita operatorn för att konvertera varje Member till en MembersViewModel
-        IEnumerable<MembersViewModel> model = members.Select(m => (MembersViewModel)m).ToList();
+        IEnumerable<MembersViewModel> model = [.. members.Select(m => (MembersViewModel)m)];
         return View(model);
     }
 
@@ -73,5 +73,16 @@ public class MembersController(IMemberService memberService) : Controller
 
         //Send Data to Service
         return Ok(new { success = true });
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetMember(string id)
+    {
+        var result = await _memberService.GetMemberById(id);
+
+        var member = ((ResponseResult<Member>)result).Data;
+
+        // Anta att member är ett objekt med properties som matchar dina modalfält
+        return Json(member);
     }
 }

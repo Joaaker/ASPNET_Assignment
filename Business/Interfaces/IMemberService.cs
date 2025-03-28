@@ -8,4 +8,6 @@ public interface IMemberService
     Task<IResponseResult> GetAllMembers();
 
     Task<IResponseResult> CreateMemberAsync(MemberRegistrationFormDto signUpForm);
+
+    Task<IResponseResult> GetMemberById(string id);
 }

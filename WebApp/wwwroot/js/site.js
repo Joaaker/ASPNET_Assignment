@@ -206,19 +206,45 @@ async function processImage(file, imagePreview, previewer, previewSize = 150) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    var editModal = document.getElementById('edit-member-modal');
+//Genererad av ChatGPT 03-mini-high - När man klickar på Edit Member knapp så gör den en fetch på den member sedan populerar med informationen.
+document.addEventListener('DOMContentLoaded', function () {
+    var editButtons = document.querySelectorAll('.edit-member-btn');
 
-    editModal.addEventListener('show.bs.modal', function (event) {
-        // Knappen som öppnade modalen
-        var button = event.relatedTarget;
-        // Hämta värdet från data-attributet
-        var memberId = button.getAttribute('data-member-id');
+    editButtons.forEach(function (button) {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
 
-        // Leta upp det dolda fältet i edit-formuläret
-        var inputId = editModal.querySelector('input[name="Id"]');
-        if (inputId) {
-            inputId.value = memberId;
-        }
+
+            var memberId = button.getAttribute('data-member-id');
+
+            fetch('/Members/GetMember?id=' + encodeURIComponent(memberId))
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('Error: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(function (data) {
+                    document.querySelector('#edit-member-modal input[name="FirstName"]').value = data.firstName || '';
+                    document.querySelector('#edit-member-modal input[name="LastName"]').value = data.lastName || '';
+                    document.querySelector('#edit-member-modal input[name="Email"]').value = data.email || '';
+                    document.querySelector('#edit-member-modal input[name="PhoneNumber"]').value = data.phoneNumber || '';
+                    document.querySelector('#edit-member-modal input[name="JobTitle"]').value = data.jobTitle || '';
+                    document.querySelector('#edit-member-modal input[name="StreetName"]').value = data.streetName || '';
+                    document.querySelector('#edit-member-modal input[name="City"]').value = data.city || '';
+                    document.querySelector('#edit-member-modal input[name="PostalCode"]').value = data.postalCode || '';
+                    document.querySelector('#edit-member-modal input[name="DateOfBirth"]').value = data.dateOfBirth || '';
+
+                    var idField = document.querySelector('#edit-member-modal input[name="Id"]');
+                    if (idField) {
+                        idField.value = data.id;
+                    }
+
+
+                })
+                .catch(function (error) {
+                    console.error('Error fetching member: ', error);
+                });
+        });
     });
 });

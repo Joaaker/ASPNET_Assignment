@@ -15,7 +15,7 @@ public class MembersViewModel
 
     public string Email { get; set; } = null!;
 
-    public string? Phone { get; set; } = null!;
+    public string? PhoneNumber { get; set; } = null!;
 
     public string? JobTitle { get; set; } = null!;
 
@@ -30,7 +30,7 @@ public class MembersViewModel
                 FirstName = model.FirstName!,
                 LastName = model.LastName!,
                 Email = model.Email!,
-                Phone = model.PhoneNumber,
+                PhoneNumber = model.PhoneNumber,
                 JobTitle = model.JobTitle,
             };
     }

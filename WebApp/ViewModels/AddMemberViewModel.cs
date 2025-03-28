@@ -26,7 +26,7 @@ public class AddMemberViewModel
 
     [Display(Name = "Phone", Prompt = "Enter phone number")]
     [Required(ErrorMessage = "Required")]
-    public string Phone { get; set; } = null!;
+    public string PhoneNumber { get; set; } = null!;
 
     [Display(Name = "Job Title", Prompt = "Enter job title")]
     [Required(ErrorMessage = "Required")]
@@ -60,7 +60,7 @@ public class AddMemberViewModel
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
-                PhoneNumber = model.Phone,
+                PhoneNumber = model.PhoneNumber,
                 JobTitle = model.JobTitle,
                 StreetName = model.StreetName,
                 PostalCode = model.PostalCode,
