@@ -1,15 +1,17 @@
-﻿<article class="member-card">
-	@await Html.PartialAsync("Partials/Members/_MemberMoreOptions")
+﻿@model MembersViewModel
+
+<article class="member-card">
+	@await Html.PartialAsync("Partials/Members/_MemberMoreOptions", Model)
 	<div class="member-image">
 		@* Dynamic Member Image here *@
 		<img src="@Url.Content("~/Images/Avatar.svg")" alt="Member avatar image" />
 	</div>
 
-	<h4 class="member-name">Member Name</h4>
+	<h4 class="member-name">@Model.FirstName @Model.LastName</h4>
 	<div class="job-title">
-		<p class="job-title-text">Chief Executive Officer</p>
+		<p class="job-title-text">@Model.JobTitle</p>
 	</div>
-	<p class="member-email">hans@domain.com</p>
-	<p class="member-phone">+46 070-123 45 78</p>
+	<p class="member-email">@Model.Email</p>
+	<p class="member-phone">@Model.Phone</p>
 	<button class="btn-base msg-btn">Message</button>
 </article>

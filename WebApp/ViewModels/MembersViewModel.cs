@@ -26,6 +26,7 @@ public class MembersViewModel
             ? null!
             : new MembersViewModel
             {
+                Id = model.Id,
                 FirstName = model.FirstName!,
                 LastName = model.LastName!,
                 Email = model.Email!,

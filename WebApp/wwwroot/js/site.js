@@ -205,3 +205,20 @@ async function processImage(file, imagePreview, previewer, previewSize = 150) {
         console.error('Failed on image-processing:', error);
     }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    var editModal = document.getElementById('edit-member-modal');
+
+    editModal.addEventListener('show.bs.modal', function (event) {
+        // Knappen som öppnade modalen
+        var button = event.relatedTarget;
+        // Hämta värdet från data-attributet
+        var memberId = button.getAttribute('data-member-id');
+
+        // Leta upp det dolda fältet i edit-formuläret
+        var inputId = editModal.querySelector('input[name="Id"]');
+        if (inputId) {
+            inputId.value = memberId;
+        }
+    });
+});
