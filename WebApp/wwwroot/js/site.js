@@ -206,7 +206,7 @@ async function processImage(file, imagePreview, previewer, previewSize = 150) {
     }
 }
 
-//Genererad av ChatGPT 03-mini-high - När man klickar på Edit Member knapp så gör den en fetch på den member sedan populerar med informationen.
+//Genererad av ChatGPT 03-mini-high - När man klickar på Edit Member knapp så gör kaller den på [HttpGet]GetMember(string id) sedan populerar form med informationen från GetMember.
 document.addEventListener('DOMContentLoaded', function () {
     var editButtons = document.querySelectorAll('.edit-member-btn');
 
