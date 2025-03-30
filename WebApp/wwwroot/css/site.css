@@ -407,7 +407,7 @@ body.modal-open{
     overflow-y: hidden;
 }
 
-.modal-container {
+._modal {
     display: none;
     justify-content: center;
     align-items: center;
@@ -421,7 +421,7 @@ body.modal-open{
 }
 
 
-    .modal-container > .content-modal {
+    ._modal > ._modal-content {
         display: flex;
         flex-direction: column;
         background-color: var(--card-background);
@@ -431,23 +431,23 @@ body.modal-open{
         width: 100%;
         max-width: 530px;
         max-height: 90vh;
-        overflow-y: auto; 
+        overflow-y: auto;
         -webkit-overflow-scrolling: touch;
     }
-        .modal-container > .content-modal::-webkit-scrollbar-track {
-            border-radius: 16px; 
+        ._modal > ._modal-content::-webkit-scrollbar-track {
+            border-radius: 16px;
         }
 
-        .content-modal > .header-modal {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            width: 100%;
-        }
-.header-modal > h3 {
-    margin: 0;
-}
+            ._modal-content > ._modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 2rem;
+                width: 100%;
+            }
+                ._modal-header > h3 {
+                    margin: 0;
+                }
 
 .modal-form .field-validation-error {
     top: 7px;
@@ -455,7 +455,7 @@ body.modal-open{
     border-radius: 10px;
 }
 
-.content-modal > form {
+._modal-content > form {
 }
 
 
@@ -482,10 +482,9 @@ body.modal-open{
 @media (min-width: 768px) {
 
     /* Modal form for mobile / tablet   */
-    .modal-container > .content-modal {
+    ._modal > ._modal-content {
         padding: 7rem;
         min-width: 500px;
-
     }
 }
 
@@ -493,12 +492,11 @@ body.modal-open{
 @media (max-width: 1339px) {
 
     /* Modal form for mobile / tablet   */
-    .modal-container {
+    ._modal {
         background-color: var(--white-100);
-       
     }
 
-        .modal-container > .content-modal {
+        ._modal > ._modal-content {
             justify-content: center;
             align-items: center;
             border-radius: 0;
@@ -538,7 +536,7 @@ body.modal-open{
         }
 
 
-    .modal-container > .content-modal {
+    ._modal > ._modal-content {
         padding: 2rem;
         min-width: 530px;
     }

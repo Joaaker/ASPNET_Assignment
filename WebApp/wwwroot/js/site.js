@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeButtons = document.querySelectorAll('[data-close="true"]')
     closeButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const modal = button.closest('.modal-container')
+            const modal = button.closest('._modal')
             if (modal) {
                 modal.style.display = 'none'
                 document.body.classList.remove('modal-open');
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (res.ok) {
-                    const modal = form.closest('.modal-container')
+                    const modal = form.closest('._modal')
                     if (modal)
                         modal.style.display = 'none';
 
@@ -230,6 +230,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     return response.json();
                 })
                 .then(function (data) {
+                    console.log(data)
                     document.querySelector('#edit-member-modal input[name="FirstName"]').value = data.firstName || '';
                     document.querySelector('#edit-member-modal input[name="LastName"]').value = data.lastName || '';
                     document.querySelector('#edit-member-modal input[name="Email"]').value = data.email || '';

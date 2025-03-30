@@ -11,10 +11,14 @@ public class AddProjectViewModel
 
     [Display(Name = "Project Name", Prompt = "Project name")]
     [Required(ErrorMessage = "Required")]
-    public string ProjectName { get; set; } = null!;
+    public string Title { get; set; } = null!;
+
+    [Display(Name = "Client Name", Prompt = "Select a client")]
+    [Required(ErrorMessage = "Required")]
+    public int ClientId { get; set; }
 
 
-    [Display(Name = "Description", Prompt = "Type something")]
+    [Display(Name = "Description", Prompt = "Type a description")]
     public string? Description { get; set; }
 
 
@@ -28,15 +32,10 @@ public class AddProjectViewModel
     public DateOnly EndDate { get; set; }
 
 
+    [Display(Name = "Members", Prompt = "Select project members")]
+    public IEnumerable<string> MembersIds { get; set; } = [];
+
     [Display(Name = "Budget", Prompt = "0")]
     public int Budget { get; set; }
 
-
-    [Display(Name = "Client Name", Prompt = "Select a client")]
-    [Required(ErrorMessage = "Required")]
-    public int ClientId { get; set; }
-
-
-    [Display(Name = "Members", Prompt = "Select project members")]
-    public List<int> MembersIds { get; set; } = [];
 }
