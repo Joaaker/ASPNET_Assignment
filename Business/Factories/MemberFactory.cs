@@ -10,12 +10,11 @@ public class MemberFactory
     {
         UserName = registrationForm.Email,
         Email = registrationForm.Email,
+        PhoneNumber = registrationForm.PhoneNumber,
         FirstName = registrationForm.FirstName,
         LastName = registrationForm.LastName,
         JobTitle = registrationForm.JobTitle,
         DateOfBirth = registrationForm.DateOfBirth,
-
-
     };
 
     public static Member CreateModel(MemberEntity memberEntity) => new()
