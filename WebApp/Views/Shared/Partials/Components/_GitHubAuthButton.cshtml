@@ -1,0 +1,9 @@
+﻿@{
+    var viewDataTitle = ViewData["Title"] as string ?? "Sign in";
+}
+
+<form asp-controller="Auth" asp-action="ExternalSignIn" method="post" class="external-account" novalidate>
+    <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+
+    <button type="submit" name="provider" value="GitHub" class="btn-external btn-github">@viewDataTitle with GitHub</button>
+</form>
