@@ -14,22 +14,17 @@ namespace WebApp.Controllers;
 public class MembersController(IMemberService memberService) : Controller
 {
     private readonly IMemberService _memberService = memberService;
+
     public async Task<IActionResult> Index()
     {
         var result = await _memberService.GetAllMembers();
         if (!result.Success)
-        {
-            // Hantera fel, exempelvis genom att visa en felvy med felmeddelande
             return View("Error", result.ErrorMessage);
-        }
-
-        // Vi antar att result är av typen ResponseResult<IEnumerable<Member>>
-        var members = ((ResponseResult<IEnumerable<Member>>)result).Data;
-        // Använder den implicita operatorn för att konvertera varje Member till en MembersViewModel
+        
+        var members = ((ResponseResult<IEnumerable<Member>>)result).Data ?? [];
         IEnumerable<MembersViewModel> model = [.. members.Select(m => (MembersViewModel)m)];
         return View(model);
     }
-
 
     [HttpPost]
     public async Task<IActionResult> Add(AddMemberViewModel form)
@@ -82,7 +77,6 @@ public class MembersController(IMemberService memberService) : Controller
 
         var member = ((ResponseResult<Member>)result).Data;
 
-        // Anta att member är ett objekt med properties som matchar dina modalfält
         return Json(member);
     }
 }

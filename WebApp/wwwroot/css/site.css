@@ -377,6 +377,11 @@ form .field-validation-error {
     .image-previewer::after {
         content: '\f030';
         font-family: 'Font Awesome 6 Free';
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 56px;
+        min-height: 56px;
         font-style: normal;
         font-weight: 900;
         background-color: var(--dark-100-60);

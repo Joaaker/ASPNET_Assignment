@@ -32,8 +32,6 @@ public class AddMemberViewModel
     [Required(ErrorMessage = "Required")]
     public string JobTitle { get; set; } = null!;
 
-    //Lägg till Account Role
-
     [Display(Name = "Street Name", Prompt = "Enter street name")]
     [Required(ErrorMessage = "Required")]
     public string StreetName { get; set; } = null!;
@@ -49,6 +47,9 @@ public class AddMemberViewModel
     [Display(Name = "Date of Birth")]
     [Required(ErrorMessage = "Required")]
     public DateOnly DateOfBirth { get; set; }
+
+
+    //Lägg till Account Role
 
 
     public static implicit operator MemberRegistrationFormDto(AddMemberViewModel model)
