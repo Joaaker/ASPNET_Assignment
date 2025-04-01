@@ -1,0 +1,17 @@
+﻿.name-container{
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+}
+
+
+/*Tablet*/
+@media (min-width: 768px) {
+
+    .name-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: .4rem;
+    }
+}

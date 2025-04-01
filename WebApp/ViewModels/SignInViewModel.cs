@@ -17,6 +17,7 @@ public class SignInViewModel
     [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$", ErrorMessage = "Invalid")]
     public string Password { get; set; } = null!;
 
+    [Display(Name = "Remember Me")]
     public bool RememberMe { get; set; }
 
     public static implicit operator SignInDto(SignInViewModel model)

@@ -9,19 +9,35 @@ main {
     align-items: center;
 }
 
-.sign-container {
+.sign-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: var(--bright-background);
+    background-color: var(--sign-card-background);
     padding: 4rem 4rem 1rem;
 }
-    .sign-container > h1 {
-    font-size: 2.5rem;
+
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
+}
+
+
+/*Tablet*/
+@media (min-width: 768px) {
+
+
+    .form-container {
+        max-width: 430px;
     }
 
+}
+
 @media (max-width: 1339px) {
-    .sign-container {
+    .sign-card {
         min-width: 100vw;
         min-width: 100dvw;
         min-height: 100vh;
@@ -31,7 +47,7 @@ main {
 
 
 @media (min-width: 1340px) {
-    .sign-container {
+    .sign-card {
         box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
         border-radius: 1rem;
     }

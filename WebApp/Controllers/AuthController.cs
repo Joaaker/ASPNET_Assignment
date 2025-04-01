@@ -14,7 +14,6 @@ public class AuthController(IAuthService authService,
     SignInManager<MemberEntity> signInManager,
     UserManager<MemberEntity> userManager) : Controller
 
-
 {
     private readonly IAuthService _authService = authService;
     private readonly IMemberService _memberService = memberService;
@@ -29,6 +28,7 @@ public class AuthController(IAuthService authService,
     [HttpPost]
     public async Task<IActionResult> SignUp(SignUpViewModel form)
     {
+        ViewBag.ErrorMessage = null;
         if (ModelState.IsValid)
         {
             MemberRegistrationFormDto dto = form;
@@ -36,14 +36,11 @@ public class AuthController(IAuthService authService,
             var result = await _memberService.CreateMemberAsync(dto);
             if (result.Success)
                 return RedirectToAction("SignIn", "Auth");
-
-            //Handle error?
         }
 
+        ViewBag.ErrorMessage = "Something went wrong, try again.";
         return View(form);
     }
-
-
 
     [Route("sign-in")]
     public IActionResult SignIn()
@@ -51,10 +48,9 @@ public class AuthController(IAuthService authService,
         return View();
     }
 
-
     [Route("sign-in")]
     [HttpPost]
-    public async Task<IActionResult> Login(SignInViewModel form, string returnUrl = "~/Projects/Index")
+    public async Task<IActionResult> SignIn(SignInViewModel form, string returnUrl = "~/Projects/Index")
     {
         ViewBag.ErrorMessage = null;
 
@@ -65,12 +61,9 @@ public class AuthController(IAuthService authService,
             if (result)
                 return Redirect(returnUrl);
         }
-
         ViewBag.ErrorMessage = "Incorrect email or password.";
         return View(form);
     }
-
-
 
     [Route("terms-and-conditions")]
     public IActionResult TermsAndConditions()

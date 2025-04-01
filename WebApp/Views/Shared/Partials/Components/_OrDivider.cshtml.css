@@ -5,14 +5,14 @@
     margin: 1.2rem 0;
     width: 100%;
 }
-    hr{
+hr {
     flex: 1;
     border: none;
-    border-top: 1px solid var(--auth-background);
+    border-top: 1px solid var(--or-hr-color);
     margin: 0 10px;
-    }
+}
 
     span {
     font-weight: bold;
-    color: var(--border-two);
+    color: var(--or-color);
     }

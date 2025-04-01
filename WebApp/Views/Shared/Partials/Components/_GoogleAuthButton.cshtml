@@ -5,5 +5,8 @@
 <form asp-controller="Auth" asp-action="ExternalSignIn" method="post" class="external-account" novalidate>
     <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
 
-    <button type="submit" name="provider" value="Google" class="btn-external btn-google">@viewDataTitle with Google</button>
+    <button type="submit" name="provider" value="Google" class="btn-external btn-base btn-google">
+        <img src="@Url.Content("~/Images/google-icon.svg")" alt="Google Logo" class="external-logo" />
+        @viewDataTitle with Google
+    </button>
 </form>
