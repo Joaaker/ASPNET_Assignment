@@ -1,7 +1,29 @@
 ﻿
 @* VID notis >>> class = notification-active PÅ Button*@
-<button class="notification-bell">
-	<i class="fa-solid fa-bell bell">
-		<i class="fa-solid fa-circle notification-circle"></i>
-	</i>
-</button>
+<div class="notification-dropdown-container">
+
+    <button id="notification-dropdown-button" class="notification-bell" data-type="dropdown-btn" data-target="#notification-dropdown">
+		<i class="fa-solid fa-bell bell">
+			<i class="fa-solid fa-circle notification-circle"></i>
+		</i>
+	</button>
+
+    <div id="notification-dropdown" class="notification-dropdown">
+        <div class="notification-header">
+            <h4>Notifications</h4>
+            <span class="notification-number">0</span>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="notifications">
+
+            <div class="notification-item" data-id="">
+                <img class="image" src="~/images/tinyAvatar.svg" />
+                <div class="message">Hans was here.</div>
+                <div class="time">1 day ago</div>
+                <button class="btn-close" onclick="dismissNotification()"></button>
+            </div>
+
+        </div>
+    </div>
+
+</div>

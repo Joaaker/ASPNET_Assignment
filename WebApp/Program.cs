@@ -6,12 +6,14 @@ using Data.Entities;
 using Data.Interfaces;
 using Data.Repositories;
 using Data.Seeders;
+using WebApp.Hubs;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -92,7 +94,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-await DatabaseSeeder.SeedRolesAsync(app.Services);
+//await DatabaseSeeder.SeedRolesAsync(app.Services);
 await DatabaseSeeder.SeedAdminAsync(app.Services);
 
 app.MapStaticAssets();
@@ -101,5 +103,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Auth}/{action=SignUp}")
     .WithStaticAssets();
+
+app.MapHub<NotficationHub>("/notficationHub");
 
 app.Run();

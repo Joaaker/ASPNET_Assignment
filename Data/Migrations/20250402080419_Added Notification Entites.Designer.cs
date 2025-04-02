@@ -4,6 +4,7 @@ using Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250402080419_Added Notification Entites")]
+    partial class AddedNotificationEntites
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -217,18 +220,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("NotificationTargetGroups");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            NotificationTargetGroup = "AllUsers"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            NotificationTargetGroup = "Admins"
-                        });
                 });
 
             modelBuilder.Entity("Data.Entities.NotificationTypeEntity", b =>
@@ -246,18 +237,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("NotificationTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            NotificationType = "User"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            NotificationType = "Project"
-                        });
                 });
 
             modelBuilder.Entity("Data.Entities.ProjectEntity", b =>
