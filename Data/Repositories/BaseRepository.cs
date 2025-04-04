@@ -4,10 +4,11 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Linq.Expressions;
+using Domain.Extensions;
 
 namespace Data.Repositories;
 
-public abstract class BaseRepository<TEntity>(DataContext context) : IBaseRepository<TEntity> where TEntity : class
+public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBaseRepository<TEntity, TModel> where TEntity : class
 {
     protected readonly DataContext _context = context;
     protected readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
@@ -79,19 +80,6 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
         }
     }
 
-    public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
-    {
-        try
-        {
-            return await _dbSet.ToListAsync();
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"Error retrieving entities :: {ex.Message}");
-            return null!;
-        }
-    }
-
     public virtual async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> expression)
     {
         if (expression == null)
@@ -105,6 +93,107 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
         {
             Debug.WriteLine($"Error retrieving {nameof(TEntity)} entity :: {ex.Message}");
             return null!;
+        }
+    }
+
+    public virtual async Task<TModel> GetAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includes)
+    {
+        IQueryable<TEntity> query = _dbSet;
+
+        if (includes != null && includes.Length != 0)
+            foreach (var include in includes)
+                query = query.Include(include);
+
+        if (where == null)
+            throw new Exception("Expression cannot be null");
+
+        try
+        {
+            var entity = await query.FirstOrDefaultAsync(where);
+            if (entity == null)
+                throw new Exception("Entity not found");
+
+            var result = entity!.MapTo<TModel>();
+            return result;
+
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error retrieving {nameof(TEntity)} entity :: {ex.Message}");
+            return default!;
+        }
+    }
+
+    public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+    {
+        try
+        {
+            return await _dbSet.ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error retrieving entities :: {ex.Message}");
+            return null!;
+        }
+    }
+
+    public virtual async Task<IEnumerable<TModel>> GetAllAsync(bool orderByDescending = false, Expression<Func<TEntity, object>>? sortBy = null, Expression<Func<TEntity, bool>>? where = null, params Expression<Func<TEntity, object>>[] includes)
+    {
+        IQueryable<TEntity> query = _dbSet;
+
+        if (where != null)
+            query = query.Where(where);
+
+        if (includes != null && includes.Length != 0)
+            foreach (var include in includes)
+                query = query.Include(include);
+
+        if (sortBy != null)
+            query = orderByDescending
+                ? query.OrderByDescending(sortBy)
+                : query.OrderBy(sortBy);
+
+        try
+        {
+            var entities = await query.ToListAsync();
+            //return entities;
+            var result = entities.Select(entity => entity.MapTo<TModel>());
+            return result;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error retrieving entities :: {ex.Message}");
+            return [];
+        }
+    }
+
+    public virtual async Task<IEnumerable<TSelect>> GetAllAsync<TSelect>(Expression<Func<TEntity, TSelect>> selector, bool orderByDescending = false, Expression<Func<TEntity, object>>? sortBy = null, Expression<Func<TEntity, bool>>? where = null, params Expression<Func<TEntity, object>>[] includes)
+    {
+        IQueryable<TEntity> query = _dbSet;
+
+        if (where != null)
+            query = query.Where(where);
+
+        if (includes != null && includes.Length != 0)
+            foreach (var include in includes)
+                query = query.Include(include);
+
+        if (sortBy != null)
+            query = orderByDescending
+                ? query.OrderByDescending(sortBy)
+                : query.OrderBy(sortBy);
+
+        try
+        {
+            var entities = await query.Select(selector).ToListAsync();
+            //return entities;
+            var result = entities.Select(entity => entity!.MapTo<TSelect>());
+            return result;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error retrieving entities :: {ex.Message}");
+            return [];
         }
     }
 

@@ -3,11 +3,12 @@ using System.Linq.Expressions;
 using Data.Contexts;
 using Data.Entities;
 using Data.Interfaces;
+using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories;
 
-public class ProjectRepository(DataContext context) : BaseRepository<ProjectEntity>(context), IProjectRepository
+public class ProjectRepository(DataContext context) : BaseRepository<ProjectEntity, Project>(context), IProjectRepository
 {
     public override async Task<IEnumerable<ProjectEntity>> GetAllAsync()
     {
