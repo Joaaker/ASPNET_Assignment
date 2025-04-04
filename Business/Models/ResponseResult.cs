@@ -35,7 +35,7 @@ public abstract class ResponseResult : IResponseResult
     }
 }
 
-public class ResponseResult<T> : ResponseResult
+public class ResponseResult<T> : ResponseResult, IResponseResult<T>
 {
     public T? Data { get; private set; }
 
