@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Business.Services;
 
-public class NotificationService(INotificationRepository notificationRepository, INotificationDismissRepository notificationDismissRepository, INotificationDismissRepository notificationDismiss) : INotificationService
+public class NotificationService(INotificationRepository notificationRepository, INotificationDismissRepository notificationDismissRepository, INotificationDismissRepository notificationDismiss) : INotificationService, INotificationService
 {
     private readonly INotificationDismissRepository _notificationDismissRepository = notificationDismissRepository;
     private readonly INotificationRepository _notificationRepository = notificationRepository;
@@ -40,7 +40,7 @@ public class NotificationService(INotificationRepository notificationRepository,
 
             await _notificationRepository.AddAsync(notificationEntity);
             var saveResult = await _notificationRepository.SaveAsync();
-            if(saveResult == false)
+            if (saveResult == false)
                 throw new Exception("Error saving NotificationEntity");
 
             await _notificationRepository.CommitTransactionAsync();
@@ -54,7 +54,7 @@ public class NotificationService(INotificationRepository notificationRepository,
         }
     }
 
-    public async Task<IResponseResult<IEnumerable<NotificationEntity>>> GetNotificationAsync(string userId)
+    public async Task<IResponseResult<IEnumerable<NotificationEntity>>> GetNotificationsAsync(string userId)
     {
         var entites = await _notificationRepository.GetNotificationsByUserId(userId);
         return ResponseResult<IEnumerable<NotificationEntity>>.Ok(entites);
@@ -73,12 +73,13 @@ public class NotificationService(INotificationRepository notificationRepository,
 
                 await _notificationDismissRepository.AddAsync(dismissed);
                 var saveResult = await _notificationDismissRepository.SaveAsync();
-                if(saveResult == false)
+                if (saveResult == false)
                     throw new Exception("Error saving NotificationDismissEntity");
 
                 await _notificationDismissRepository.CommitTransactionAsync();
                 return ResponseResult.Ok();
-            } else
+            }
+            else
                 throw new Exception("Already dismissed");
         }
         catch (Exception ex)

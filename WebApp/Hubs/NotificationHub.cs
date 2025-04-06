@@ -2,7 +2,7 @@
 
 namespace WebApp.Hubs;
 
-public class NotficationHub : Hub
+public class NotificationHub : Hub
 {
     public async Task SendNotificationToAll(object notification)
     {

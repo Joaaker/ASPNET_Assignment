@@ -1,10 +1,15 @@
-﻿
-@* VID notis >>> class = notification-active PÅ Button*@
+﻿@{
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "anonymous";
+    var notifications = await notificationService.GetNotificationAsync(userId);
+}
 <div class="notification-dropdown-container">
 
     <button id="notification-dropdown-button" class="notification-bell" data-type="dropdown-btn" data-target="#notification-dropdown">
-		<i class="fa-solid fa-bell bell">
-			<i class="fa-solid fa-circle notification-circle"></i>
+        <i class="fa-solid fa-bell bell">
+            @* @if (notifications.Any()) *@
+            @* { *@
+                <i class="fa-solid fa-circle notification-circle"></i>
+            @* } *@
 		</i>
 	</button>
 
@@ -16,6 +21,15 @@
         <div class="dropdown-divider"></div>
         <div class="notifications">
 
+            @foreach (var notification in notifications)
+            {
+                <div class="notification-item" data-id="">
+                    <img class="image" src="@notification.Icon" />
+                    <div class="message">@notification.Message</div>
+                    <div class="time" data-created="@notification.Created.ToString("s")">@notification.Created</div>
+                    <button class="btn-close" onclick="dismissNotification(@notification.Id)"></button>
+                </div>
+            }
             <div class="notification-item" data-id="">
                 <img class="image" src="~/images/tinyAvatar.svg" />
                 <div class="message">Hans was here.</div>
@@ -92,28 +106,55 @@
             notificationNumber.textContent = count
         }
 
-        // Ändra till Att lägga till klassen "active" på "notificationDropdownButton"
-        let dot = notificationDropdownButton.querySelector('.dot.dot-red')
-        if (count > 0 && !dot) {
-            dot = document.createElement('div')
-            dot.className = 'dot dot-red'
-            notificationDropdownButton.appendChild(dot)
+        if (count > 0) {
+            notificationDropdownButton.classList.add('notification-active')
         }
 
-        // Hans verison i videon
-         
+        if (count === 0) {
+            notificationDropdownButton.classList.remove('notification-active')
+        }
+
+        // Video verison
         // let dot = notificationDropdownButton.querySelector('.dot.dot-red')
         // if (count > 0 && !dot) {
         //     dot = document.createElement('div')
         //     dot.className = 'dot dot-red'
         //     notificationDropdownButton.appendChild(dot)
         // }
-
-        if (count === 0 && dot) {
-            dot.remove()
-        }
     }
 
+        function updateRelativeTimes() {
+        const elements = document.querySelectorAll('.notification-item .time');
+        const now = new Date();
 
+        elements.forEach(el => {
+            const created = new Date(el.getAttribute('data-created'));
+            const diff = now - created;
+            const diffSeconds = Math.floor(diff / 1000);
+            const diffMinutes = Math.floor(diffSeconds / 60);
+            const diffHours = Math.floor(diffMinutes / 60);
+            const diffDays = Math.floor(diffHours / 24);
+            const diffWeeks = Math.floor(diffDays / 7);
+
+            let relativeTime = '';
+
+            if (diffMinutes < 1) {
+                relativeTime = '0 min ago';
+            } else if (diffMinutes < 60) {
+                relativeTime = diffMinutes + ' min ago';
+            } else if (diffHours < 2) {
+                relativeTime = diffHours + ' hour ago';
+            } else if (diffHours < 24) {
+                relativeTime = diffHours + ' hours ago';
+            } else if (diffDays < 2) {
+                relativeTime = diffDays + ' day ago';
+            } else if (diffDays < 7) {
+                relativeTime = diffDays + ' days ago';
+            } else {
+                relativeTime = diffWeeks + ' weeks ago';
+            }
+
+            el.textContent = relativeTime;
+        });
+    }
 </script>
-  

@@ -107,6 +107,6 @@ app.MapControllerRoute(
     pattern: "{controller=Auth}/{action=SignUp}")
     .WithStaticAssets();
 
-app.MapHub<NotficationHub>("/notficationHub");
+app.MapHub<NotificationHub>("/notficationHub");
 
 app.Run();

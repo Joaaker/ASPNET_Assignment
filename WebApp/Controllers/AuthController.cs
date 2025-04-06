@@ -5,6 +5,9 @@ using Domain.Dtos;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Data.Entities;
+using Microsoft.AspNetCore.SignalR;
+using WebApp.Hubs;
+using Business.Services;
 
 
 namespace WebApp.Controllers;
@@ -12,14 +15,20 @@ namespace WebApp.Controllers;
 public class AuthController(IAuthService authService,
     IMemberService memberService,
     SignInManager<MemberEntity> signInManager,
-    UserManager<MemberEntity> userManager) : Controller
+    UserManager<MemberEntity> userManager, 
+    IHubContext<NotificationHub> notificationHub, 
+    INotificationService notificationService) : Controller
 
 {
     private readonly IAuthService _authService = authService;
     private readonly IMemberService _memberService = memberService;
     private readonly SignInManager<MemberEntity> _signInManager = signInManager;
     private readonly UserManager<MemberEntity> _userManager = userManager;
+    private readonly IHubContext<NotificationHub> _notificationHub = notificationHub;
+    private readonly INotificationService _notificationService = notificationService;
 
+
+    #region Local Sign Up
     public IActionResult SignUp()
     {
         return View();
@@ -42,6 +51,16 @@ public class AuthController(IAuthService authService,
         return View(form);
     }
 
+    [Route("terms-and-conditions")]
+    public IActionResult TermsAndConditions()
+    {
+        return View();
+    }
+    #endregion
+
+
+    #region Local Sign In
+
     [Route("sign-in")]
     public IActionResult SignIn()
     {
@@ -59,24 +78,15 @@ public class AuthController(IAuthService authService,
             SignInDto dto = form;
             var result = await _authService.LogInAsync(dto);
             if (result)
+            {
+
+            }
                 return Redirect(returnUrl);
         }
         ViewBag.ErrorMessage = "Incorrect email or password.";
         return View(form);
     }
-
-    [Route("terms-and-conditions")]
-    public IActionResult TermsAndConditions()
-    {
-        return View();
-    }
-
-    public async Task<IActionResult> LogOut()
-    {
-        await _authService.LogOutAsync();
-        return RedirectToAction("SignIn", "Auth");
-    }
-
+    #endregion
 
     #region External Authentication
 
@@ -147,6 +157,9 @@ public class AuthController(IAuthService authService,
         }
     }
     #endregion
-
-
+    public async Task<IActionResult> LogOut()
+    {
+        await _authService.LogOutAsync();
+        return RedirectToAction("SignIn", "Auth");
+    }
 }
