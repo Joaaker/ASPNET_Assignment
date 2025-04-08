@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250325160807_Added Entites Client, Status, Project, ProjectMemberJunction")]
-    partial class AddedEntitesClientStatusProjectProjectMemberJunction
+    [Migration("20250408172812_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,7 +50,7 @@ namespace Data.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("Data.Entities.MemberAdressEntity", b =>
+            modelBuilder.Entity("Data.Entities.MemberAddressEntity", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -147,6 +147,120 @@ namespace Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Data.Entities.NotificationDismissedEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NotificationId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NotificationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("DismissedNotifications");
+                });
+
+            modelBuilder.Entity("Data.Entities.NotificationEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NotificationTargetGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NotificationTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NotificationTargetGroupId");
+
+                    b.HasIndex("NotificationTypeId");
+
+                    b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("Data.Entities.NotificationTargetGroupEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NotificationTargetGroup")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NotificationTargetGroups");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            NotificationTargetGroup = "AllUsers"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            NotificationTargetGroup = "Admins"
+                        });
+                });
+
+            modelBuilder.Entity("Data.Entities.NotificationTypeEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NotificationType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NotificationTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            NotificationType = "User"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            NotificationType = "Project"
+                        });
                 });
 
             modelBuilder.Entity("Data.Entities.ProjectEntity", b =>
@@ -370,15 +484,53 @@ namespace Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Data.Entities.MemberAdressEntity", b =>
+            modelBuilder.Entity("Data.Entities.MemberAddressEntity", b =>
                 {
                     b.HasOne("Data.Entities.MemberEntity", "Member")
                         .WithOne("Address")
-                        .HasForeignKey("Data.Entities.MemberAdressEntity", "UserId")
+                        .HasForeignKey("Data.Entities.MemberAddressEntity", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Member");
+                });
+
+            modelBuilder.Entity("Data.Entities.NotificationDismissedEntity", b =>
+                {
+                    b.HasOne("Data.Entities.NotificationEntity", "Notification")
+                        .WithMany("DismissedNotfifications")
+                        .HasForeignKey("NotificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Entities.MemberEntity", "Member")
+                        .WithMany("DismissedNotifications")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Member");
+
+                    b.Navigation("Notification");
+                });
+
+            modelBuilder.Entity("Data.Entities.NotificationEntity", b =>
+                {
+                    b.HasOne("Data.Entities.NotificationTargetGroupEntity", "TargetGroup")
+                        .WithMany("Notifications")
+                        .HasForeignKey("NotificationTargetGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Entities.NotificationTypeEntity", "NotificationType")
+                        .WithMany("Notifications")
+                        .HasForeignKey("NotificationTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NotificationType");
+
+                    b.Navigation("TargetGroup");
                 });
 
             modelBuilder.Entity("Data.Entities.ProjectEntity", b =>
@@ -479,7 +631,24 @@ namespace Data.Migrations
                 {
                     b.Navigation("Address");
 
+                    b.Navigation("DismissedNotifications");
+
                     b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("Data.Entities.NotificationEntity", b =>
+                {
+                    b.Navigation("DismissedNotfifications");
+                });
+
+            modelBuilder.Entity("Data.Entities.NotificationTargetGroupEntity", b =>
+                {
+                    b.Navigation("Notifications");
+                });
+
+            modelBuilder.Entity("Data.Entities.NotificationTypeEntity", b =>
+                {
+                    b.Navigation("Notifications");
                 });
 
             modelBuilder.Entity("Data.Entities.ProjectEntity", b =>

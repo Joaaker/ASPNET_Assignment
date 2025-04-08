@@ -97,7 +97,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-//await DatabaseSeeder.SeedRolesAsync(app.Services);
+await DatabaseSeeder.SeedRolesAsync(app.Services);
 await DatabaseSeeder.SeedAdminAsync(app.Services);
 
 app.MapStaticAssets();

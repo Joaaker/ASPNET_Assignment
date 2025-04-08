@@ -1,6 +1,10 @@
 ﻿@{
     var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "anonymous";
-    var notifications = await notificationService.GetNotificationAsync(userId);
+    var notificationsResult = await notificationService.GetNotificationsAsync(userId);
+    var notifications = notificationsResult.Data;
+}
+
+
 }
 <div class="notification-dropdown-container">
 
@@ -8,10 +12,10 @@
         <i class="fa-solid fa-bell bell">
             @* @if (notifications.Any()) *@
             @* { *@
-                <i class="fa-solid fa-circle notification-circle"></i>
+            <i class="fa-solid fa-circle notification-circle"></i>
             @* } *@
-		</i>
-	</button>
+        </i>
+    </button>
 
     <div id="notification-dropdown" class="notification-dropdown">
         <div class="notification-header">
@@ -21,7 +25,7 @@
         <div class="dropdown-divider"></div>
         <div class="notifications">
 
-            @foreach (var notification in notifications)
+            @foreach (var notification in notifications!)
             {
                 <div class="notification-item" data-id="">
                     <img class="image" src="@notification.Icon" />

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Business.Services;
 
-public class NotificationService(INotificationRepository notificationRepository, INotificationDismissRepository notificationDismissRepository, INotificationDismissRepository notificationDismiss) : INotificationService, INotificationService
+public class NotificationService(INotificationRepository notificationRepository, INotificationDismissRepository notificationDismissRepository) : INotificationService
 {
     private readonly INotificationDismissRepository _notificationDismissRepository = notificationDismissRepository;
     private readonly INotificationRepository _notificationRepository = notificationRepository;
