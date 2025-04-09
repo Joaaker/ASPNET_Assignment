@@ -77,10 +77,8 @@ public class AuthController(IAuthService authService,
         {
             SignInDto dto = form;
             var result = await _authService.LogInAsync(dto);
-            if (result)
-            {
 
-            }
+            if (result)
                 return Redirect(returnUrl);
         }
         ViewBag.ErrorMessage = "Incorrect email or password.";

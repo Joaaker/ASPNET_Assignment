@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Linq.Expressions;
 using Business.Factories;
 using Business.Interfaces;
 using Business.Models;
@@ -78,11 +79,11 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
         }
     }
 
-    public async Task<IResponseResult> GetMemberById(string id)
+    public async Task<IResponseResult> GetMemberByExpression(Expression<Func<MemberEntity, bool>> expression)
     {
         try
         {
-            var memberEntity = await _memberRepository.GetAsync(x => x.Id == id);
+            var memberEntity = await _memberRepository.GetAsync(expression);
             if (memberEntity == null)
             {
                 return ResponseResult<Member>.Error("Member not found");

@@ -1,19 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Business.Factories;
 using Business.Interfaces;
 using Business.Models;
+using Business.Services;
 using Domain.Dtos;
 using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using WebApp.Hubs;
 using WebApp.ViewModels;
 
 namespace WebApp.Controllers;
 
 [Authorize(Roles = "Admin")]
-public class MembersController(IMemberService memberService) : Controller
+public class MembersController(IMemberService memberService, IHubContext<NotificationHub> notficationHub, INotificationService notificationService) : Controller
 {
     private readonly IMemberService _memberService = memberService;
+    private readonly IHubContext<NotificationHub> _notificationHub = notficationHub;
+    private readonly INotificationService _notificationService = notificationService;
 
     public async Task<IActionResult> Index()
     {
@@ -43,12 +49,20 @@ public class MembersController(IMemberService memberService) : Controller
 
         MemberRegistrationFormDto dto = form;
 
-        var result = await _memberService.CreateMemberAsync(dto);
-        if (!result.Success)
-            return StatusCode(result.StatusCode, new { success = false, message = result.ErrorMessage });
+        var createResult = await _memberService.CreateMemberAsync(dto);
+        if (createResult.Success)
+        {
+            if (await _memberService.GetMemberByExpression(x => x.Email == form.Email) is IResponseResult<Member> memberResult && memberResult.Data != null)
+            {
+                var member = memberResult.Data;
+                var message = $"{member.FirstName} {member.LastName} added";
+                var notificationEntity = NotificationFactory.CreateDto(2, 1, message, null);
 
-
-        return Ok(new { success = true });
+                await _notificationService.AddNotificationAsync(notificationEntity);
+            }
+            return Ok(new { success = true });
+        } else
+            return StatusCode(createResult.StatusCode, new { success = false, message = createResult.ErrorMessage });
     }
 
     [HttpPost]
@@ -73,7 +87,7 @@ public class MembersController(IMemberService memberService) : Controller
     [HttpGet]
     public async Task<IActionResult> GetMember(string id)
     {
-        var result = await _memberService.GetMemberById(id);
+        var result = await _memberService.GetMemberByExpression(x => x.Id == id);
 
         var member = ((ResponseResult<Member>)result).Data;
 

@@ -25,11 +25,11 @@ public class NotificationService(INotificationRepository notificationRepository,
                 switch (dto.NotificationTypeId)
                 {
                     case 1:
-                        dto.Image = "~/images/profiles/user-template.svg";
+                        dto.Image = "~/Images/Profiles/user-template.svg";
                         break;
 
                     case 2:
-                        dto.Image = "~/images/projects/project-template.svg";
+                        dto.Image = "~/Images/Projects/project-template.svg";
                         break;
                 }
             }

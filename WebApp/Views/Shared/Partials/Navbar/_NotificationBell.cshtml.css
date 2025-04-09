@@ -1,10 +1,31 @@
-﻿.notification-bell {
-    display: flex;
-    border: none;
-    align-items: center;
-    margin: 0 8px;
-    background-color: transparent;
+﻿.notification-dropdown-container{
+    position: relative;
 }
+
+.notification-dropdown {
+    display: none;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: var(--card-background);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    right: 0;
+    top: 160%;
+    max-width: 380px;
+    z-index: 10;
+    padding: 1rem;
+}
+    .notification-dropdown.show{
+        display: flex;
+    }
+
+    .notification-bell {
+        display: flex;
+        border: none;
+        align-items: center;
+        margin: 0 8px;
+        background-color: transparent;
+    }
 
     .notification-bell > .bell {
         position: relative;
@@ -24,3 +45,58 @@
 .notification-active > .bell > .notification-circle {
     display: flex;
 }
+
+.notification-number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+}
+
+.notification-number-active {
+    color: white;
+    background-color: var(--red-dark);
+    padding: .2rem;
+    
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-item {
+    display: grid;
+    grid-template-areas:"img text close-btn";
+    grid-template-columns: auto auto auto;
+    gap: .8rem;
+}
+    .notification-item > ._img-container {
+        grid-area: img;
+        max-width: 56px;
+        max-height: 56px;
+    }
+
+    .notification-item > .btn-close {
+        grid-area: close-btn;
+    }
+
+    .notification-item > ._text-container {
+        grid-area: text;
+    }
+
+        ._text-container > .message {
+        
+            display: flex;
+            white-space: nowrap;
+        }
+
+        ._text-container > ._time {
+            grid-area: time;
+            display: flex;
+        }
+
+

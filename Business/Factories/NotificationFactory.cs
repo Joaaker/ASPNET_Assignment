@@ -12,4 +12,12 @@ public class NotificationFactory
         Icon = dto.Image,
         Message = dto.Message
     };
+
+    public static NotificationDto CreateDto(int notificationTargetGroupId, int notificationTypeId, string message, string? image) => new()
+    {
+        NotificationTargetGroupId = notificationTargetGroupId,
+        NotificationTypeId = notificationTypeId,
+        Message = message,
+        Image = image ?? "~/Images/Profiles/user-template.svg"
+    };
 }
