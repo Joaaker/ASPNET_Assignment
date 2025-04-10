@@ -80,7 +80,7 @@
         max-height: 56px;
     }
 
-    .notification-item > .btn-close {
+    .notification-item > ._btn-close {
         grid-area: close-btn;
     }
 

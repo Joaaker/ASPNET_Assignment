@@ -8,56 +8,17 @@
         <li>
             <button class="dropdown-item edit-member-btn" type="button" data-modal="true" data-target="#edit-member-modal" data-member-id="@Model.Id">
                 <i class="fa-solid fa-pen"></i>
-                <span>Edit @Model.Id</span>
+                <span>Edit</span>
             </button>
         </li>
         <li class="divider">
             <hr/>
         </li>
         <li>
-            <button class="dropdown-item delete" type="button">
+            <a asp-controller="Members" asp-action="Delete" asp-route-id="@Model.Id" class="dropdown-item _delete-btn">
                 <i class="fa-solid fa-trash delete"></i>
                 <span class="delete">Delete Member</span>
-            </button>
+            </a>
         </li>
     </ul>
 </div>
-
-@* <script> *@
-@*     $(document).ready(function () { *@
-@*         // När en edit-knapp klickas *@
-@*         $('.edit-member-btn').on('click', function (e) { *@
-@*             e.preventDefault(); *@
-@*             // Hämta medlemmens id från data-attributet *@
-@*             var memberId = $(this).data('member-id'); *@
-
-@*             // Gör ett AJAX-anrop till din controller. Se till att URL:en och parametern stämmer. *@
-@*             $.ajax({ *@
-@*                 url: '/Members/GetMember', // Ändra denna URL om din route skiljer sig *@
-@*                 type: 'GET', *@
-@*                 data: { id: memberId }, *@
-@*                 dataType: 'json', *@
-@*                 success: function (data) { *@
-@*                     // Exempel: fyll i fälten i modalformuläret med datan som returneras från controllern *@
-@*                     $('#edit-member-modal input[name="FirstName"]').val(data.firstName); *@
-@*                     $('#edit-member-modal input[name="LastName"]').val(data.lastName); *@
-@*                     $('#edit-member-modal input[name="Email"]').val(data.email); *@
-@*                     $('#edit-member-modal input[name="Phone"]').val(data.phone); *@
-@*                     $('#edit-member-modal input[name="JobTitle"]').val(data.jobTitle); *@
-@*                     $('#edit-member-modal input[name="StreetName"]').val(data.streetName); *@
-@*                     $('#edit-member-modal input[name="City"]').val(data.city); *@
-@*                     $('#edit-member-modal input[name="PostalCode"]').val(data.postalCode); *@
-@*                     $('#edit-member-modal input[name="DateOfBirth"]').val(data.dateOfBirth); // Se till att datumformatet är korrekt *@
-@*                     // Om du har ett hidden fält för Id *@
-@*                     $('#edit-member-modal input[name="Id"]').val(data.id); *@
-
-@*                     // Visa modal, t.ex. med Bootstrap (om du använder Bootstrap modaler) *@
-@*                     // $('#edit-member-modal').modal('show'); *@
-@*                 }, *@
-@*                 error: function (xhr, status, error) { *@
-@*                     console.error("Fel vid hämtning av medlem: ", error); *@
-@*                 } *@
-@*             }); *@
-@*         }); *@
-@*     }); *@
-@* </script> *@

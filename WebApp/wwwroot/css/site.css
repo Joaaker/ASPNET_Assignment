@@ -306,6 +306,28 @@ ul > li > button > i {
     font-size: .8rem;
 }
 
+._delete-btn {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    border-radius: 12px;
+}
+
+    ._delete-btn > .delete {
+        color: var(--red);
+        margin: 0;
+    }
+
+    ._delete-btn:hover {
+        background-color: var(--error-background-color);
+    }
+
+    ._delete-btn > i {
+        margin: 0;
+        font-size: .8rem;
+    }
+
+
 /*FORM*/
 .auth-form {
     display: flex;

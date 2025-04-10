@@ -12,4 +12,12 @@ public class MemberAddressFactory
         City = form.City!,
         UserId = userId  
     };
+
+    public static void UpdateMemberAddressEntity(MemberAddressEntity currentEntity, MemberRegistrationFormDto updateForm, string memberId)
+    {
+        currentEntity.StreetName = updateForm.StreetName!;
+        currentEntity.PostalCode = updateForm.PostalCode!;
+        currentEntity.City = updateForm.City!;
+        currentEntity.UserId = memberId;
+    }
 }

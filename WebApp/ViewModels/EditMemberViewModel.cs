@@ -5,7 +5,7 @@ namespace WebApp.ViewModels;
 
 public class EditMemberViewModel
 {
-    public int Id { get; set; }
+    public string Id { get; set; } = null!;
 
     [Display(Name = "Member Image", Prompt = "Select a image")]
     [DataType(DataType.Upload)]

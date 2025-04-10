@@ -7,9 +7,13 @@ namespace Business.Interfaces;
 
 public interface IMemberService
 {
-    Task<IResponseResult> GetAllMembers();
+    Task<IResponseResult> GetAllMembersAsync();
 
-    Task<IResponseResult> CreateMemberAsync(MemberRegistrationFormDto signUpForm);
+    Task<IResponseResult> CreateMemberAsync(MemberRegistrationFormDto form);
 
-    Task<IResponseResult> GetMemberByExpression(Expression<Func<MemberEntity, bool>> predicate);
+    Task<IResponseResult> GetMemberByExpressionAsync(Expression<Func<MemberEntity, bool>> predicate);
+
+    Task<IResponseResult> DeleteMemberAsync(string memberId);
+
+    Task<IResponseResult> UpdateMemberAsync(string memberId, MemberRegistrationFormDto updateForm);
 }

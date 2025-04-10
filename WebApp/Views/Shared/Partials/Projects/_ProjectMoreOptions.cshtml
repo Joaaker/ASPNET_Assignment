@@ -19,10 +19,11 @@
             <hr/>
         </li>
         <li>
-            <button class="dropdown-item delete" type="button">
+            @* asp-controller="Projects" asp-action="Delete" asp-route-id="@Model.Id" *@
+            <a class="dropdown-item _delete-btn">
                 <i class="fa-solid fa-trash delete"></i>
                 <span class="delete">Delete Project</span>
-            </button>
+            </a>
         </li>
     </ul>
 </div>

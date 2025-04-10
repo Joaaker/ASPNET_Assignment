@@ -1,7 +1,10 @@
 ﻿@model MembersViewModel
 
 <article class="member-card">
-	@await Html.PartialAsync("Partials/Members/_MemberMoreOptions", Model)
+	<div class="_btn-container">
+		@await Html.PartialAsync("Partials/Members/_MemberMoreOptions", Model)
+	</div>
+
 	<div class="member-image">
 		@* Dynamic Member Image here *@
 		<img src="@Url.Content("~/Images/Avatar.svg")" alt="Member avatar image" />
@@ -9,9 +12,9 @@
 
 	<h4 class="member-name">@Model.FirstName @Model.LastName</h4>
 	<div class="job-title">
-		<p class="job-title-text">@Model.JobTitle</p>
+		<p class="job-title-text">@(Model.JobTitle ?? "Designation")</p>
 	</div>
 	<p class="member-email">@Model.Email</p>
-	<p class="member-phone">@Model.PhoneNumber</p>
+	<p class="member-phone">@(Model.PhoneNumber ?? "Phonenumber")</p>
 	<button class="btn-base msg-btn">Message</button>
 </article>

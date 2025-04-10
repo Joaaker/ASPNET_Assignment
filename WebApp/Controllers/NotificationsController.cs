@@ -1,8 +1,6 @@
 ﻿using System.Security.Claims;
 using Business.Interfaces;
-using Data.Entities;
 using Domain.Dtos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using WebApp.Hubs;
