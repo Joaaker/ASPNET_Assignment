@@ -32,15 +32,19 @@ public class ProjectService(IProjectRepository projectRepository, IProjectMember
             if (saveResult == false)
                 throw new Exception("Error saving project");
 
-            foreach (string memberIds in form.MembersIds)
+            if (form.MembersIds.Count != 0)
             {
-                var projectMemberEntity = ProjectMembersFactory.CreateEntity(newProject.Id, memberIds);
-                await _projectMemberRepository.AddAsync(projectMemberEntity);
+                foreach (string memberIds in form.MembersIds)
+                {
+                    var projectMemberEntity = ProjectMembersFactory.CreateEntity(newProject.Id, memberIds);
+                    await _projectMemberRepository.AddAsync(projectMemberEntity);
+                }
+
+                var pmSaveResult = await _projectMemberRepository.SaveAsync();
+                if (pmSaveResult == false)
+                    throw new Exception("Error saving project members");
             }
 
-            var psSaveResult = await _projectRepository.SaveAsync();
-            if (psSaveResult == false)
-                throw new Exception("Error saving ProjectService");
 
             await _projectRepository.CommitTransactionAsync();
             return ResponseResult.Ok();
@@ -78,18 +82,17 @@ public class ProjectService(IProjectRepository projectRepository, IProjectMember
         }
     }
 
-    public async Task<IResponseResult> GetAllProjectsAsync()
+    public async Task<IResponseResult<IEnumerable<Project>>> GetAllProjectsAsync()
     {
         try
         {
-            var entites = await _projectRepository.GetAllAsync();
-            var projects = entites.Select(ProjectFactory.CreateModel).ToList();
+            var projects = await _projectRepository.GetAllModelsAsync();
             return ResponseResult<IEnumerable<Project>>.Ok(projects);
         }
         catch (Exception ex)
         {
             Debug.WriteLine(ex.Message);
-            return ResponseResult.Error("Error retrieving projects");
+            return ResponseResult<IEnumerable<Project>>.Error("Error retrieving projects");
         }
     }
 

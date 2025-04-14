@@ -3,6 +3,12 @@
 @{
     var defaultStartDate = DateTime.Today.ToString("yyyy-MM-dd");
     var defaultEndDate = DateTime.Today.AddDays(30).ToString("yyyy-MM-dd");
+
+    var statusesResult = await statusService.GetAllStatusesAsync();
+    var statuses = statusesResult.Data;
+
+    var clientResult = await clientService.GetAllClientsAsync();
+    var clients = clientResult.Data;
 }
 
 <div id="add-project-modal" class="_modal">
@@ -14,7 +20,7 @@
 
 		</div>
 
-		<form novalidate asp-action="AddProject" method="post" asp-controller="Projects" class="modal-form">
+		<form novalidate asp-action="Add" method="post" asp-controller="Projects" class="modal-form">
 
 			<div class="image-previewer circle">
 				<img src="" class="image-preview" />
@@ -32,7 +38,13 @@
             <div class="mb-3">
                 <label asp-for="ClientId" class="form-label"></label>
                 <div class="field-group">
-                    <input asp-for="ClientId" class="form-control text-input">
+                    <select asp-for="ClientId" class="form-control">
+                        <option selected disabled hidden>---- Select a client ----</option>
+                        @foreach (var client in clients ?? [])
+                        {
+                            <option value="@client.Id">@client.ClientName</option>
+                        }
+                    </select>
                     <span asp-validation-for="ClientId"></span>
                 </div>
             </div>
@@ -62,14 +74,25 @@
             </div>
 
             <div class="mb-3">
-                @* <label asp-for="StatusId" class="form-label"></label> *@
-                @* <div class="field-group"> *@
-                @*     <select asp-for="StatusId" asp-items="Model.StatusList" class="form-control"> *@
-                @*         <option value="">--Select a status--</option> *@
-                @*         <option value="1">@Model.</option> *@
-                @*     </select> *@
-                @*     <span asp-validation-for="StatusId"></span> *@
-                @* </div> *@
+                <label asp-for="StatusId" class="form-label"></label> 
+                <div class="field-group"> 
+                   <select asp-for="StatusId" class="form-control">
+                        <option selected disabled hidden>---- Select a status ----</option>
+                        @foreach (var status in statuses ?? [])
+                        {
+                            <option value="@status.Id">@status.StatusName</option>
+                        }
+                     </select> 
+                    <span asp-validation-for="StatusId"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Budget" class="form-label"></label>
+                <div class="field-group">
+                    <input asp-for="Budget" class="form-control text-input">
+                    <span asp-validation-for="Budget"></span>
+                </div>
             </div>
 			
 			<button class="btn-base btn-blue btn-submit" type="submit">Create</button>

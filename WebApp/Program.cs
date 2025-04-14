@@ -22,6 +22,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IProjectMemberService, ProjectMemberService>();
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IStatusService, StatusService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
@@ -30,6 +31,7 @@ builder.Services.AddScoped<IMemberAddressRepository, MemberAddressRepository>();
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IProjectMemberRepository, ProjectMemberRepository>();
+builder.Services.AddScoped<IStatusRepository, StatusRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
 builder.Services.AddIdentity<MemberEntity, IdentityRole>(options =>

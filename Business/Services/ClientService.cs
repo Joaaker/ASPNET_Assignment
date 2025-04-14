@@ -65,20 +65,18 @@ public class ClientService(IClientRepository clientRepository) : IClientService
             return ResponseResult.Error($"Error deleting client :: {ex.Message}");
         }
     }
-    
 
-    public async Task<IResponseResult> GetAllClientsAsync()
+    public async Task<IResponseResult<IEnumerable<Client>>> GetAllClientsAsync()
     {
         try
         {
-            var entites = await _clientRepository.GetAllAsync();
-            var clients = entites.Select(ClientFactory.CreateModel).ToList();
+            var clients = await _clientRepository.GetAllModelsAsync();
             return ResponseResult<IEnumerable<Client>>.Ok(clients);
         }
         catch (Exception ex)
         {
             Debug.WriteLine(ex.Message);
-            return ResponseResult.Error("Error retrieving clients");
+            return ResponseResult<IEnumerable<Client>>.Error("Error retrieving clients");
         }
     }
 

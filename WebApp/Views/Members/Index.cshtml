@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<MembersViewModel>
+
 @{
     ViewData["Title"] = "Members";
 }
 
 <partial name="Partials/Members/_AddMemberForm" model="new AddMemberViewModel()" />
 <partial name="Partials/Members/_EditMemberForm" model="new EditMemberViewModel()" />
-
 
 <div class="top-bar">
     <h1>Team Members</h1>
@@ -14,6 +14,7 @@
         <span>Add Team Member</span>
     </button>
 </div>
+
 <section class="member-section">
 
     @foreach (var member in Model)

@@ -1,9 +1,15 @@
-﻿@{
-    ViewData["Title"] = "Projects";
+﻿@model IEnumerable<ProjectsViewModel>
+
+@{
+	ViewData["Title"] = "Projects";
+
+	var projectsResult = await projectService.GetAllProjectsAsync();
+	var projects = projectsResult.Data;
+
 }
 
-
-@await Html.PartialAsync("Partials/Projects/_AddProjectForm")
+<partial name="Partials/Projects/_AddProjectForm" model="new AddProjectViewModel()" />
+<partial name="Partials/Projects/_EditProjectForm" model="new EditProjectViewModel()" />
 
 <div class="top-bar">
 	<h1>Projects</h1>
@@ -12,6 +18,7 @@
 		<span>Add Project</span>
 	</button>
 </div>
+
 <div class="menu">
 	<div class="btn-container">
 		<button class="status-btn selected">ALL [8]</button>
@@ -19,28 +26,10 @@
 		<button class="status-btn">COMPLETED [4]</button>
 	</div>
 </div>
+
 <section class="project-section">
-	@* for each project..  display project card or something like that *@
-	@await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
-    @await Html.PartialAsync("Partials/Projects/_ProjectCard")
+
+	@foreach (var project in projects!)
+		@await Html.PartialAsync("Partials/Projects/_ProjectCard", project)
+
 </section>

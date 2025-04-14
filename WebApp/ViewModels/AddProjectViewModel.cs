@@ -14,7 +14,7 @@ public class AddProjectViewModel
     [Required(ErrorMessage = "Required")]
     public string Title { get; set; } = null!;
 
-    [Display(Name = "Client Name", Prompt = "Select a client")]
+    [Display(Name = "Client")]
     [Required(ErrorMessage = "Required")]
     public int ClientId { get; set; }
 
@@ -24,7 +24,6 @@ public class AddProjectViewModel
     [Display(Name = "Start Date")]
     [Required(ErrorMessage = "Required")]
     public DateOnly StartDate { get; set; }
-
 
     [Display(Name = "End Date")]
     [Required(ErrorMessage = "Required")]
@@ -36,10 +35,7 @@ public class AddProjectViewModel
     [Display(Name = "Budget", Prompt = "0")]
     public int Budget { get; set; }
 
-    //[Display(Name = "Project Status", Prompt = "Select a project status")]
-    //public List<SelectListItem> StatusList { get; set; }
-
-    [Display(Name = "Selected Status", Prompt = "Select a project status")]
+    [Display(Name = "Project Status")]
     [Range(1, 3, ErrorMessage = "Required")]
     public int StatusId { get; set; }
 
@@ -62,13 +58,4 @@ public class AddProjectViewModel
                 StatusId = model.StatusId
             };
     }
-
-    //StatusId = int.TryParse(model.StatusId, out int statusId) ? statusId : 1
-
-
-    //public AddProjectViewModel() => StatusList = [
-    //        new() { Value = "1", Text = "Not started" },
-    //        new() { Value = "2", Text = "Started" },
-    //        new() { Value = "3", Text = "Completed" }
-    //    ];
 }
