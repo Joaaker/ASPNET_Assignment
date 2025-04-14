@@ -5,13 +5,14 @@
 .notification-dropdown {
     display: none;
     flex-direction: column;
+    gap: .4rem;
     border-radius: 10px;
     background-color: var(--card-background);
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     position: absolute;
     right: 0;
     top: 160%;
-    max-width: 380px;
+    max-width: 500px;
     z-index: 10;
     padding: 1rem;
 }
@@ -46,21 +47,25 @@
     display: flex;
 }
 
-.notification-number {
+._number-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 20px;
     width: 20px;
+    
     border-radius: 50%;
+}
+.notification-number{
+    color: var(--headline);
 }
 
 .notification-number-active {
-    color: white;
     background-color: var(--red-dark);
-    padding: .2rem;
-    
 }
+    .notification-number-active > .notification-number {
+        color: white;
+    }
 
 .notification-header {
     display: flex;
@@ -68,10 +73,22 @@
     align-items: center;
 }
 
+    .notification-header > h4{
+        margin: 0 1.5rem 0 0;
+        padding: 0;
+    }
+
+.notifications{
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+}
+
 .notification-item {
     display: grid;
-    grid-template-areas:"img text close-btn";
-    grid-template-columns: auto auto auto;
+    align-items: center;
+    grid-template-areas: "img text close-btn";
+    grid-template-columns: auto 1fr auto;
     gap: .8rem;
 }
     .notification-item > ._img-container {
@@ -80,16 +97,21 @@
         max-height: 56px;
     }
 
-    .notification-item > ._btn-close {
+    .notification-item > .btn-close {
         grid-area: close-btn;
     }
 
-    .notification-item > ._text-container {
-        grid-area: text;
+    .notification-item > .btn-close::before {
+        color: var(--headline);
     }
 
+        .notification-item > ._text-container {
+            grid-area: text;
+            width: 100%;
+        }
+
         ._text-container > .message {
-        
+            color: var(--headline);
             display: flex;
             white-space: nowrap;
         }
@@ -97,6 +119,5 @@
         ._text-container > ._time {
             grid-area: time;
             display: flex;
+            color: var(--text);
         }
-
-

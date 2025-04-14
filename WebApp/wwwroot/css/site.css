@@ -208,23 +208,30 @@ p {
     border-color: var(--blue-accent);
 }
 
-.btn-close {
+._btn-close {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: transparent;
+
     color: var(--text);
     text-decoration: none;
     border: none;
-    user-select: none;
+    user-select: none;  
     cursor: pointer;
     transition: all 200ms;
+}
+._btn-close::before {
+    font-family: 'Font Awesome 6 Free';
+    content: '\f00d';
+    font-size: 1.4em;
+    font-weight: 900;
+    color: var(--text);
 }
 
 .btn-submit{
     width: 100%;
 }
-
 
 a {
     text-decoration: none;

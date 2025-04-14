@@ -15,7 +15,9 @@
     <div id="notification-dropdown" class="notification-dropdown">
         <div class="notification-header">
             <h4>Notifications</h4>
-            <span class="notification-number">0</span>
+            <div class="_number-container">
+                <span class="notification-number">0</span>
+            </div>
         </div>
         <div class="dropdown-divider"></div>
         <div class="notifications">
@@ -30,7 +32,7 @@
                         <div class="message">@notification.Message</div>
                         <div class="_time" data-created="@notification.Created.ToString("s")">@notification.Created</div>
                     </div>
-                    <button class="btn-close" onclick="dismissNotification('@notification.Id')">X</button>
+                    <button class="_btn-close" onclick="dismissNotification('@notification.Id')"></button>
                 </div>
             }
         </div>
@@ -62,7 +64,7 @@ connection.on("ReceiveNotification", function(notification) {
         <div class="message">${notification.message}</div>
         <div class="_time" data-created="${new Date(notification.created).toISOString()}">${notification.created}</div>
     </div>
-    <button class="btn-close" onclick="dismissNotification('${notification.id}')"></button>
+    <button class="_btn-close" onclick="dismissNotification('${notification.id}')"></button>
     `
 
     notifications.insertBefore(item, notifications.firstChild)
@@ -103,6 +105,7 @@ function removeNotification(notificationId) {
 function updateNotificationCount() {
     const notifications = document.querySelector('.notifications')
     const notificationNumber = document.querySelector('.notification-number')
+    const notificationNumberContainer = document.querySelector('._number-container')
     const notificationDropdownButton = document.querySelector('#notification-dropdown-button')
     const count = notifications.querySelectorAll('.notification-item').length
 
@@ -112,12 +115,12 @@ function updateNotificationCount() {
 
     if (count > 0) {
         notificationDropdownButton.classList.add('notification-active')
-        notificationNumber.classList.add('notification-number-active')
+        notificationNumberContainer.classList.add('notification-number-active')
     }
 
     if (count === 0) {
         notificationDropdownButton.classList.remove('notification-active')
-        notificationNumber.classList.remove('notification-number-active')
+        notificationNumberContainer.classList.remove('notification-number-active')
     }
 }
 
