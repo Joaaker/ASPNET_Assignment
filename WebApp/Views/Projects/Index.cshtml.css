@@ -12,7 +12,7 @@
     color: var(--status-btn-text);
 }
 
-.status-btn.selected {
+.status-btn._selected {
     color: var(--blue-accent);
     border-bottom: 3px solid var(--blue-accent);
 

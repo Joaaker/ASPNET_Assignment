@@ -307,3 +307,174 @@ function initializeDropdowns() {
         closeAllDropdowns(null, dropdownElements)
     })
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    updateRelativeTimes();
+    updateNotificationCount();
+});
+
+const connection = new signalR.HubConnectionBuilder()
+    .withUrl("/notificationHub")
+    .build()
+
+connection.on("ReceiveNotification", function (notification) {
+    const notifications = document.querySelector('.notifications')
+
+    const item = document.createElement('div')
+    item.className = 'notification-item'
+    item.setAttribute('data-id', notification.id)
+    item.innerHTML =
+        `
+    <div class="_img-container">
+        <img class="image" src="${notification.icon}" />
+    </div>
+    <div class="_text-container">
+        <div class="message">${notification.message}</div>
+        <div class="_time" data-created="${new Date(notification.created).toISOString()}">${notification.created}</div>
+    </div>
+    <button class="_btn-close" onclick="dismissNotification('${notification.id}')"></button>
+    `
+
+    notifications.insertBefore(item, notifications.firstChild)
+
+    updateRelativeTimes()
+    updateNotificationCount()
+})
+
+connection.on("NotificationDismissed", function (notificationId) {
+    removeNotification(notificationId)
+})
+
+connection.start().catch(error => console.error(error))
+
+async function dismissNotification(notificationId) {
+    try {
+        const res = await fetch(`/api/notifications/dismiss/${notificationId}`, { method: 'POST' })
+        if (res.ok) {
+            removeNotification(notificationId)
+        }
+        else {
+            console.error('Error removing notification')
+        }
+    }
+    catch (error) {
+        console.error('Error removing notification: ', error)
+    }
+}
+
+function removeNotification(notificationId) {
+    const element = document.querySelector(`.notification-item[data-id="${notificationId}"]`)
+    if (element) {
+        element.remove()
+        updateNotificationCount()
+    }
+}
+
+function updateNotificationCount() {
+    const notifications = document.querySelector('.notifications')
+    const notificationNumber = document.querySelector('.notification-number')
+    const notificationNumberContainer = document.querySelector('._number-container')
+    const notificationDropdownButton = document.querySelector('#notification-dropdown-button')
+    const count = notifications.querySelectorAll('.notification-item').length
+
+    if (notificationNumber) {
+        notificationNumber.textContent = count
+    }
+
+    if (count > 0) {
+        notificationDropdownButton.classList.add('notification-active')
+        notificationNumberContainer.classList.add('notification-number-active')
+    }
+
+    if (count === 0) {
+        notificationDropdownButton.classList.remove('notification-active')
+        notificationNumberContainer.classList.remove('notification-number-active')
+    }
+}
+
+//Notification X time ago and Project X time left
+document.addEventListener('DOMContentLoaded', () => {
+        updateTimes();
+        setInterval(updateTimes, 60 * 1000);
+});
+
+    function updateTimes() {
+  const now = new Date();
+
+  document.querySelectorAll('._time').forEach(el => {
+    const created = new Date(el.dataset.created);
+    const diffMs = now - created;
+    el.textContent = formatPast(diffMs);
+  });
+
+  document.querySelectorAll('._time-left').forEach(el => {
+    const end     = new Date(el.dataset.timeLeft);
+    const diffMs  = end - now;
+    const parent  = el.closest('.deadline');
+
+    if (diffMs < 0) {
+        el.textContent = 'Expired';
+    parent?.classList.remove('near');
+    return;
+    }
+
+    el.textContent = formatFuture(diffMs);
+
+    if (diffMs < 7 * 24 * 60 * 60 * 1000) {
+        parent?.classList.add('near');
+    } else {
+        parent?.classList.remove('near');
+    }
+  });
+}
+
+function formatPast(diffMs) {
+  const sec  = Math.floor(diffMs / 1000);
+    const min  = Math.floor(sec / 60);
+    const hrs  = Math.floor(min / 60);
+    const days = Math.floor(hrs / 24);
+
+    if (min < 1)   return '0 min ago';
+    if (min < 60)  return min + ' min ago';
+    if (hrs < 2)   return '1 hour ago';
+    if (hrs < 24)  return hrs + ' hours ago';
+    if (days < 2)  return '1 day ago';
+    if (days < 7)  return days + ' days ago';
+    return Math.floor(days / 7) + ' weeks ago';
+}
+
+function formatFuture(diffMs) {
+  const sec   = Math.floor(diffMs / 1000);
+    const min   = Math.floor(sec / 60);
+    const hrs   = Math.floor(min / 60);
+    const days  = Math.floor(hrs / 24);
+    const weeks = Math.floor(days / 7);
+
+    if (days < 2)   return '1 day left';
+    if (days < 7)   return days + ' days left';
+    return weeks + ' weeks left';
+};
+
+//Project status buttons
+document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.status-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            buttons.forEach(b => b.classList.remove('_selected'));
+            btn.classList.add('_selected');
+
+            const filter = btn.dataset.filter;
+
+            projectCards.forEach(card => {
+                const status = card.dataset.status;
+                if (filter === 'all' || status === filter) {
+                    card.style.display = 'grid';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+});

@@ -12,5 +12,5 @@ public class Project
     public int? Budget { get; set; }
     public string ClientName { get; set; } = null!;
     public string StatusName { get; set; } = null!;
-    public ICollection<Member> Members { get; set; } = [];
+    public ICollection<Member> ProjectMembers { get; set; } = [];
 }

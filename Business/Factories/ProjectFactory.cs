@@ -26,7 +26,7 @@ public class ProjectFactory
         EndDate = entity.EndDate,
         StatusName = entity.Status.StatusName,
         ClientName = entity.Client.ClientName,
-        Members = [.. entity.ProjectMembers
+        ProjectMembers = [.. entity.ProjectMembers
         .Select(junctionTable => new Member
         {
             Id = junctionTable.UserId,

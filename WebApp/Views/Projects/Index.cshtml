@@ -4,8 +4,8 @@
 	ViewData["Title"] = "Projects";
 
 	var projectsResult = await projectService.GetAllProjectsAsync();
-	var projects = projectsResult.Data;
-
+	var projects = projectsResult.Data ?? [];
+	
 }
 
 <partial name="Partials/Projects/_AddProjectForm" model="new AddProjectViewModel()" />
@@ -21,15 +21,16 @@
 
 <div class="menu">
 	<div class="btn-container">
-		<button class="status-btn selected">ALL [8]</button>
-		<button class="status-btn">STARTED [4]</button>
-		<button class="status-btn">COMPLETED [4]</button>
+		<button class="status-btn _selected" data-filter="all">ALL [@projects.Count()]</button>
+		<button class="status-btn" data-filter="started">STARTED [@projects.Count(p => p.StatusName.Equals("Started", StringComparison.OrdinalIgnoreCase))]</button>
+		<button class="status-btn" data-filter="completed">COMPLETED [@projects.Count(p => p.StatusName.Equals("Completed", StringComparison.OrdinalIgnoreCase))]</button>
 	</div>
 </div>
 
 <section class="project-section">
 
-	@foreach (var project in projects!)
+	@foreach (var project in projects)
 		@await Html.PartialAsync("Partials/Projects/_ProjectCard", project)
 
+	
 </section>
