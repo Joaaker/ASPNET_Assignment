@@ -260,6 +260,10 @@ document.addEventListener('DOMContentLoaded', function () {
 //Notification dropdown
 document.addEventListener('DOMContentLoaded', () => {
     initializeDropdowns();
+    updateRelativeTimes();
+    updateNotificationCount();
+    updateDeadline();
+    setInterval(updateTimes, 60 * 1000);
 });
 
 function closeAllDropdowns(exceptDropdown, dropdownElements) {
@@ -308,10 +312,6 @@ function initializeDropdowns() {
     })
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    updateRelativeTimes();
-    updateNotificationCount();
-});
 
 const connection = new signalR.HubConnectionBuilder()
     .withUrl("/notificationHub")
@@ -392,20 +392,43 @@ function updateNotificationCount() {
     }
 }
 
-//Notification X time ago and Project X time left
-document.addEventListener('DOMContentLoaded', () => {
-        updateTimes();
-        setInterval(updateTimes, 60 * 1000);
-});
+function updateRelativeTimes() {
+    const elements = document.querySelectorAll('._time');
+    const now = new Date();
 
-    function updateTimes() {
+    elements.forEach(el => {
+        const created = new Date(el.getAttribute('data-created'));
+        const diff = now - created;
+        const diffSeconds = Math.floor(diff / 1000);
+        const diffMinutes = Math.floor(diffSeconds / 60);
+        const diffHours = Math.floor(diffMinutes / 60);
+        const diffDays = Math.floor(diffHours / 24);
+        const diffWeeks = Math.floor(diffDays / 7);
+
+        let relativeTime = '';
+
+        if (diffMinutes < 1) {
+            relativeTime = '0 min ago';
+        } else if (diffMinutes < 60) {
+            relativeTime = diffMinutes + ' min ago';
+        } else if (diffHours < 2) {
+            relativeTime = diffHours + ' hour ago';
+        } else if (diffHours < 24) {
+            relativeTime = diffHours + ' hours ago';
+        } else if (diffDays < 2) {
+            relativeTime = diffDays + ' day ago';
+        } else if (diffDays < 7) {
+            relativeTime = diffDays + ' days ago';
+        } else {
+            relativeTime = diffWeeks + ' weeks ago';
+        }
+
+        el.textContent = relativeTime;
+    });
+}
+
+function updateDeadline() {
   const now = new Date();
-
-  document.querySelectorAll('._time').forEach(el => {
-    const created = new Date(el.dataset.created);
-    const diffMs = now - created;
-    el.textContent = formatPast(diffMs);
-  });
 
   document.querySelectorAll('._time-left').forEach(el => {
     const end     = new Date(el.dataset.timeLeft);
@@ -426,21 +449,6 @@ document.addEventListener('DOMContentLoaded', () => {
         parent?.classList.remove('near');
     }
   });
-}
-
-function formatPast(diffMs) {
-  const sec  = Math.floor(diffMs / 1000);
-    const min  = Math.floor(sec / 60);
-    const hrs  = Math.floor(min / 60);
-    const days = Math.floor(hrs / 24);
-
-    if (min < 1)   return '0 min ago';
-    if (min < 60)  return min + ' min ago';
-    if (hrs < 2)   return '1 hour ago';
-    if (hrs < 24)  return hrs + ' hours ago';
-    if (days < 2)  return '1 day ago';
-    if (days < 7)  return days + ' days ago';
-    return Math.floor(days / 7) + ' weeks ago';
 }
 
 function formatFuture(diffMs) {
