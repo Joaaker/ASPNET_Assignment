@@ -9,7 +9,7 @@
 		<h2 class="project-title">@Model.Title</h2>
 		<h3 class="project-client">@Model.ClientName</h3>
 	</div>
-	@await Html.PartialAsync("Partials/Projects/_ProjectMoreOptions")
+	@await Html.PartialAsync("Partials/Projects/_ProjectMoreOptions", Model)
 	<p class="project-description">@Model.Description</p>
 	<div class="deadline-members">
 		@* div med "deadline" ska ha klassen "near" när det är kortare tid än 1 vecka *@

@@ -5,6 +5,7 @@ using Data.Interfaces;
 using Domain.Extensions;
 using Domain.Models;
 using System.Diagnostics;
+using System.Linq.Expressions;
 
 namespace Business.Services;
 
@@ -20,17 +21,18 @@ public class StatusService(IStatusRepository statusRepository) : IStatusService
             return ResponseResult<IEnumerable<Status>>.Ok(statusModels);
     }
 
-    public async Task<IResponseResult> GetStatusByNameAsync(string statusName)
+    public async Task<IResponseResult> GetStatusByExpressionAsync(Expression<Func<StatusEntity, bool>> expression)
     {
-        var status = await _statusRepository.GetAsync(x => x.StatusName == statusName);
-        var result = status.MapTo<Status>();
-        return ResponseResult<Status>.Ok(result);
-    }
+        try
+        {
+            var status = await _statusRepository.GetModelAsync(expression);
 
-    public async Task<IResponseResult> GetStatusByIdAsync(int id)
-    {
-        var status = await _statusRepository.GetAsync(x => x.Id == id);
-        var result = status.MapTo<Status>();
-        return ResponseResult<Status>.Ok(result);
+            return ResponseResult<Status>.Ok(status);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return ResponseResult.Error("Error retrieving client");
+        }
     }
 }

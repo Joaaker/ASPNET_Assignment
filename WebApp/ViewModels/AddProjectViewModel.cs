@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Domain.Dtos;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebApp.ViewModels;
 
@@ -18,7 +17,7 @@ public class AddProjectViewModel
     [Required(ErrorMessage = "Required")]
     public int ClientId { get; set; }
 
-    [Display(Name = "Description", Prompt = "Type a description")]
+    [Display(Name = "Description", Prompt = "Enter a description")]
     public string? Description { get; set; }
 
     [Display(Name = "Start Date")]
@@ -32,13 +31,12 @@ public class AddProjectViewModel
     [Display(Name = "Members", Prompt = "Select project members")]
     public List<string> MembersIds { get; set; } = [];
 
-    [Display(Name = "Budget", Prompt = "0")]
-    public int Budget { get; set; }
-
     [Display(Name = "Project Status")]
     [Range(1, 3, ErrorMessage = "Required")]
     public int StatusId { get; set; }
 
+    [Display(Name = "Budget", Prompt = "0")]
+    public int Budget { get; set; }
 
 
     public static implicit operator ProjectRegistrationDto(AddProjectViewModel model)

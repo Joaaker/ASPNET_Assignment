@@ -1,10 +1,12 @@
-﻿<div class="btn-group">
+﻿@model Project
+
+<div class="btn-group">
     <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
         @await Html.PartialAsync("Partials/Components/_EditButtonDots")
     </button>
     <ul class="dropdown-menu dropdown-menu-end">
         <li>
-            <button class="dropdown-item" type="button">
+            <button class="dropdown-item edit-project-btn" type="button" data-modal="true" data-target="#edit-project-modal" data-project-id="@Model.Id">
                 <i class="fa-solid fa-pen"></i>
                 <span>Edit</span>
             </button>
@@ -19,8 +21,7 @@
             <hr/>
         </li>
         <li>
-            @* asp-controller="Projects" asp-action="Delete" asp-route-id="@Model.Id" *@
-            <a class="dropdown-item _delete-btn">
+            <a asp-controller="Projects" asp-action="Delete" asp-route-id="@Model.Id" class="dropdown-item _delete-btn">
                 <i class="fa-solid fa-trash delete"></i>
                 <span class="delete">Delete Project</span>
             </a>

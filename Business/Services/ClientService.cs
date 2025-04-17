@@ -1,10 +1,14 @@
 ﻿using System.Diagnostics;
+using System.Linq.Expressions;
 using Business.Factories;
 using Business.Interfaces;
 using Business.Models;
+using Data.Entities;
 using Data.Interfaces;
+using Data.Repositories;
 using Domain.Dtos;
 using Domain.Models;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace Business.Services;
 
@@ -80,15 +84,12 @@ public class ClientService(IClientRepository clientRepository) : IClientService
         }
     }
 
-    public async Task<IResponseResult> GetClientByIdAsync(int id)
+    public async Task<IResponseResult> GetClientByExpressionAsync(Expression<Func<ClientEntity, bool>> expression)
     {
         try
         {
-            var entity = await _clientRepository.GetAsync(x => x.Id == id);
-            if (entity == null)
-                return ResponseResult.NotFound("Client not found");
+            var client = await _clientRepository.GetModelAsync(expression);
 
-            var client = ClientFactory.CreateModel(entity);
             return ResponseResult<Client>.Ok(client);
         }
         catch (Exception ex)

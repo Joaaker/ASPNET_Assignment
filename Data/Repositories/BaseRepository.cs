@@ -96,7 +96,7 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
         }
     }
 
-    public virtual async Task<TModel> GetAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includes)
+    public virtual async Task<TModel> GetModelAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includes)
     {
         IQueryable<TEntity> query = _dbSet;
 
@@ -109,13 +109,10 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
 
         try
         {
-            var entity = await query.FirstOrDefaultAsync(where);
-            if (entity == null)
-                throw new Exception("Entity not found");
+            var entity = await query.FirstOrDefaultAsync(where) ?? throw new Exception("Entity not found");
 
             var result = entity!.MapTo<TModel>();
             return result;
-
         }
         catch (Exception ex)
         {

@@ -35,6 +35,39 @@ public class ProjectRepository(DataContext context) : BaseRepository<ProjectEnti
         }
     }
 
+    public override async Task<Project> GetModelAsync(
+        Expression<Func<ProjectEntity, bool>> where,
+        params Expression<Func<ProjectEntity, object>>[] includes)
+    {
+        ArgumentNullException.ThrowIfNull(where);
+
+        try
+        {
+            IQueryable<ProjectEntity> query = _context.Projects
+                .Include(x => x.Status)
+                .Include(x => x.Client)
+                .Include(x => x.ProjectMembers)
+                    .ThenInclude(pm => pm.Member);
+
+            if (includes != null && includes.Length > 0)
+            {
+                foreach (var include in includes)
+                    query = query.Include(include);
+            }
+
+            var entity = await query.FirstOrDefaultAsync(where);
+
+            ArgumentNullException.ThrowIfNull(entity, "Project not found");
+
+            return entity.MapTo<Project>();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error retrieving Project entity :: {ex.Message}");
+            return default!; 
+        }
+    }
+
     public override async Task<ProjectEntity> GetAsync(Expression<Func<ProjectEntity, bool>> expression)
     {
         if (expression == null)
