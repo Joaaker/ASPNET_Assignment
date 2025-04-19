@@ -8,11 +8,11 @@
     height: 40px;
 }
 
-.btn-group > button.show {
-    background-color: var(--auth-background);
-}
+    .btn-group > button.show {
+        background-color: var(--auth-background);
+    }
 
-.btn-group > .dropdown-toggle::after{
+.btn-group > .dropdown-toggle::after {
     content: none;
 }
 
@@ -31,13 +31,17 @@ ul > li > button {
     border-radius: 12px;
 }
 
-    .divider {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: .4rem 0;
-        width: 100%;
+    ul > li > button > i {
+        font-size: .8rem;
     }
+
+.divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: .4rem 0;
+    width: 100%;
+}
 
     .divider > hr {
         flex: 1;
@@ -46,16 +50,25 @@ ul > li > button {
         margin: 0 10px;
     }
 
+/*._delete-btn {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    border-radius: 12px;
+    background-color: greenyellow;
+}
 
-    ul > li > button > .delete {
+    ._delete-btn > .delete {
         color: var(--red);
-    
+        margin: 0;
     }
-    button.dropdown-item.delete:hover {
+
+    ._delete-btn:hover {
         background-color: var(--error-background-color);
     }
 
-
-ul > li > button > i {
-    font-size: .8rem;
-}
+    ._delete-btn > i {
+        margin: 0;
+        font-size: .8rem;
+    }
+*/

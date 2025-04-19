@@ -1,20 +1,23 @@
-﻿<article class="project-card">
+﻿@model Project
+
+<article class="project-card" data-status="@Model.StatusName.ToLowerInvariant()">
 	<div class="project-image">
 		@* Dynamic Project Image here *@
 		<img src="@Url.Content("~/Images/ProjectImage.svg")" alt="My Image" />
 	</div>
 	<div class="title-client">
-		<h2 class="project-title">Project Name</h2>
-		<h3 class="project-client">Client Name</h3>
+		<h2 class="project-title">@Model.Title</h2>
+		<h3 class="project-client">@Model.ClientName</h3>
 	</div>
-	@await Html.PartialAsync("Partials/Projects/_ProjectMoreOptions")
-	<p class="project-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</p>
+	@await Html.PartialAsync("Partials/Projects/_ProjectMoreOptions", Model)
+	<p class="project-description">@Model.Description</p>
 	<div class="deadline-members">
 		@* div med "deadline" ska ha klassen "near" när det är kortare tid än 1 vecka *@
 		<div class="deadline">
 			<i class="fa-regular fa-clock"></i>
-			<span class="dynamic-time">5 days</span>
-			<span>left</span>
+			<span class="_time-left" data-time-left="@Model.EndDate.ToString("yyyy-MM-dd")">
+				@Model.EndDate.ToShortDateString()
+			</span>
 		</div>
 		<div class="project-members">
 			@* Dynamic avatar images here. for each ,*@

@@ -1,5 +1,4 @@
-﻿
-.project-card {
+﻿.project-card {
     display: grid;
     grid-template-areas:
         "image title-client dots-btn"

@@ -3,11 +3,14 @@
     Layout = "~/Views/Shared/_Auth_Layout.cshtml";
     ViewData["Title"] = "Sign up";
 }
+<h1>Create Account</h1>
+
+@await Html.PartialAsync("Partials/Components/_GoogleAuthButton", ViewData)
+@await Html.PartialAsync("Partials/Components/_GitHubAuthButton", ViewData)
+
+@await Html.PartialAsync("Partials/Components/_OrDivider")
 
 <form class="auth-form" method="post" asp-controller="Auth" asp-action="SignUp" novalidate enctype="multipart/form-data">
-    <h1>Create Account</h1>
-    <button>PARTIAL Sign Up With Google</button>
-    @await Html.PartialAsync("Partials/Components/_OrDivider")
 
     <div class="name-container">
         <div class="mb-3">

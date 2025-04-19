@@ -1,20 +1,140 @@
 ﻿@model EditProjectViewModel
 
-<div id="add-project-modal" class="modal-container">
-	<div class="content-modal">
-		<div class="header-modal">
-			<h3> Add Project</h3>
-			<button class="btn-close" type="button" data-close="true"></button>
+@{
+	var statusesResult = await statusService.GetAllStatusesAsync();
+	var statuses = statusesResult.Data;
 
+	var clientResult = await clientService.GetAllClientsAsync();
+	var clients = clientResult.Data;
+}
 
+<div id="edit-project-modal" class="_modal">
+	<div class="_modal-content">
+		<div class="_modal-header">
+			<h3>Edit Project</h3>
+			<button class="_btn-close" type="button" data-close="true"></button>
 		</div>
-		<form novalidate asp-action="AddProject" method="post" asp-controller="Projects" class="modal-form">
-			<div class="image-previewer circle">
-				<img src="" class="image-preview" />
-				<input asp-for="ProjectImage" accept="image/*" class="hide" />
-			</div>
 
-			<button class="btn-base btn-blue btn-submit" type="submit">Create</button>
+		<form novalidate asp-action="Edit" method="post" asp-controller="Projects" class="modal-form">
+
+            <input type="hidden" asp-for="Id" id="edit-project-id" />
+
+            <div class="image-previewer circle">
+                <img src="" class="image-preview" />
+                <input asp-for="ProjectImage" accept="image/*" class="hide" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <div class="field-group">
+                    <input asp-for="Title" class="form-control text-input">
+                    <span asp-validation-for="Title"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ClientId" class="form-label"></label>
+                <div class="field-group">
+                    <select asp-for="ClientId" class="form-control">
+                        <option selected disabled hidden>---- Select a client ----</option>
+                        @foreach (var client in clients ?? [])
+                        {
+                            <option value="@client.Id">@client.ClientName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="ClientId"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <div class="field-group">
+                    <input asp-for="Description" class="form-control text-input">
+                    <span asp-validation-for="Description"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="StartDate" class="form-label"></label>
+                <div class="field-group">
+                    <input asp-for="StartDate" class="form-control date-input start-date" type="date">
+                    <span asp-validation-for="StartDate"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="EndDate" class="form-label"></label>
+                <div class="field-group">
+                    <input asp-for="EndDate" class="form-control date-input end-date" type="date">
+                    <span asp-validation-for="EndDate"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="StatusId" class="form-label"></label>
+                <div class="field-group">
+                    <select asp-for="StatusId" class="form-control">
+                        <option selected disabled hidden>---- Select a status ----</option>
+                        @foreach (var status in statuses ?? [])
+                        {
+                            <option value="@status.Id">@status.StatusName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="StatusId"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Budget" class="form-label"></label>
+                <div class="field-group">
+                    <input asp-for="Budget" class="form-control text-input">
+                    <span asp-validation-for="Budget"></span>
+                </div>
+            </div>
+
+            <button class="btn-base btn-blue btn-submit" type="submit">Save</button>
+
 		</form>
 	</div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const editProjButtons = document.querySelectorAll('.edit-project-btn');
+
+      editProjButtons.forEach(button => {
+        button.addEventListener('click', async function(e) {
+          e.preventDefault();
+          const projectId = button.getAttribute('data-project-id');
+
+          try {
+            const res  = await fetch('/Projects/GetProjectForEdit?id=' + encodeURIComponent(projectId));
+            if (!res.ok) throw new Error(res.statusText);
+
+            const data = await res.json();
+
+            const proj   = data.project;
+            const stat   = data.status;
+            const client = data.client;
+
+            document.querySelector('#edit-project-modal input[name="Id"]').value          = proj.id;
+            document.querySelector('#edit-project-modal input[name="Title"]').value       = proj.title      || '';
+            document.querySelector('#edit-project-modal input[name="Description"]').value = proj.description || '';
+            document.querySelector('#edit-project-modal input[name="StartDate"]').value   = proj.startDate  || '';
+            document.querySelector('#edit-project-modal input[name="EndDate"]').value     = proj.endDate    || '';
+            document.querySelector('#edit-project-modal input[name="Budget"]').value      = proj.budget     != null ? proj.budget : '';
+
+            document.querySelector('#edit-project-modal select[name="ClientId"]').value = client.id;
+            document.querySelector('#edit-project-modal select[name="StatusId"]').value = stat.id;
+
+            const modal = document.querySelector('#edit-project-modal');
+            modal.style.display = 'flex';
+            document.body.classList.add('modal-open');
+          }
+          catch (err) {
+            console.error('Kunde inte hämta projekt:', err);
+          }
+        });
+      });
+    });
+</script>

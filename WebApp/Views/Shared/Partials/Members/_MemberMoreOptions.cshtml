@@ -1,4 +1,4 @@
-﻿
+﻿@model MembersViewModel
 
 <div class="btn-group">
     <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -6,7 +6,7 @@
     </button>
     <ul class="dropdown-menu dropdown-menu-end">
         <li>
-            <button class="dropdown-item" type="button">
+            <button class="dropdown-item edit-member-btn" type="button" data-modal="true" data-target="#edit-member-modal" data-member-id="@Model.Id">
                 <i class="fa-solid fa-pen"></i>
                 <span>Edit</span>
             </button>
@@ -15,10 +15,10 @@
             <hr/>
         </li>
         <li>
-            <button class="dropdown-item delete" type="button">
+            <a asp-controller="Members" asp-action="Delete" asp-route-id="@Model.Id" class="dropdown-item _delete-btn">
                 <i class="fa-solid fa-trash delete"></i>
                 <span class="delete">Delete Member</span>
-            </button>
+            </a>
         </li>
     </ul>
 </div>

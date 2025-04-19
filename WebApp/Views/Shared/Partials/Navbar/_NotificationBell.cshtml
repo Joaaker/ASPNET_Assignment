@@ -1,7 +1,40 @@
-﻿
-@* VID notis >>> class = notification-active PÅ Button*@
-<button class="notification-bell">
-	<i class="fa-solid fa-bell bell">
-		<i class="fa-solid fa-circle notification-circle"></i>
-	</i>
-</button>
+﻿@{
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "anonymous";
+    var notificationsResult = await notificationService.GetNotificationsAsync(userId);
+    var notifications = notificationsResult.Data ?? [];
+}
+
+<div class="notification-dropdown-container">
+
+    <button id="notification-dropdown-button" class="notification-bell" data-type="dropdown-btn" data-target="#notification-dropdown">
+        <i class="fa-solid fa-bell bell">
+            <i class="fa-solid fa-circle notification-circle"></i>
+        </i>
+    </button>
+
+    <div id="notification-dropdown" class="notification-dropdown">
+        <div class="notification-header">
+            <h4>Notifications</h4>
+            <div class="_number-container">
+                <span class="notification-number">0</span>
+            </div>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="notifications">
+
+            @foreach (var notification in notifications)
+            {
+                <div class="notification-item" data-id="@notification.Id">
+                    <div class="_img-container">
+                        <img class="image" src="@notification.Icon" />
+                    </div>
+                    <div class="_text-container">
+                        <div class="message">@notification.Message</div>
+                        <div class="_time" data-created="@notification.Created.ToString("s")">@notification.Created</div>
+                    </div>
+                    <button class="_btn-close" onclick="dismissNotification('@notification.Id')"></button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

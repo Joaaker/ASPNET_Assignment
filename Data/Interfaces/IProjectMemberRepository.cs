@@ -2,6 +2,6 @@
 
 namespace Data.Interfaces;
 
-public interface IProjectMemberRepository : IBaseRepository<ProjectMemberJunctionEntity>
+public interface IProjectMemberRepository : IBaseRepository<ProjectMemberJunctionEntity, ProjectMemberJunctionEntity>
 {
 }

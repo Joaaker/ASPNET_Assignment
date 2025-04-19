@@ -34,7 +34,7 @@ public class ClientsController(IClientService clientService) : Controller
 
         ClientRegistrationDto registrationDto = formData;
 
-        IResponseResult result = await _clientService.CreateClientAsync(registrationDto);
+        var result = await _clientService.CreateClientAsync(registrationDto);
 
         if (!result.Success)
             return StatusCode(result.StatusCode, new { success = false, message = result.ErrorMessage });

@@ -2,7 +2,7 @@
 
 namespace Data.Interfaces;
 
-public interface IBaseRepository<TEntity> where TEntity : class
+public interface IBaseRepository<TEntity, TModel> where TEntity : class
 {
     Task BeginTransactionAsync();
     Task CommitTransactionAsync();
@@ -11,7 +11,10 @@ public interface IBaseRepository<TEntity> where TEntity : class
     Task<TEntity> AddAsync(TEntity entity);
     Task<bool> SaveAsync();
     Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> expression);
-    Task<IEnumerable<TEntity>> GetAllAsync();
+    Task<TModel> GetModelAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includes);
     Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> expression);
+    Task<IEnumerable<TEntity>> GetAllAsync();
+    Task<IEnumerable<TModel>> GetAllModelsAsync(bool orderByDescending = false, Expression<Func<TEntity, object>>? sortBy = null, Expression<Func<TEntity, bool>>? where = null, params Expression<Func<TEntity, object>>[] includes);
+    Task<IEnumerable<TSelect>> GetAllAsync<TSelect>(Expression<Func<TEntity, TSelect>> selector, bool orderByDescending = false, Expression<Func<TEntity, object>>? sortBy = null, Expression<Func<TEntity, bool>>? where = null, params Expression<Func<TEntity, object>>[] includes);
     Task<bool> UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity updatedEntity);
 }
