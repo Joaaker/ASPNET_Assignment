@@ -18,5 +18,5 @@ public class EditClientViewModel
 
     [Display(Name = "Phone", Prompt = "Client phone number")]
     [Required(ErrorMessage = "Required")]
-    public string Phone { get; set; } = null!;
+    public string PhoneNumber { get; set; } = null!;
 }

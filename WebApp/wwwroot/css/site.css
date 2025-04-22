@@ -51,11 +51,13 @@
     --error-background-color: #ff664030;
     --text: var(--dark-400);
     --headline: var(--dark-100);
+    --grey-text: var(--gray-800);
     --background: var(--white-200);
     --card-background: var(--white-100);
     --bright-background: var(--white-100);
     --sign-card-background: var(--white-100);
     --auth-background: var(--gray-100);
+    --job-title-background: var(--gray-200);
     --status-btn-text: var(--gray-800);
     --border: var(--gray-300);
     --border-two: var(--gray-700);
@@ -75,11 +77,13 @@
 .dark {
     --text: var(--gray-100);
     --headline: var(--white-100);
+    --grey-text: var(--gray-700);
     --background: var(--dark-background);
     --bright-background: var(--gray-600);
     --sign-card-background: var(--dark-300);
     --card-background: var(--dark-300);
     --auth-background: var(--dark-background);
+    --job-title-background: var(--gray-600);
     --status-btn-text: var(--gray-700);
     --border: var(--dark-50);
     --or-color: var(--dark-50);
@@ -492,18 +496,18 @@ body.modal-open{
     overflow-y: hidden;
 }
 
-._modal {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--modal-background);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 10;
-}
+    ._modal {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--modal-background);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10;
+    }
 
 
     ._modal > ._modal-content {
@@ -544,9 +548,75 @@ body.modal-open{
 }
 
 
+/* FRÅN VIDEO TAGS SEARCH START*/
+.form-tag-select.focused,
+.search-results.focused {
+    border-color: var(--form-input-border-focus-color);
+}
 
+.form-tag-input {
+    font-size: 1em;
+    outline: none;
+    border: none;
+    flex-grow: 1;
+    font-weight: 400;
+    font-family: var(--font-standard);
+    background-color: var(--form-input-background-color);
+}
 
+.form-tag-select label,
+.form-tag-select i {
+    cursor: pointer;
+    position: absolute;
+    font-size: 1.1em;
+    right: 1rem;
+    top: 0.8rem;
+}
 
+.form-input::placeholder,
+.form-select::placeholder,
+.form-textarea::placeholder,
+.form-tag-input::placeholder {
+    color: var(--form-input-placeholder-color);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.search-item {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8em;
+}
+
+    .search-item:hover {
+        background-color: var(--blue-light-opacity);
+        border-radius: 12px;
+    }
+
+    .search-item.active {
+        background-color: var(--blue-light-opacity);
+        border-radius: 12px;
+    }
+
+.search-results {
+    background-color: var(--form-input-background-color);
+    border: 1px solid var(--form-input-border-color);
+    border-top: none;
+    border-radius: 0 0 13px 13px;
+    padding: 1rem;
+    width: 100%;
+    position: absolute;
+    top: 85%;
+    left: 0;
+    z-index: 10;
+    display: none;
+}
+
+/* FRÅN VIDEO TAGS SEARCH END*/
 
 
 /*Mobile only*/
@@ -581,6 +651,9 @@ body.modal-open{
 
 /* Mobile / Tablet only */
 @media (max-width: 1339px) {
+/*    body.modal-open > header {
+        display: none;
+    }*/
 
     /* Modal form for mobile / tablet   */
     ._modal {

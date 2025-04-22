@@ -10,7 +10,7 @@ public class ClientFactory
     {
         ClientName = registrationForm.ClientName,
         Email = registrationForm.Email,
-        PhoneNumber = registrationForm.Phone
+        PhoneNumber = registrationForm.PhoneNumber
     };
 
     public static ClientEntity CreateEntity(ClientRegistrationDto registrationForm, int id) => new()
@@ -18,13 +18,13 @@ public class ClientFactory
         Id = id,
         ClientName = registrationForm.ClientName,
         Email = registrationForm.Email,
-        PhoneNumber = registrationForm.Phone
+        PhoneNumber = registrationForm.PhoneNumber
     };
 
     public static Client CreateModel(ClientEntity entity) => new()
     {
         ClientName = entity.ClientName,
         Email = entity.Email,
-        Phone = entity.PhoneNumber
+        PhoneNumber = entity.PhoneNumber
     };
 }

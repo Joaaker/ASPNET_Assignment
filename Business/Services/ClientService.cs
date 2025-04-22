@@ -5,10 +5,8 @@ using Business.Interfaces;
 using Business.Models;
 using Data.Entities;
 using Data.Interfaces;
-using Data.Repositories;
 using Domain.Dtos;
 using Domain.Models;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace Business.Services;
 
@@ -110,8 +108,9 @@ public class ClientService(IClientRepository clientRepository) : IClientService
             if (entityToUpdate == null)
                 return ResponseResult.NotFound("client not found");
 
-            await _clientRepository.BeginTransactionAsync();
             entityToUpdate = ClientFactory.CreateEntity(updateForm, entityToUpdate.Id);
+
+            await _clientRepository.BeginTransactionAsync();
             await _clientRepository.UpdateAsync(x => x.Id == id, entityToUpdate);
             bool saveResult = await _clientRepository.SaveAsync();
             if (saveResult == false)

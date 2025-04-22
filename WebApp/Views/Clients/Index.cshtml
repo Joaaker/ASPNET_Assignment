@@ -2,10 +2,13 @@
 
 @{
 	ViewData["Title"] = "Clients";
+
+	var clientResult = await clientService.GetAllClientsAsync();
+	var clients = clientResult.Data;
 }
 
-<partial name="Partials/Clients/_AddClientForm" />
-@* @await Html.PartialAsync("Partials/Clients/_AddClientForm") *@
+<partial name="Partials/Clients/_AddClientForm" model="new AddClientViewModel()"/>
+<partial name="Partials/Clients/_EditClientForm" model="new EditClientViewModel()" />
 
 
 <div class="top-bar">
@@ -16,3 +19,11 @@
 
 	</button>
 </div>
+
+
+<section class="client-section">
+
+	@foreach (var client in clients ?? [])
+		@await Html.PartialAsync("Partials/Clients/_ClientCard", client)
+
+</section>

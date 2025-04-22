@@ -1,5 +1,9 @@
-﻿using Business.Interfaces;
+﻿using Business.Factories;
+using Business.Interfaces;
+using Business.Models;
 using Domain.Dtos;
+using Domain.Extensions;
+using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.ViewModels;
@@ -7,9 +11,10 @@ using WebApp.ViewModels;
 namespace WebApp.Controllers;
 
 [Authorize(Roles = "Admin")]
-public class ClientsController(IClientService clientService) : Controller
+public class ClientsController(IClientService clientService, INotificationService notificationService) : Controller
 {
     private readonly IClientService _clientService = clientService;
+    private readonly INotificationService _notificationService = notificationService;
 
     public IActionResult Index()
     {
@@ -32,19 +37,37 @@ public class ClientsController(IClientService clientService) : Controller
             return BadRequest(new { success = false, errors });
         }
 
-        ClientRegistrationDto registrationDto = formData;
+        var dto = formData.MapTo<ClientRegistrationDto>();
 
-        var result = await _clientService.CreateClientAsync(registrationDto);
+        var createResult = await _clientService.CreateClientAsync(dto);
+        if (createResult.Success)
+        {
+            if (await _clientService.GetClientByExpressionAsync(x => x.Email == formData.Email) is IResponseResult<Client> clientResult && clientResult.Data != null)
+            {
+                var client = clientResult.Data;
+                var message = $"{client.ClientName} added";
+                var notificationEntity = NotificationFactory.CreateDto(2, 1, message, null);
 
-        if (!result.Success)
-            return StatusCode(result.StatusCode, new { success = false, message = result.ErrorMessage });
-        
+                await _notificationService.AddNotificationAsync(notificationEntity);
+            }
+        }
+        return createResult.Success
+            ? Ok(new { success = true })
+            : StatusCode(createResult.StatusCode, new { success = false, message = createResult.ErrorMessage });
+    }
 
-        return Ok(new { success = true });
+    [HttpGet]
+    public async Task<IActionResult> GetClient(int id)
+    {
+        var result = await _clientService.GetClientByExpressionAsync(x => x.Id == id);
+
+        var client = ((ResponseResult<Client>)result).Data;
+
+        return Json(client);
     }
 
     [HttpPost]
-    public IActionResult Edit(ClientsViewModel formData)
+    public async Task<IActionResult> Edit(EditClientViewModel formData)
     {
         if (!ModelState.IsValid)
         {
@@ -58,7 +81,21 @@ public class ClientsController(IClientService clientService) : Controller
             return BadRequest(new { success = false, errors });
         }
 
-        //Send Data to Service
-        return Ok(new { success = true });
+        var dto = formData.MapTo<ClientRegistrationDto>();
+
+        var updateResult = await _clientService.UpdateClientAsync(formData.Id, dto);
+
+        return updateResult.Success
+            ? Ok(new { success = true })
+            : StatusCode(updateResult.StatusCode, new { success = false, message = updateResult.ErrorMessage });
+    }
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        var deleteResult = await _clientService.DeleteClientAsync(id);
+        if (!deleteResult.Success)
+            return StatusCode(deleteResult.StatusCode, new { success = false, message = deleteResult.ErrorMessage });
+
+        return RedirectToAction("Index");
     }
 }

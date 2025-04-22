@@ -1,5 +1,10 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model Client
+
+<article class="client-card">
+	<h3 class="client-name">@Model.ClientName</h3>
+	@await Html.PartialAsync("Partials/Clients/_ClientMoreOptions", Model)
+	<div class="client-contact">
+		<h4 class="client-email">@Model.Email</h4>
+		<h4 class="client-phone">@Model.PhoneNumber</h4>
+	</div>
+</article>

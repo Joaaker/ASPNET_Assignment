@@ -231,7 +231,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     return response.json();
                 })
                 .then(function (data) {
-                    console.log(data)
                     document.querySelector('#edit-member-modal input[name="FirstName"]').value = data.firstName || '';
                     document.querySelector('#edit-member-modal input[name="LastName"]').value = data.lastName || '';
                     document.querySelector('#edit-member-modal input[name="Email"]').value = data.email || '';
@@ -256,6 +255,77 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+//Edit Client AJAX
+document.addEventListener('DOMContentLoaded', function () {
+    const editButtons = document.querySelectorAll('.edit-client-btn');
+
+    editButtons.forEach(btn => {
+        btn.addEventListener('click', async e => {
+            e.preventDefault();
+
+            const clientId = btn.getAttribute('data-client-id');
+            try {
+                const res = await fetch('/Clients/GetMember?id=' + encodeURIComponent(clientId));
+                if (!res.ok) throw new Error(res.statusText);
+
+                const client = await res.json()
+
+                const modal = document.querySelector('#edit-client-modal');
+
+                modal.querySelector('input[name="Id"]').value = client.id || ''
+                modal.querySelector('input[name="ClientName"]').value = client.clientName || ''
+                modal.querySelector('input[name="Email"]').value = client.email || ''
+                modal.querySelector('input[name="PhoneNumber"]').value = client.phoneNumber || ''
+
+                modal.style.display = 'flex';
+                document.body.classList.add('modal-open');
+            }
+            catch (error) {
+                console.error('Error fetching client:', error)
+            }
+        })
+    })
+})
+
+//Edit Project AJAX
+document.addEventListener('DOMContentLoaded', function () {
+    const editProjButtons = document.querySelectorAll('.edit-project-btn');
+
+    editProjButtons.forEach(button => {
+        button.addEventListener('click', async function (e) {
+            e.preventDefault();
+            const projectId = button.getAttribute('data-project-id');
+
+            try {
+                const res = await fetch('/Projects/GetProjectForEdit?id=' + encodeURIComponent(projectId));
+                if (!res.ok) throw new Error(res.statusText);
+
+                const data = await res.json();
+
+                const project = data.project;
+                const status = data.status;
+                const client = data.client;
+
+                document.querySelector('#edit-project-modal input[name="Id"]').value = project.id;
+                document.querySelector('#edit-project-modal input[name="Title"]').value = project.title || '';
+                document.querySelector('#edit-project-modal input[name="Description"]').value = project.description || '';
+                document.querySelector('#edit-project-modal input[name="StartDate"]').value = project.startDate || '';
+                document.querySelector('#edit-project-modal input[name="EndDate"]').value = project.endDate || '';
+                document.querySelector('#edit-project-modal input[name="Budget"]').value = project.budget != null ? project.budget : '';
+
+                document.querySelector('#edit-project-modal select[name="ClientId"]').value = client.id;
+                document.querySelector('#edit-project-modal select[name="StatusId"]').value = status.id;
+
+                const modal = document.querySelector('#edit-project-modal');
+                modal.style.display = 'flex';
+                document.body.classList.add('modal-open');
+            }
+            catch (err) {
+                console.error('Project not found:', err);
+            }
+        });
+    });
+});
 
 //Notification dropdown
 document.addEventListener('DOMContentLoaded', () => {
