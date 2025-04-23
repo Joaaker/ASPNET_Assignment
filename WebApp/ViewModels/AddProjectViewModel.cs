@@ -45,7 +45,6 @@ public class AddProjectViewModel
             ? null!
             : new ProjectRegistrationDto
             {
-                //Project Image?
                 Title = model.Title,
                 ClientId = model.ClientId,
                 Description = model.Description,

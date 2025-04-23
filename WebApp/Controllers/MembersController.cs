@@ -54,7 +54,9 @@ public class MembersController(IMemberService memberService,
         var imageFileUri = await _fileHandler.UploadFileAsync(form.MemberImage!);
 
         MemberRegistrationFormDto dto = form;
+
         dto.ImageUri = imageFileUri;
+
         var createResult = await _memberService.CreateMemberAsync(dto);
         if (createResult.Success)
         {

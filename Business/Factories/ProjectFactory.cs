@@ -8,6 +8,7 @@ public class ProjectFactory
 {
     public static ProjectEntity CreateEntity(ProjectRegistrationDto registrationForm) => new()
     {
+        ProjectImageUri = registrationForm.ProjectImageUri ?? "https://aspnetassignment.blob.core.windows.net/images/b069ca09-4f72-4fdf-a5d3-e5b26c3aca5b.svg",
         Title = registrationForm.Title,
         Description = registrationForm.Description,
         StartDate = registrationForm.StartDate,
@@ -17,6 +18,18 @@ public class ProjectFactory
         Budget = registrationForm.Budget
     };
 
+    public static void UpdateEntity(ProjectEntity existingProject, ProjectRegistrationDto updateForm)
+    {
+        existingProject.Title = updateForm.Title;
+        existingProject.Description = updateForm.Description;
+        existingProject.StartDate = updateForm.StartDate;
+        existingProject.EndDate = updateForm.EndDate;
+        existingProject.StatusId = updateForm.StatusId;
+        existingProject.ClientId = updateForm.ClientId;
+        existingProject.Budget = updateForm.Budget;
+        if (!string.IsNullOrWhiteSpace(updateForm.ProjectImageUri))
+            existingProject.ProjectImageUri = updateForm.ProjectImageUri;
+    }
     public static Project CreateModel(ProjectEntity entity) => new()
     {
         Id = entity.Id,
@@ -30,18 +43,9 @@ public class ProjectFactory
         .Select(junctionTable => new Member
         {
             Id = junctionTable.UserId,
+            ImageUri = junctionTable.Member.ImageUri,
             FirstName = junctionTable.Member.FirstName,
             LastName = junctionTable.Member.LastName,
         })]
     };
-    public static void UpdateEntity(ProjectEntity existingProject, ProjectRegistrationDto updateForm)
-    {
-        existingProject.Title = updateForm.Title;
-        existingProject.Description = updateForm.Description;
-        existingProject.StartDate = updateForm.StartDate;
-        existingProject.EndDate = updateForm.EndDate;
-        existingProject.StatusId = updateForm.StatusId;
-        existingProject.ClientId = updateForm.ClientId;
-        existingProject.Budget = updateForm.Budget;
-    }
 }

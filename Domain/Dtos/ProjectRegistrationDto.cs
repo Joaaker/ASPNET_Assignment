@@ -4,8 +4,7 @@ namespace Domain.Dtos;
 
 public class ProjectRegistrationDto 
 {
-    //Project Image??
-    //public IFormFile ProjectImageFile { get; set; } = null!;
+    public string? ProjectImageUri { get; set; }
     public string Title { get; set; } = null!;
     public string? Description { get; set; }
     public DateOnly StartDate { get; set; }

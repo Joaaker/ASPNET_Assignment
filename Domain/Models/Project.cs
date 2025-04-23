@@ -3,8 +3,7 @@
 public class Project
 {
     public int Id { get; set; }
-    //Project Image? 
-    //public IFormFile? ProjectImage { get; set; }
+    public string ProjectImageUri { get; set; } = null!;
     public string Title { get; set; } = null!;
     public string? Description { get; set; }
     public DateOnly StartDate { get; set; }

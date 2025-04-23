@@ -15,13 +15,11 @@ public class ProjectMemberService(IProjectMemberRepository projectMemberReposito
         //Transactions are handled in ProjectService.UpdateProjectAsync()
         try
         {
-            var projectServiceJunctionEntity = await _projectMemberRepository.GetAsync(
-                x => x.ProjectId == projectId && x.UserId == memberId);
-            if (projectServiceJunctionEntity == null)
-                return ResponseResult.NotFound("ProjectService not found");
+            var projectMembersJunctionEntity = await _projectMemberRepository.GetAsync(x => x.ProjectId == projectId && x.UserId == memberId);
+            if (projectMembersJunctionEntity == null)
+                return ResponseResult.NotFound("ProjectMember not found");
 
-            await _projectMemberRepository.DeleteAsync(
-                x => x.ProjectId == projectId && x.UserId == memberId);
+            await _projectMemberRepository.DeleteAsync(x => x.ProjectId == projectId && x.UserId == memberId);
             var saveResult = await _projectMemberRepository.SaveAsync();
             if (saveResult == false)
                 throw new Exception("Error occurred while saving the deletion.");
@@ -31,15 +29,12 @@ public class ProjectMemberService(IProjectMemberRepository projectMemberReposito
         catch (Exception ex)
         {
             Debug.WriteLine(ex.Message);
-            return ResponseResult.Error($"Error deleting ProjectService :: {ex.Message}");
+            return ResponseResult.Error($"Error deleting ProjectMember :: {ex.Message}");
         }
-
     }
 
     public async Task<IResponseResult> UpdateProjectMembersAsync(int projectId, List<string> currentMemberIds, List<string> newMemberIds)
     {
-        if (currentMemberIds == null || newMemberIds == null)
-            return ResponseResult.BadRequest("Invalid update ProjectService input");
         //Transactions are handled in ProjectService.UpdateProjectAsync()
         try
         {
@@ -51,26 +46,24 @@ public class ProjectMemberService(IProjectMemberRepository projectMemberReposito
 
             foreach (string memberId in toRemove)
             {
-                var deleteResponse = DeleteProjectMembersAsync(projectId, memberId);
-                if (deleteResponse.Result.Success == false)
-                    throw new Exception("Error deleting ProjectService");
+                var deleteResponse = await DeleteProjectMembersAsync(projectId, memberId);
+                if (deleteResponse.Success == false)
+                    throw new Exception($"Error deleting ProjectMember :: {deleteResponse.ErrorMessage}");
             }
-
-            foreach (var serviceId in toAdd)
+            foreach (var memberId in toAdd)
             {
-                var newProjectServiceEntity = ProjectMembersFactory.CreateEntity(projectId, serviceId);
-                await _projectMemberRepository.AddAsync(newProjectServiceEntity);
+                var projectMembersJunctionEntity = ProjectMembersFactory.CreateEntity(projectId, memberId);
+                await _projectMemberRepository.AddAsync(projectMembersJunctionEntity);
                 var psAddSaveResult = await _projectMemberRepository.SaveAsync();
                 if (psAddSaveResult == false)
-                    throw new Exception("Error saving updated ProjectService");
+                    throw new Exception($"Error saving updated ProjectMember");
             }
-
             return ResponseResult.Ok();
         }
         catch (Exception ex)
         {
             Debug.WriteLine(ex.Message);
-            return ResponseResult.Error($"Error deleting ProjectService :: {ex.Message}");
+            return ResponseResult.Error($"Error updating ProjectMembers :: {ex.Message}");
         }
     }
 }

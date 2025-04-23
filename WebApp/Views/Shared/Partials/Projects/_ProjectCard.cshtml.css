@@ -17,9 +17,18 @@
     box-sizing: border-box;
 }
 
-.project-image{
+.project-image {
     grid-area: image;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 56px;
+    max-width: 56px;
 }
+    .project-image > img{
+        width: 100%;
+        height: 100%;
+    }
 
 .title-client {
     grid-area: title-client;
@@ -27,45 +36,45 @@
     flex-direction: column;
 }
 
-.project-title {
-    display: flex;
-    color: var(--headline);
-    font-size: 1.1rem;
-    overflow: hidden;
-}
-.project-client {
-    display: flex;
-    color: var(--grey-text);
-    font-size: .9rem;
-    overflow: hidden;
-}
+    .project-title {
+        display: flex;
+        color: var(--headline);
+        font-size: 1.1rem;
+        overflow: hidden;
+    }
+    .project-client {
+        display: flex;
+        color: var(--grey-text);
+        font-size: .9rem;
+        overflow: hidden;
+    }
 
 .project-description {
     grid-area: description;
     overflow: hidden;
 }
 
-.deadline-members {
+._bottom-container {
     grid-area: deadline-members;
     display: flex;
     justify-content: space-between;
 }
 
-.deadline {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: .5rem .8rem;
-    border-radius: 12px;
-    background-color: var(--deadline-bg);
-}
-    .deadline > i {
-        color: var(--headline);
+    .deadline {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: .5rem .8rem;
+        border-radius: 12px;
+        background-color: var(--deadline-bg);
     }
-    .deadline > span {
-        margin: 0;
-        color: var(--headline);
-    }
+        .deadline > i {
+            color: var(--headline);
+        }
+        .deadline > span {
+            margin: 0;
+            color: var(--headline);
+        }
 
 
 .deadline.near {
@@ -82,4 +91,16 @@
         display: flex;
         align-items: center;
         overflow: hidden;
+    }
+
+.avatar-img-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 30px;
+    max-width: 30px;
+}
+    .avatar-img-container > img {
+        height: 100%;
+        width: 100%;
     }

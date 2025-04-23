@@ -21,7 +21,7 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
     private readonly IMemberRepository _memberRepository = memberRepsoitory;
 
 
-    public async Task<IResponseResult> GetAllMembersAsync()
+    public async Task<IResponseResult<IEnumerable<Member>>> GetAllMembersAsync()
     {
         try
         {
@@ -32,7 +32,7 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
         catch (Exception ex)
         {
             Debug.WriteLine(ex.Message);
-            return ResponseResult.Error("Error retrieving members");
+            return ResponseResult<IEnumerable<Member>>.Error("Error retrieving members");
         }
     }
 

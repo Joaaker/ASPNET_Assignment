@@ -9,6 +9,9 @@
 
     var clientResult = await clientService.GetAllClientsAsync();
     var clients = clientResult.Data;
+
+    var membersResult = await memberService.GetAllMembersAsync();
+    var members = membersResult.Data;
 }
 
 <div id="add-project-modal" class="_modal">
@@ -85,14 +88,28 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="form-label">Members</div>
-                <div id="tagged-users" class="form-input form-tag-select">
-                    <input type="text" id="user-search" class="form-tag-input" placeholder="Add member..." />
-                    <label for="user-search" class="fa-solid fa-ellipsis"></label>
-                    <div id="user-search-results" class="search-results"></div>
+            <div class="mb-3">
+                <label asp-for="MembersIds" class="form-label"></label>
+                <div class="field-group">
+                    <select asp-for="MembersIds" class="form-control">
+                        <option selected disabled hidden>---- Select a member ----</option>
+                        @foreach (var member in members ?? [])
+                        {
+                            <option value="@member.Id">@member.FirstName @member.LastName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="MembersIds"></span>
                 </div>
             </div>
+
+            @* <div class="form-group"> *@
+            @*     <div class="form-label">Members</div> *@
+            @*     <div id="tagged-users" class="form-input form-tag-select"> *@
+            @*         <input type="text" id="user-search" class="form-tag-input" placeholder="Add member..." /> *@
+            @*         <label for="user-search" class="fa-solid fa-ellipsis"></label> *@
+            @*         <div id="user-search-results" class="search-results"></div> *@
+            @*     </div> *@
+            @* </div> *@
 
             <div class="mb-3">
                 <label asp-for="Budget" class="form-label"></label>

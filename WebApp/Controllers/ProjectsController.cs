@@ -1,9 +1,7 @@
 ﻿using Business.Factories;
 using Business.Interfaces;
-using Business.Models;
-using Business.Services;
 using Domain.Dtos;
-using Domain.Extensions;
+using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,13 +12,14 @@ using WebApp.ViewModels;
 namespace WebApp.Controllers;
 
 [Authorize]
-public class ProjectsController(IProjectService projectService, IHubContext<NotificationHub> notficationHub, INotificationService notificationService, IClientService clientService, IStatusService statusService) : Controller
+public class ProjectsController(IProjectService projectService, IHubContext<NotificationHub> notficationHub, INotificationService notificationService, IClientService clientService, IStatusService statusService,IFileHandler fileHandler) : Controller
 {
     private readonly IProjectService _projectService = projectService;
     private readonly IHubContext<NotificationHub> _notificationHub = notficationHub;
     private readonly INotificationService _notificationService = notificationService;
     private readonly IClientService _clientService = clientService;
     private readonly IStatusService _statusService = statusService;
+    private readonly IFileHandler _fileHandler = fileHandler;
 
     public IActionResult Index()
     {
@@ -42,7 +41,11 @@ public class ProjectsController(IProjectService projectService, IHubContext<Noti
             return BadRequest(new { success = false, errors });
         }
 
+        var imageFileUri = await _fileHandler.UploadFileAsync(formData.ProjectImage!);
+
         ProjectRegistrationDto dto = formData;
+        
+        dto.ProjectImageUri = imageFileUri;
 
         var createResult = await _projectService.CreateProjectAsync(dto);
         if (createResult.Success)
@@ -96,7 +99,11 @@ public class ProjectsController(IProjectService projectService, IHubContext<Noti
             return BadRequest(new { success = false, errors });
         }
 
-       ProjectRegistrationDto dto = formData;
+        var imageFileUri = await _fileHandler.UploadFileAsync(formData.ProjectImage!);
+
+        ProjectRegistrationDto dto = formData;
+
+        dto.ProjectImageUri = imageFileUri;
 
         var updateResult = await _projectService.UpdateProjectAsync(formData.Id, dto);
 

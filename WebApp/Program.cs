@@ -18,7 +18,6 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 var connectionString = builder.Configuration.GetConnectionString("AzureBlobStorage");
 var containerName = "images";
-
 builder.Services.AddScoped<IFileHandler>(_ => new AzureFileHandler(connectionString!, containerName));
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 

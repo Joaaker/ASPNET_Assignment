@@ -3,11 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Data.Entities;
 
-//Image?
 public class ProjectEntity
 {
     [Key]
     public int Id { get; set; }
+
+    public string ProjectImageUri { get; set; } = null!;
 
     public string Title { get; set; } = null!;
 
