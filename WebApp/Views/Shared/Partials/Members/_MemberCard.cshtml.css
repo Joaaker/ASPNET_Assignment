@@ -2,44 +2,62 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1.5rem;
-    gap: 1rem;
+    padding: 1rem 1rem 1.5rem 1rem;
+    gap: 1.4rem;
     width: 300px;
+    background-color: var(--card-background);
+    border-radius: 1rem;
 }
 
-._btn-container{
+._container-btn-image {
     display: flex;
     width: 100%;
-    justify-content: flex-end;
+    flex-direction: column;
+    align-items: center;
 }
+
+    ._btn-container {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .member-image {
+        max-width: 150px;
+        max-height: 150px;
+    }
+
+.member-name {
+    margin: 0;
+}
+
+.job-title {
+    padding: .6rem 1rem;
+    border-radius: 1rem;
+    background-color: var(--job-title-background);
+    background-color: var(--external-sign-btn);
+}
+
+    .job-title >.job-title-text {
+        color: var(--dark-100);
+        margin: 0;
+    }
+
+.contact-information {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .6rem;
+}
+    .member-email {
+        margin: 0;
+    }
+
+    .member-phone {
+        margin: 0;
+    }
 
 .msg-btn {
     background-color: var(--external-sign-btn);
     width: 100%;
-}
-
-.member-image {
-}
-
-.member-name{
-
-}
-
-.job-title {
-
-}
-
-    .job-title >.job-title-text {
-    }
-
-.member-email {
-
-}
-
-.member-phone {
-
-}
-
-.Member-members{
-
 }

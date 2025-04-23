@@ -240,13 +240,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.querySelector('#edit-member-modal input[name="City"]').value = data.city || '';
                     document.querySelector('#edit-member-modal input[name="PostalCode"]').value = data.postalCode || '';
                     document.querySelector('#edit-member-modal input[name="DateOfBirth"]').value = data.dateOfBirth || '';
-
-                    var idField = document.querySelector('#edit-member-modal input[name="Id"]');
-                    if (idField) {
-                        idField.value = data.id;
-                    }
-
-
+                    document.querySelector('#edit-member-modal input[name="Id"]').value = data.id;
                 })
                 .catch(function (error) {
                     console.error('Error fetching member: ', error);

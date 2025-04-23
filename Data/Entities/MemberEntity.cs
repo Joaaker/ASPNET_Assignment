@@ -2,9 +2,10 @@
 
 namespace Data.Entities;
 
-//Image?
 public class MemberEntity : IdentityUser
 {
+    public string? ImageUri { get; set; }
+
     [ProtectedPersonalData]
     public string? FirstName { get; set; }
 

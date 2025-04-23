@@ -10,7 +10,7 @@ public class ProjectMemberService(IProjectMemberRepository projectMemberReposito
 {
     private readonly IProjectMemberRepository _projectMemberRepository = projectMemberRepository;
 
-    public async Task<IResponseResult> DeleteProjectServiceAsync(int projectId, string memberId)
+    public async Task<IResponseResult> DeleteProjectMembersAsync(int projectId, string memberId)
     {
         //Transactions are handled in ProjectService.UpdateProjectAsync()
         try
@@ -36,7 +36,7 @@ public class ProjectMemberService(IProjectMemberRepository projectMemberReposito
 
     }
 
-    public async Task<IResponseResult> UpdateProjectServicesAsync(int projectId, List<string> currentMemberIds, List<string> newMemberIds)
+    public async Task<IResponseResult> UpdateProjectMembersAsync(int projectId, List<string> currentMemberIds, List<string> newMemberIds)
     {
         if (currentMemberIds == null || newMemberIds == null)
             return ResponseResult.BadRequest("Invalid update ProjectService input");
@@ -51,7 +51,7 @@ public class ProjectMemberService(IProjectMemberRepository projectMemberReposito
 
             foreach (string memberId in toRemove)
             {
-                var deleteResponse = DeleteProjectServiceAsync(projectId, memberId);
+                var deleteResponse = DeleteProjectMembersAsync(projectId, memberId);
                 if (deleteResponse.Result.Success == false)
                     throw new Exception("Error deleting ProjectService");
             }

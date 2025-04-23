@@ -13,5 +13,4 @@ public class NotificationHub : Hub
     {
         await Clients.All.SendAsync("AdminReceiveNotification", notification);
     }
-
 }

@@ -35,7 +35,7 @@
 }
 .project-client {
     display: flex;
-    color: var(--status-btn-text);
+    color: var(--grey-text);
     font-size: .9rem;
     overflow: hidden;
 }

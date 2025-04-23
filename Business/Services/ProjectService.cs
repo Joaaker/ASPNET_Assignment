@@ -134,9 +134,9 @@ public class ProjectService(IProjectRepository projectRepository, IProjectMember
                 .Select(junctionTable => junctionTable.UserId)
                 .ToList();
 
-            var projectServicesUpdate = _projectMemberService.UpdateProjectServicesAsync(
+            var projectMembersUpdate = _projectMemberService.UpdateProjectMembersAsync(
                 id, existingMemberIds, updateForm.MembersIds);
-            if (projectServicesUpdate.Result.Success == false)
+            if (projectMembersUpdate.Result.Success == false)
                 throw new Exception("Error updating ProjectServices");
 
             await _projectRepository.CommitTransactionAsync();

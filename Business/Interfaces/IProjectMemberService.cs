@@ -4,6 +4,6 @@ namespace Business.Interfaces;
 
 public interface IProjectMemberService
 {
-    Task<IResponseResult> UpdateProjectServicesAsync(int projectId, List<string> currentMemberIds, List<string> newMemberIds);
-    Task<IResponseResult> DeleteProjectServiceAsync(int projectId, string memberId);
+    Task<IResponseResult> UpdateProjectMembersAsync(int projectId, List<string> currentMemberIds, List<string> newMemberIds);
+    Task<IResponseResult> DeleteProjectMembersAsync(int projectId, string memberId);
 }

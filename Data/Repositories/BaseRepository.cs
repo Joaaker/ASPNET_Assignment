@@ -200,10 +200,7 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
 
         try
         {
-            var existingEntity = await _dbSet.FirstOrDefaultAsync(expression);
-            if (existingEntity == null)
-                throw new Exception("Cannot find existing entity");
-
+            var existingEntity = await _dbSet.FirstOrDefaultAsync(expression) ?? throw new Exception("Cannot find existing entity");
             _context.Entry(existingEntity).CurrentValues.SetValues(entityToUpdate);
             return true;
         }
@@ -221,10 +218,7 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
 
         try
         {
-            var existingEntity = await _dbSet.FirstOrDefaultAsync(expression);
-            if (existingEntity == null)
-                throw new Exception("Cannot find existing entity");
-
+            var existingEntity = await _dbSet.FirstOrDefaultAsync(expression) ?? throw new Exception("Cannot find existing entity");
             _dbSet.Remove(existingEntity);
             return true;
         }

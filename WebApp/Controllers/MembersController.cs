@@ -2,21 +2,28 @@
 using Business.Interfaces;
 using Business.Models;
 using Domain.Dtos;
+using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using WebApp.Hubs;
 using WebApp.ViewModels;
 
 namespace WebApp.Controllers;
 
 [Authorize(Roles = "Admin")]
-public class MembersController(IMemberService memberService, IHubContext<NotificationHub> notficationHub, INotificationService notificationService) : Controller
+public class MembersController(IMemberService memberService,
+    IHubContext<NotificationHub> notficationHub, 
+    INotificationService notificationService, 
+    IFileHandler fileHandler) : Controller
+
 {
     private readonly IMemberService _memberService = memberService;
     private readonly IHubContext<NotificationHub> _notificationHub = notficationHub;
     private readonly INotificationService _notificationService = notificationService;
+    private readonly IFileHandler _fileHandler = fileHandler;
 
     public async Task<IActionResult> Index()
     {
@@ -44,8 +51,10 @@ public class MembersController(IMemberService memberService, IHubContext<Notific
             return BadRequest(new { success = false, errors });
         }
 
-        MemberRegistrationFormDto dto = form;
+        var imageFileUri = await _fileHandler.UploadFileAsync(form.MemberImage!);
 
+        MemberRegistrationFormDto dto = form;
+        dto.ImageUri = imageFileUri;
         var createResult = await _memberService.CreateMemberAsync(dto);
         if (createResult.Success)
         {
@@ -68,7 +77,12 @@ public class MembersController(IMemberService memberService, IHubContext<Notific
         if (!ModelState.IsValid)
             return BadRequest(new { success = false, message = "ModelState not valid." });
 
+        var imageFileUri = await _fileHandler.UploadFileAsync(formData.MemberImage!);
+
         MemberRegistrationFormDto dto = formData;
+
+        dto.ImageUri = imageFileUri;
+
         var updateResult = await _memberService.UpdateMemberAsync(formData.Id, dto);
 
         var notificationMessage = updateResult.Success
@@ -124,6 +138,23 @@ public class MembersController(IMemberService memberService, IHubContext<Notific
             return BadRequest(new { success = false, message = "An unexpected error occurred while processing the request." });
         }
     }
+
+    [HttpGet]
+    public async Task<JsonResult> SearchUsers(string term)
+    {
+        if (string.IsNullOrWhiteSpace(term))
+            return Json(new List<object>());
+
+        //var users = await _context.Users
+        //    .Where(x => x.FirstName.Contains(term) || x.LastName.Contains(term) || x.Email.Contains(term))
+        //    .Select(x => new { x.Id, x.ImageUrl, FullName = x.FirstName + " " + x.LastName })
+        //    .ToListAsync();
+        await Task.Delay(5000); 
+
+        //return Json(users);
+        return Json(new List<object>());
+    }
+
 
     //[HttpGet]
     //public async Task<IActionResult> DeleteMember(string id)

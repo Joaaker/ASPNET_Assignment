@@ -4,11 +4,7 @@ using Business.Interfaces;
 using Business.Models;
 using Data.Entities;
 using Data.Interfaces;
-using Data.Repositories;
 using Domain.Dtos;
-using Domain.Models;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Business.Services;
 
@@ -59,7 +55,6 @@ public class NotificationService(INotificationRepository notificationRepository,
         var entites = await _notificationRepository.GetNotificationsByUserId(userId);
         return ResponseResult<IEnumerable<NotificationEntity>>.Ok(entites);
     }
-
 
     public async Task<IResponseResult> DismissNotificationAsync(string notificationId, string userId)
     {

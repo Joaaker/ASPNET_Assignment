@@ -3,7 +3,7 @@
 public class Member
 {
     public string Id { get; set; } = null!;
-    //Member Image??
+    public string? ImageUri { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public string? Email { get; set; } = null!;

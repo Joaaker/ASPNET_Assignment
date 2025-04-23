@@ -2,8 +2,8 @@
 
 public class MemberRegistrationFormDto
 {
-    //Member Image??
     public string RoleName { get; set; } = null!;
+    public string? ImageUri { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public string Email { get; set; } = null!;

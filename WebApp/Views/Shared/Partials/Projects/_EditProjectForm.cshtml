@@ -98,43 +98,43 @@
 	</div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const editProjButtons = document.querySelectorAll('.edit-project-btn');
+@* <script> *@
+@*     document.addEventListener('DOMContentLoaded', function () { *@
+@*       const editProjButtons = document.querySelectorAll('.edit-project-btn'); *@
 
-      editProjButtons.forEach(button => {
-        button.addEventListener('click', async function(e) {
-          e.preventDefault();
-          const projectId = button.getAttribute('data-project-id');
+@*       editProjButtons.forEach(button => { *@
+@*         button.addEventListener('click', async function(e) { *@
+@*           e.preventDefault(); *@
+@*           const projectId = button.getAttribute('data-project-id'); *@
 
-          try {
-            const res  = await fetch('/Projects/GetProjectForEdit?id=' + encodeURIComponent(projectId));
-            if (!res.ok) throw new Error(res.statusText);
+@*           try { *@
+@*             const res  = await fetch('/Projects/GetProjectForEdit?id=' + encodeURIComponent(projectId)); *@
+@*             if (!res.ok) throw new Error(res.statusText); *@
 
-            const data = await res.json();
+@*             const data = await res.json(); *@
 
-            const proj   = data.project;
-            const stat   = data.status;
-            const client = data.client;
+@*             const project   = data.project; *@
+@*             const status   = data.status; *@
+@*             const client = data.client; *@
 
-            document.querySelector('#edit-project-modal input[name="Id"]').value          = proj.id;
-            document.querySelector('#edit-project-modal input[name="Title"]').value       = proj.title      || '';
-            document.querySelector('#edit-project-modal input[name="Description"]').value = proj.description || '';
-            document.querySelector('#edit-project-modal input[name="StartDate"]').value   = proj.startDate  || '';
-            document.querySelector('#edit-project-modal input[name="EndDate"]').value     = proj.endDate    || '';
-            document.querySelector('#edit-project-modal input[name="Budget"]').value      = proj.budget     != null ? proj.budget : '';
+@*             document.querySelector('#edit-project-modal input[name="Id"]').value          = project.id; *@
+@*             document.querySelector('#edit-project-modal input[name="Title"]').value       = project.title      || ''; *@
+@*             document.querySelector('#edit-project-modal input[name="Description"]').value = project.description || ''; *@
+@*             document.querySelector('#edit-project-modal input[name="StartDate"]').value   = project.startDate  || ''; *@
+@*             document.querySelector('#edit-project-modal input[name="EndDate"]').value     = project.endDate    || ''; *@
+@*             document.querySelector('#edit-project-modal input[name="Budget"]').value      = project.budget     != null ? project.budget : ''; *@
 
-            document.querySelector('#edit-project-modal select[name="ClientId"]').value = client.id;
-            document.querySelector('#edit-project-modal select[name="StatusId"]').value = stat.id;
+@*             document.querySelector('#edit-project-modal select[name="ClientId"]').value = client.id; *@
+@*             document.querySelector('#edit-project-modal select[name="StatusId"]').value = status.id; *@
 
-            const modal = document.querySelector('#edit-project-modal');
-            modal.style.display = 'flex';
-            document.body.classList.add('modal-open');
-          }
-          catch (err) {
-            console.error('Kunde inte hämta projekt:', err);
-          }
-        });
-      });
-    });
-</script>
+@*             const modal = document.querySelector('#edit-project-modal'); *@
+@*             modal.style.display = 'flex'; *@
+@*             document.body.classList.add('modal-open'); *@
+@*           } *@
+@*           catch (err) { *@
+@*             console.error('Project not found:', err); *@
+@*           } *@
+@*         }); *@
+@*       }); *@
+@*     }); *@
+@* </script> *@

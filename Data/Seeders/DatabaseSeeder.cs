@@ -1,6 +1,7 @@
 ﻿using Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using static System.Net.WebRequestMethods;
 
 namespace Data.Seeders;
 
@@ -34,6 +35,7 @@ public class DatabaseSeeder
             {
                 UserName = adminEmail,
                 Email = adminEmail,
+                ImageUri = "https://aspnetassignment.blob.core.windows.net/images/1d0e95a8-e947-4877-8857-c15de4e55a87.svg",
                 FirstName = "System",
                 LastName = "Admin"
             };

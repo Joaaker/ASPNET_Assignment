@@ -1,13 +1,12 @@
 ﻿using Domain.Models;
 
-
 namespace WebApp.ViewModels;
 
 public class MembersViewModel
 {
     public string? Id { get; set; }
 
-    public IFormFile? MemberImage { get; set; }
+    public string? ImageUri { get; set; }
 
     public string FirstName { get; set; } = null!;
 
@@ -27,6 +26,7 @@ public class MembersViewModel
             : new MembersViewModel
             {
                 Id = model.Id,
+                ImageUri = model.ImageUri,
                 FirstName = model.FirstName!,
                 LastName = model.LastName!,
                 Email = model.Email!,

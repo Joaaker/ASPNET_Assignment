@@ -48,8 +48,9 @@ public class AddMemberViewModel
     [Required(ErrorMessage = "Required")]
     public DateOnly DateOfBirth { get; set; }
 
-
-    //Lägg till Account Role
+    //[Display(Name = "Account Role")]
+    //[Required(ErrorMessage = "Required")]
+    //public string RoleName { get; set; } = null!;
 
 
     public static implicit operator MemberRegistrationFormDto(AddMemberViewModel model)

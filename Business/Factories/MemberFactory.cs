@@ -1,6 +1,7 @@
 ﻿using Data.Entities;
 using Domain.Dtos;
 using Domain.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Business.Factories;
 
@@ -8,6 +9,7 @@ public class MemberFactory
 {
     public static MemberEntity CreateEntity(MemberRegistrationFormDto registrationForm) => new()
     {
+        ImageUri = registrationForm.ImageUri ?? "https://aspnetassignment.blob.core.windows.net/images/1d0e95a8-e947-4877-8857-c15de4e55a87.svg",
         UserName = registrationForm.Email,
         Email = registrationForm.Email,
         PhoneNumber = registrationForm.PhoneNumber,
@@ -20,6 +22,7 @@ public class MemberFactory
     public static Member CreateModel(MemberEntity memberEntity) => new()
     {
         Id = memberEntity.Id,
+        ImageUri = memberEntity.ImageUri,
         Email = memberEntity.Email!,
         FirstName = memberEntity.FirstName,
         LastName = memberEntity.LastName,
@@ -40,5 +43,7 @@ public class MemberFactory
         currentEntity.PhoneNumber = updateForm.PhoneNumber;
         currentEntity.DateOfBirth = updateForm.DateOfBirth;
         currentEntity.JobTitle = updateForm.JobTitle;
+        if (!string.IsNullOrWhiteSpace(updateForm.ImageUri))
+            currentEntity.ImageUri = updateForm.ImageUri;
     }
 }
