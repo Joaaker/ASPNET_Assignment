@@ -1,6 +1,11 @@
-﻿<div class="user-information">
+﻿@{
+    var userImg = User.FindFirstValue("ImageUri") ?? "https://aspnetassignment.blob.core.windows.net/images/1d0e95a8-e947-4877-8857-c15de4e55a87.svg";
+    var userFullName = (User.FindFirstValue(ClaimTypes.GivenName) ?? "User") + " " + (User.FindFirstValue(ClaimTypes.Surname) ?? "Full Name");
+}
+
+<div class="user-information">
     <div class="user-avatar">
-        <img src="@Url.Content("~/Images/tinyAvatar.svg")" alt="Avatar Image" />
+        <img src="@userImg" alt="User-Avatar Image"/>
     </div>
-    <span class="user-name">Tommy Mattin-Lassei</span>
+    <span class="user-name">@userFullName</span>
 </div>

@@ -1,5 +1,8 @@
-﻿<div class="search">
-	@* TODO make a working search *@
+﻿@{
+	var userImg = User.FindFirstValue("ImageUri") ?? "https://aspnetassignment.blob.core.windows.net/images/1d0e95a8-e947-4877-8857-c15de4e55a87.svg";
+}
+
+<div class="search">
 	<i class="fa-solid fa-magnifying-glass"></i>
 	<input type="text" placeholder="Search anything.."/>
 </div>
@@ -11,8 +14,6 @@
 	</div>
 	<span class="separator"></span>
 	<div class="avatar-image">
-		@* TO DO *@
-		@* Temporary, change to dynamic avatar based on the user that is logged in *@
-		<img src="@Url.Content("~/Images/tinyAvatar.svg")" alt="My Image" />
+		<img src="@userImg" alt="User-Avatar Image" />
 	</div>
 </div>

@@ -33,7 +33,10 @@ public class EditMemberViewModel
     [Required(ErrorMessage = "Required")]
     public string JobTitle { get; set; } = null!;
 
-    //Lägg till Account Role
+    [Display(Name = "Account Role")]
+    [Required(ErrorMessage = "Required")]
+    public string RoleName { get; set; } = null!;
+
 
     [Display(Name = "Street Name", Prompt = "Enter street name")]
     [Required(ErrorMessage = "Required")]
@@ -67,7 +70,7 @@ public class EditMemberViewModel
                 PostalCode = model.PostalCode,
                 City = model.City,
                 DateOfBirth = model.DateOfBirth,
-                RoleName = "User"
+                RoleName = model.RoleName
             };
     }
 }

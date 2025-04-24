@@ -88,7 +88,10 @@ public class ProjectService(IProjectRepository projectRepository, IProjectMember
     {
         try
         {
-            var projects = await _projectRepository.GetAllModelsAsync();
+            var entities = await _projectRepository.GetAllAsync();
+
+            var projects = entities.Select(e => ProjectFactory.CreateModel(e));
+
             return ResponseResult<IEnumerable<Project>>.Ok(projects);
         }
         catch (Exception ex)
@@ -97,6 +100,20 @@ public class ProjectService(IProjectRepository projectRepository, IProjectMember
             return ResponseResult<IEnumerable<Project>>.Error("Error retrieving projects");
         }
     }
+
+    //public async Task<IResponseResult<IEnumerable<Project>>> GetAllProjectsAsync()
+    //{
+    //    try
+    //    {
+    //        var projects = await _projectRepository.GetAllModelsAsync();
+    //        return ResponseResult<IEnumerable<Project>>.Ok(projects);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Debug.WriteLine(ex.Message);
+    //        return ResponseResult<IEnumerable<Project>>.Error("Error retrieving projects");
+    //    }
+    //}
 
     public async Task<IResponseResult> GetProjectByExpressionAsync(Expression<Func<ProjectEntity, bool>> expression)
     {

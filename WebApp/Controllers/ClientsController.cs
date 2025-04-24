@@ -18,7 +18,6 @@ public class ClientsController(IClientService clientService, INotificationServic
 
     public IActionResult Index()
     {
-
         return View();
     }
 
@@ -45,10 +44,9 @@ public class ClientsController(IClientService clientService, INotificationServic
             if (await _clientService.GetClientByExpressionAsync(x => x.Email == formData.Email) is IResponseResult<Client> clientResult && clientResult.Data != null)
             {
                 var client = clientResult.Data;
-                var message = $"{client.ClientName} added";
-                var notificationEntity = NotificationFactory.CreateDto(2, 1, message, null);
+                var notificationDto = NotificationFactory.CreateDto(2, 1, $"{client.ClientName} added", "https://aspnetassignment.blob.core.windows.net/images/b069ca09-4f72-4fdf-a5d3-e5b26c3aca5b.svg");
 
-                await _notificationService.AddNotificationAsync(notificationEntity);
+                await _notificationService.AddNotificationAsync(notificationDto);
             }
         }
         return createResult.Success

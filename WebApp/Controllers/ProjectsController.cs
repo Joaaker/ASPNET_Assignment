@@ -54,7 +54,7 @@ public class ProjectsController(IProjectService projectService, IHubContext<Noti
             {
                 var project = projectResult.Data;
                 var message = $"{project.Title} added";
-                var notificationEntity = NotificationFactory.CreateDto(1, 2, message, null);
+                var notificationEntity = NotificationFactory.CreateDto(1, 2, message, project.ProjectImageUri);
 
                 await _notificationService.AddNotificationAsync(notificationEntity);
             }

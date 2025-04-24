@@ -231,6 +231,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     return response.json();
                 })
                 .then(function (data) {
+                    console.log(data)
                     document.querySelector('#edit-member-modal input[name="FirstName"]').value = data.firstName || '';
                     document.querySelector('#edit-member-modal input[name="LastName"]').value = data.lastName || '';
                     document.querySelector('#edit-member-modal input[name="Email"]').value = data.email || '';
@@ -241,6 +242,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.querySelector('#edit-member-modal input[name="PostalCode"]').value = data.postalCode || '';
                     document.querySelector('#edit-member-modal input[name="DateOfBirth"]').value = data.dateOfBirth || '';
                     document.querySelector('#edit-member-modal input[name="Id"]').value = data.id;
+                    document.querySelector('#edit-member-modal select[name="RoleName"]').value = data.roleName;
                 })
                 .catch(function (error) {
                     console.error('Error fetching member: ', error);
@@ -484,11 +486,14 @@ function updateRelativeTimes() {
         } else if (diffDays < 7) {
             relativeTime = diffDays + ' days ago';
         } else {
-            relativeTime = diffWeeks + ' weeks ago';
+            if (diffWeeks === 1) {
+                relativeTime = '1 week ago';
+            } else {
+                relativeTime = diffWeeks + ' weeks ago';
+            }
         }
-
         el.textContent = relativeTime;
-    });
+    })
 }
 
 function updateDeadline() {
@@ -516,16 +521,17 @@ function updateDeadline() {
 }
 
 function formatFuture(diffMs) {
-  const sec   = Math.floor(diffMs / 1000);
-    const min   = Math.floor(sec / 60);
-    const hrs   = Math.floor(min / 60);
-    const days  = Math.floor(hrs / 24);
+    const sec = Math.floor(diffMs / 1000);
+    const min = Math.floor(sec / 60);
+    const hrs = Math.floor(min / 60);
+    const days = Math.floor(hrs / 24);
     const weeks = Math.floor(days / 7);
 
-    if (days < 2)   return '1 day left';
-    if (days < 7)   return days + ' days left';
+    if (days < 2) return '1 day left';
+    if (days < 7) return days + ' days left';
+    if (weeks === 1) return '1 week left';
     return weeks + ' weeks left';
-};
+}
 
 //Project status buttons
 document.addEventListener('DOMContentLoaded', () => {

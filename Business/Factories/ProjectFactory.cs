@@ -34,6 +34,7 @@ public class ProjectFactory
     {
         Id = entity.Id,
         Title = entity.Title,
+        ProjectImageUri = entity.ProjectImageUri,
         Description = entity.Description,
         StartDate = entity.StartDate,
         EndDate = entity.EndDate,

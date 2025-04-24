@@ -19,9 +19,11 @@
                 <span class="notification-number">0</span>
             </div>
         </div>
-        <div class="dropdown-divider"></div>
-        <div class="notifications">
+        <div class="divider">
+            <hr />
+        </div>
 
+        <div class="notifications">
             @foreach (var notification in notifications)
             {
                 <div class="notification-item" data-id="@notification.Id">

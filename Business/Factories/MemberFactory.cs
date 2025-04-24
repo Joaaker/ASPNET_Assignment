@@ -3,7 +3,6 @@ using Domain.Dtos;
 using Domain.Models;
 
 namespace Business.Factories;
-
 public class MemberFactory
 {
     public static MemberEntity CreateEntity(MemberRegistrationFormDto registrationForm) => new()

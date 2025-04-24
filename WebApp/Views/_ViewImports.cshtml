@@ -1,11 +1,16 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@using WebApp.ViewModels
+@using Domain.Models
+@using Data.Entities
+@using Business.Interfaces
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Identity
+
 @inject IMemberService memberService
 @inject IClientService clientService
 @inject IProjectService projectService
 @inject IStatusService statusService
+@inject IRoleService roleService
 @inject INotificationService notificationService
-
-@using WebApp.ViewModels
-@using Domain.Models
-@using Business.Interfaces
-@using System.Security.Claims
+@* @inject UserManager<MemberEntity> UserManager *@

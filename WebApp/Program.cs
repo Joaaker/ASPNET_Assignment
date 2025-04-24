@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Business.Interfaces;
 using Business.Services;
+using Business.Factories;
 using Data.Contexts;
 using Data.Entities;
 using Data.Interfaces;
@@ -14,11 +15,14 @@ using Domain.Interfaces;
 using Domain.Handlers;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
+
 var connectionString = builder.Configuration.GetConnectionString("AzureBlobStorage");
 var containerName = "images";
 builder.Services.AddScoped<IFileHandler>(_ => new AzureFileHandler(connectionString!, containerName));
+
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<INotificationService, NotificationService>();
@@ -28,6 +32,7 @@ builder.Services.AddScoped<IProjectMemberService, ProjectMemberService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IStatusService, StatusService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<INotificationDismissRepository, NotificationDismissRepository>();
@@ -46,6 +51,8 @@ builder.Services.AddIdentity<MemberEntity, IdentityRole>(options =>
 })
     .AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddScoped<IUserClaimsPrincipalFactory<MemberEntity>, MemberClaimsPrincipalFactory>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -96,6 +103,7 @@ builder.Services.AddAuthentication(options =>
 });
 
 var app = builder.Build();
+
 app.UseHsts();
 app.UseHttpsRedirection();
 app.UseRouting();

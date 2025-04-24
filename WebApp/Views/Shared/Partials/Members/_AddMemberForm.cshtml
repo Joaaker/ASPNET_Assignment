@@ -1,11 +1,8 @@
 ﻿@model AddMemberViewModel
 
 @{
-    // var statusesResult = await statusService.GetAllStatusesAsync();
-    // var statuses = statusesResult.Data;
-
-
-    // HÄMTA ROLES
+    var roleResult = await roleService.GetAllRolessAsync();
+    var roles = roleResult.Data;
 }
 
 <div id="add-member-modal" class="_modal">
@@ -66,19 +63,19 @@
                 </div>
             </div>
 
-            @* <div class="mb-3"> *@
-            @*     <label asp-for="RoleName" class="form-label"></label> *@
-            @*     <div class="field-group"> *@
-            @*         <select asp-for="RoleName" class="form-control"> *@
-            @*             <option selected disabled hidden>---- Select a account role ----</option> *@
-            @*             @foreach (var status in statuses ?? []) *@
-            @*             { *@
-            @*                 <option value="@status.Id">@status.StatusName</option> *@
-            @*             } *@
-            @*         </select> *@
-            @*         <span asp-validation-for="RoleName"></span> *@
-            @*     </div> *@
-            @* </div> *@
+             <div class="mb-3"> 
+                <label asp-for="RoleName" class="form-label"></label> 
+                <div class="field-group"> 
+                    <select asp-for="RoleName" class="form-control"> 
+                        <option selected disabled hidden>---- Select account role ----</option>
+                        @foreach (var role in roles ?? [])
+                            { 
+                                <option value="@role.Name">@role.Name</option> 
+                            } 
+                   </select> 
+                   <span asp-validation-for="RoleName"></span> 
+                </div> 
+             </div> 
 
             <div class="mb-3">
                 <label asp-for="StreetName" class="form-label"></label>

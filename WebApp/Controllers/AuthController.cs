@@ -135,7 +135,7 @@ public class AuthController(IAuthService authService,
             string email = info.Principal.FindFirstValue(ClaimTypes.Email)!;
             string username = $"ext_{info.LoginProvider.ToLower()}_{email}";
 
-            var user = new MemberEntity { UserName = username, Email = email, FirstName = firstName, LastName = lastName };
+            var user = new MemberEntity { UserName = username, Email = email, FirstName = firstName, LastName = lastName, ImageUri = "https://aspnetassignment.blob.core.windows.net/images/1d0e95a8-e947-4877-8857-c15de4e55a87.svg" };
 
             var identityResult = await _userManager.CreateAsync(user);
             if (identityResult.Succeeded)

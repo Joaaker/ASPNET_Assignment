@@ -48,9 +48,9 @@ public class AddMemberViewModel
     [Required(ErrorMessage = "Required")]
     public DateOnly DateOfBirth { get; set; }
 
-    //[Display(Name = "Account Role")]
-    //[Required(ErrorMessage = "Required")]
-    //public string RoleName { get; set; } = null!;
+    [Display(Name = "Account Role")]
+    [Required(ErrorMessage = "Required")]
+    public string RoleName { get; set; } = null!;
 
 
     public static implicit operator MemberRegistrationFormDto(AddMemberViewModel model)
@@ -68,7 +68,7 @@ public class AddMemberViewModel
                 PostalCode = model.PostalCode,
                 City = model.City,
                 DateOfBirth = model.DateOfBirth,
-                RoleName = "User"
+                RoleName = model.RoleName
             };
     }
 }

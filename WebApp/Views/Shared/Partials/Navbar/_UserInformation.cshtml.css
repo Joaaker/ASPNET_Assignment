@@ -5,8 +5,22 @@
     background-color: var(--user-background);
     border-radius: 12px;
     padding: .7rem 1rem;
+    width: 100%;
 }
 
     .user-information > span {
+        justify-self: stretch;
         color: var(--headline);
     }
+
+    .user-avatar{
+        display: flex;
+        max-height: 40px;
+        max-width: 40px;
+        justify-content: center;
+        align-items: center;
+    }
+        .user-avatar > img {
+            height: 40px;
+            width: 40px;
+        }

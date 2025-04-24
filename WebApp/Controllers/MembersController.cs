@@ -7,7 +7,6 @@ using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
 using WebApp.Hubs;
 using WebApp.ViewModels;
 
@@ -63,8 +62,7 @@ public class MembersController(IMemberService memberService,
             if (await _memberService.GetMemberByExpressionAsync(x => x.Email == form.Email) is IResponseResult<Member> memberResult && memberResult.Data != null)
             {
                 var member = memberResult.Data;
-                var message = $"{member.FirstName} {member.LastName} added";
-                var notificationEntity = NotificationFactory.CreateDto(2, 1, message, null);
+                var notificationEntity = NotificationFactory.CreateDto(2, 1, $"{member.FirstName} {member.LastName} added", member.ImageUri);
 
                 await _notificationService.AddNotificationAsync(notificationEntity);
             }

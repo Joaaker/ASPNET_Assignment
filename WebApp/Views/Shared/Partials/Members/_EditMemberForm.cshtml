@@ -1,5 +1,10 @@
 ﻿@model EditMemberViewModel
 
+@{
+    var roleResult = await roleService.GetAllRolessAsync();
+    var roles = roleResult.Data;
+}
+
 <div id="edit-member-modal" class="_modal">
     <div class="_modal-content">
         <div class="_modal-header">
@@ -59,6 +64,20 @@
                 <div class="field-group">
                     <input asp-for="JobTitle" class="form-control text-input">
                     <span asp-validation-for="JobTitle"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="RoleName" class="form-label"></label>
+                <div class="field-group">
+                    <select asp-for="RoleName" class="form-control">
+                        <option selected disabled hidden>---- Select account role ----</option>
+                        @foreach (var role in roles ?? [])
+                        {
+                            <option value="@role.Name">@role.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="RoleName"></span>
                 </div>
             </div>
 

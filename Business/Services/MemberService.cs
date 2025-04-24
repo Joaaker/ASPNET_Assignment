@@ -5,12 +5,10 @@ using Business.Interfaces;
 using Business.Models;
 using Data.Entities;
 using Data.Interfaces;
-using Data.Repositories;
 using Domain.Dtos;
 using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace Business.Services;
 
@@ -19,7 +17,6 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
     private readonly UserManager<MemberEntity> _userManager = userManager;
     private readonly IMemberAddressRepository _memberAddressRepository = memberAddressRepository;
     private readonly IMemberRepository _memberRepository = memberRepsoitory;
-
 
     public async Task<IResponseResult<IEnumerable<Member>>> GetAllMembersAsync()
     {
@@ -35,7 +32,6 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
             return ResponseResult<IEnumerable<Member>>.Error("Error retrieving members");
         }
     }
-
 
     public async Task<IResponseResult> CreateMemberAsync(MemberRegistrationFormDto form)
     {
@@ -53,11 +49,11 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
 
             var userCreationResult = await _userManager.CreateAsync(memberEntity, form.Password ?? "BytMig123!");
             if (!userCreationResult.Succeeded)
-                throw new Exception("Failed to create user");
+                throw new Exception("Failed to create member");
 
             var addToRoleResult = await _userManager.AddToRoleAsync(memberEntity, form.RoleName);
             if (!addToRoleResult.Succeeded)
-                throw new Exception("Failed to add role to user");
+                throw new Exception("Failed to add role to member");
 
             if (!string.IsNullOrWhiteSpace(form.StreetName) &&
                 !string.IsNullOrWhiteSpace(form.PostalCode) &&
@@ -77,7 +73,7 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
         {
             await _memberRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error in CreateMemberAsync: {ex.Message}");
-            return ResponseResult.Error("Error creating employee");
+            return ResponseResult.Error($"Error creating member :: {ex.Message}");
         }
     }
 
@@ -88,14 +84,19 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
             var memberEntity = await _memberRepository.GetAsync(expression);
             if (memberEntity == null)
                 return ResponseResult.Error("Member not found");
-            
+
+            var memberRoles = await _userManager.GetRolesAsync(memberEntity);
+            var roleName = memberRoles.SingleOrDefault() ?? throw new Exception("No role was found for this member");
+
             var member = MemberFactory.CreateModel(memberEntity);
+            member.RoleName = roleName;
+
             return ResponseResult<Member>.Ok(member);
         }
         catch (Exception ex)
         {
             Debug.WriteLine(ex.Message);
-            return ResponseResult.Error("Error retrieving member");
+            return ResponseResult.Error($"Error retrieving member :: {ex.Message}");
         }
     }
 
@@ -127,11 +128,8 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
 
     public async Task<IResponseResult> UpdateMemberAsync(string memberId, MemberRegistrationFormDto updateForm)
     {
-        if (updateForm == null)
-            return ResponseResult.BadRequest("Invalid form");
-
         if (updateForm.RoleName != "Admin" && updateForm.RoleName != "User")
-            throw new Exception("Invalid role specified.");
+            return ResponseResult.BadRequest("Invalid role specified.");
 
         try
         {
@@ -145,23 +143,30 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
             await _memberRepository.UpdateAsync(x => x.Id == memberId, memberToUpdate);
             var saveResult = await _memberRepository.SaveAsync();
             if (saveResult == false)
-                throw new Exception("Error saving updated project");
+                throw new Exception("Error saving updated member");
 
-            if (!string.IsNullOrWhiteSpace(updateForm.StreetName) &&
-               !string.IsNullOrWhiteSpace(updateForm.PostalCode) &&
-               !string.IsNullOrWhiteSpace(updateForm.City) )
+            var memberAddress = await _memberAddressRepository.GetAsync(x => x.UserId == memberId);
+            if(memberAddress.StreetName != updateForm.StreetName || 
+                memberAddress.PostalCode != updateForm.PostalCode || 
+                memberAddress.City != updateForm.City)
             {
-                var memberAddress = await _memberAddressRepository.GetAsync(x => x.UserId == memberId);
-                if(memberAddress.StreetName != updateForm.StreetName || 
-                    memberAddress.PostalCode != updateForm.PostalCode || 
-                    memberAddress.City != updateForm.City)
-                {
-                    MemberAddressFactory.UpdateMemberAddressEntity(memberAddress, updateForm, memberId);
-                    await _memberAddressRepository.UpdateAsync(x => x.UserId == memberId, memberAddress);
-                    bool saveAddressResult = await _memberAddressRepository.SaveAsync();
-                    if (saveAddressResult == false)
-                        throw new Exception("Failed to save member address.");
-                }
+                MemberAddressFactory.UpdateMemberAddressEntity(memberAddress, updateForm, memberId);
+                await _memberAddressRepository.UpdateAsync(x => x.UserId == memberId, memberAddress);
+                bool saveAddressResult = await _memberAddressRepository.SaveAsync();
+                if (saveAddressResult == false)
+                    throw new Exception("Failed to save member address.");
+            }
+
+            var currentRoles = await _userManager.GetRolesAsync(memberToUpdate);
+            if (currentRoles.SingleOrDefault() != updateForm.RoleName)
+            {
+                var removeResult = await _userManager.RemoveFromRolesAsync(memberToUpdate, currentRoles);
+                if (!removeResult.Succeeded)
+                    throw new Exception("Failed to remove existing roles");
+
+                var addResult = await _userManager.AddToRoleAsync(memberToUpdate, updateForm.RoleName);
+                if (!addResult.Succeeded)
+                    throw new Exception("Failed to add new role");
             }
 
             await _memberRepository.CommitTransactionAsync();
