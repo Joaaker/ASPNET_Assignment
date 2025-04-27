@@ -62,6 +62,12 @@
         </a>
       </label>
     </div>
+    @if (!string.IsNullOrEmpty(ViewBag?.ErrorMessage))
+    {
+        <div class="sign-error">
+            @ViewBag?.ErrorMessage
+        </div>
+    }
 
     <button type="submit" class="btn-base btn-blue">Create Account</button>
 </form>

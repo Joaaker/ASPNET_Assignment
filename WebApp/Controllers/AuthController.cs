@@ -8,16 +8,9 @@ using Data.Entities;
 using Microsoft.AspNetCore.SignalR;
 using WebApp.Hubs;
 
-
 namespace WebApp.Controllers;
 
-public class AuthController(IAuthService authService,
-    IMemberService memberService,
-    SignInManager<MemberEntity> signInManager,
-    UserManager<MemberEntity> userManager, 
-    IHubContext<NotificationHub> notificationHub, 
-    INotificationService notificationService) : Controller
-
+public class AuthController(IAuthService authService, IMemberService memberService, SignInManager<MemberEntity> signInManager, UserManager<MemberEntity> userManager, IHubContext<NotificationHub> notificationHub, INotificationService notificationService) : Controller
 {
     private readonly IAuthService _authService = authService;
     private readonly IMemberService _memberService = memberService;
@@ -25,7 +18,6 @@ public class AuthController(IAuthService authService,
     private readonly UserManager<MemberEntity> _userManager = userManager;
     private readonly IHubContext<NotificationHub> _notificationHub = notificationHub;
     private readonly INotificationService _notificationService = notificationService;
-
 
     #region Local Sign Up
     public IActionResult SignUp()

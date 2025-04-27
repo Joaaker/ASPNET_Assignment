@@ -91,9 +91,8 @@ public class ClientsController(IClientService clientService, INotificationServic
     public async Task<IActionResult> Delete(int id)
     {
         var deleteResult = await _clientService.DeleteClientAsync(id);
-        if (!deleteResult.Success)
-            return StatusCode(deleteResult.StatusCode, new { success = false, message = deleteResult.ErrorMessage });
-
-        return RedirectToAction("Index");
+        return deleteResult.Success
+            ? Ok(new { success = true })
+            : StatusCode(deleteResult.StatusCode, new { success = false, message = deleteResult.ErrorMessage });
     }
 }

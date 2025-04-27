@@ -13,11 +13,7 @@ using WebApp.ViewModels;
 namespace WebApp.Controllers;
 
 [Authorize(Roles = "Admin")]
-public class MembersController(IMemberService memberService,
-    IHubContext<NotificationHub> notficationHub, 
-    INotificationService notificationService, 
-    IFileHandler fileHandler) : Controller
-
+public class MembersController(IMemberService memberService, IHubContext<NotificationHub> notficationHub, INotificationService notificationService, IFileHandler fileHandler) : Controller
 {
     private readonly IMemberService _memberService = memberService;
     private readonly IHubContext<NotificationHub> _notificationHub = notficationHub;
@@ -49,7 +45,6 @@ public class MembersController(IMemberService memberService,
 
             return BadRequest(new { success = false, errors });
         }
-
         var imageFileUri = await _fileHandler.UploadFileAsync(form.MemberImage!);
 
         MemberRegistrationFormDto dto = form;
@@ -62,13 +57,20 @@ public class MembersController(IMemberService memberService,
             if (await _memberService.GetMemberByExpressionAsync(x => x.Email == form.Email) is IResponseResult<Member> memberResult && memberResult.Data != null)
             {
                 var member = memberResult.Data;
-                var notificationEntity = NotificationFactory.CreateDto(2, 1, $"{member.FirstName} {member.LastName} added", member.ImageUri);
+                var notificationDto = NotificationFactory.CreateDto(2, 1, $"{member.FirstName} {member.LastName} added", member.ImageUri);
 
-                await _notificationService.AddNotificationAsync(notificationEntity);
+
+                var notificationResult = await _notificationService.AddNotificationAsync(notificationDto);
+                if (notificationResult.Success && notificationResult.Data != null)
+                {
+                    var notificationEntity = notificationResult.Data;
+                    await _notificationHub.Clients.Group("Admins").SendAsync("SendNotification", notificationEntity);
+                }
             }
-            return Ok(new { success = true });
-        } else
-            return StatusCode(createResult.StatusCode, new { success = false, message = createResult.ErrorMessage });
+        } 
+        return createResult.Success
+            ? Ok(new { success = true })
+            : StatusCode(createResult.StatusCode, new { success = false, message = createResult.ErrorMessage });
     }
 
     [HttpPost]
@@ -89,8 +91,13 @@ public class MembersController(IMemberService memberService,
             ? $"{formData.FirstName} {formData.LastName} successfully updated."
             : "Error occurred while updating a member.";
 
-        var notificationEntity = NotificationFactory.CreateDto(2, 1, notificationMessage, null);
-        await _notificationService.AddNotificationAsync(notificationEntity);
+        var notificationDto = NotificationFactory.CreateDto(2, 1, notificationMessage, dto.ImageUri);
+        var notificationResult = await _notificationService.AddNotificationAsync(notificationDto);
+        if (notificationResult.Success && notificationResult.Data != null)
+        {
+            var notificationEntity = notificationResult.Data;
+            await _notificationHub.Clients.Group("Admins").SendAsync("SendNotification", notificationEntity);
+        }
 
         return updateResult.Success
             ? Ok(new { success = true })
@@ -101,9 +108,7 @@ public class MembersController(IMemberService memberService,
     public async Task<IActionResult> GetMember(string id)
     {
         var result = await _memberService.GetMemberByExpressionAsync(x => x.Id == id);
-
         var member = ((ResponseResult<Member>)result).Data;
-
         return Json(member);
     }
 
@@ -111,32 +116,30 @@ public class MembersController(IMemberService memberService,
     {
         if (string.IsNullOrWhiteSpace(id))
             return BadRequest(new { success = false, message = "Invalid member id." });
-        
-        try
-        {
-            var memberResponse = await _memberService.GetMemberByExpressionAsync(x => x.Id == id);
-            if (memberResponse is not IResponseResult<Member> memberResult || memberResult.Data == null)
-                return NotFound(new { success = false, message = "Member not found." });
+
+        var memberResponse = await _memberService.GetMemberByExpressionAsync(x => x.Id == id);
+        if (memberResponse is not IResponseResult<Member> memberResult || memberResult.Data == null)
+            return NotFound(new { success = false, message = "Member not found." });
             
-            var member = memberResult.Data;
+        var member = memberResult.Data;
 
-            var deleteResult = await _memberService.DeleteMemberAsync(id);
+        var deleteResult = await _memberService.DeleteMemberAsync(id);
 
-            string notificationMessage = deleteResult.Success
-                ? $"{member.FirstName} {member.LastName} successfully deleted."
-                : $"Error deleting {member.FirstName} {member.LastName}.";
+        string notificationMessage = deleteResult.Success
+            ? $"{member.FirstName} {member.LastName} successfully deleted."
+            : $"Error deleting {member.FirstName} {member.LastName}.";
 
-            var notificationEntity = NotificationFactory.CreateDto(2, 1, notificationMessage, null);
-            await _notificationService.AddNotificationAsync(notificationEntity);
-
-
-            if (!deleteResult.Success)
-                return StatusCode(deleteResult.StatusCode, new { success = false, message = deleteResult.ErrorMessage });
-
-            return RedirectToAction("Index");
-        } catch {
-            return BadRequest(new { success = false, message = "An unexpected error occurred while processing the request." });
+        var notificationDto = NotificationFactory.CreateDto(2, 1, notificationMessage, member.ImageUri);
+        var notificationResult = await _notificationService.AddNotificationAsync(notificationDto);
+        if (notificationResult.Success && notificationResult.Data != null)
+        {
+            var notificationEntity = notificationResult.Data;
+            await _notificationHub.Clients.Group("Admins").SendAsync("SendNotification", notificationEntity);
         }
+
+        return deleteResult.Success
+            ? Ok(new { success = true })
+            : StatusCode(deleteResult.StatusCode, new { success = false, message = deleteResult.ErrorMessage });
     }
 
     [HttpGet]
@@ -154,33 +157,4 @@ public class MembersController(IMemberService memberService,
         //return Json(users);
         return Json(new List<object>());
     }
-
-
-    //[HttpGet]
-    //public async Task<IActionResult> DeleteMember(string id)
-    //{
-    //    try
-    //    {
-    //        var memberToDelete = await _memberService.GetMemberByExpressionAsync(x => x.Id == id);
-
-    //        if (memberToDelete is IResponseResult<Member> memberResult && memberResult.Data != null)
-    //        {
-    //            var member = memberResult.Data;
-    //            var message = $"{member.FirstName} {member.LastName} successfully deleted.";
-    //            var notificationEntity = NotificationFactory.CreateDto(2, 1, message, null);
-
-    //            var result = await _memberService.DeleteMemberAsync(id);
-    //            if (result.Success)
-    //            {
-    //                await _notificationService.AddNotificationAsync(notificationEntity);
-    //                return RedirectToAction("Index");
-    //            }
-    //            else
-    //                return StatusCode(result.StatusCode, new { success = false, message = result.ErrorMessage });
-    //        }
-
-    //    } catch {
-    //        return BadRequest(new { success = false});
-    //    }
-    //}
 }

@@ -101,6 +101,8 @@ builder.Services.AddAuthentication(options =>
         }
     };
 });
+builder.Logging.AddConsole();
+builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
 var app = builder.Build();
 
@@ -121,6 +123,7 @@ app.MapControllerRoute(
     pattern: "{controller=Auth}/{action=SignUp}")
     .WithStaticAssets();
 
-app.MapHub<NotificationHub>("/notficationHub");
+app.MapHub<NotificationHub>("/notificationHub");
+
 
 app.Run();

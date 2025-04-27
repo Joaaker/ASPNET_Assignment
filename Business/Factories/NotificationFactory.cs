@@ -18,6 +18,6 @@ public class NotificationFactory
         NotificationTargetGroupId = notificationTargetGroupId,
         NotificationTypeId = notificationTypeId,
         Message = message,
-        Image = image ?? "~/Images/Profiles/user-template.svg"
+        Image = image ?? "https://aspnetassignment.blob.core.windows.net/images/1d0e95a8-e947-4877-8857-c15de4e55a87.svg"
     };
 }

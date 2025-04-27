@@ -1,4 +1,5 @@
-﻿using Business.Factories;
+﻿using System.Diagnostics;
+using Business.Factories;
 using Business.Interfaces;
 using Domain.Dtos;
 using Domain.Interfaces;
@@ -54,13 +55,19 @@ public class ProjectsController(IProjectService projectService, IHubContext<Noti
             {
                 var project = projectResult.Data;
                 var message = $"{project.Title} added";
-                var notificationEntity = NotificationFactory.CreateDto(1, 2, message, project.ProjectImageUri);
+                var notificationDto = NotificationFactory.CreateDto(1, 2, message, project.ProjectImageUri);
 
-                await _notificationService.AddNotificationAsync(notificationEntity);
+                var notificationResult = await _notificationService.AddNotificationAsync(notificationDto);
+                if (notificationResult.Success && notificationResult.Data != null)
+                {
+                    var notificationEntity = notificationResult.Data;
+                    await _notificationHub.Clients.All.SendAsync("SendNotification", notificationEntity);
+                }
             }
-            return Ok(new { success = true });
-        } else 
-            return StatusCode(createResult.StatusCode, new { success = false, message = createResult.ErrorMessage });
+        }
+        return createResult.Success
+            ? Ok(new { success = true })
+            : StatusCode(createResult.StatusCode, new { success = false, message = createResult.ErrorMessage });
     }
 
     [HttpGet]
@@ -107,19 +114,16 @@ public class ProjectsController(IProjectService projectService, IHubContext<Noti
 
         var updateResult = await _projectService.UpdateProjectAsync(formData.Id, dto);
 
-        if (!updateResult.Success)
-            return StatusCode(updateResult.StatusCode, new { success = false, message = updateResult.ErrorMessage });
-
-        return Ok(new { success = true });
+        return updateResult.Success
+            ? Ok(new { success = true })
+            : StatusCode(updateResult.StatusCode, new { success = false, message = updateResult.ErrorMessage });
     }
-
 
     public async Task<IActionResult> Delete(int id)
     {
         var deleteResult = await _projectService.DeleteProjectAsync(id);
-        if (!deleteResult.Success)
-            return StatusCode(deleteResult.StatusCode, new { success = false, message = deleteResult.ErrorMessage });
-
-        return RedirectToAction("Index");
+        return deleteResult.Success
+            ? Ok(new { success = true })
+            : StatusCode(deleteResult.StatusCode, new { success = false, message = deleteResult.ErrorMessage });
     }
 }

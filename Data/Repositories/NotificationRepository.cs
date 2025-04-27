@@ -14,12 +14,12 @@ public class NotificationRepository(DataContext context) : BaseRepository<Notifi
             .Select(x => x.NotificationId)
             .ToListAsync();
 
-        var notifications = await _context.Notifications
+        var notificationsResult = await _context.Notifications
             .Where(x => !dismissedIds.Contains(x.Id))
             .OrderByDescending(x => x.Created)
             .Take(take)
             .ToListAsync();
 
-        return notifications;
+        return notificationsResult;
     }
 }

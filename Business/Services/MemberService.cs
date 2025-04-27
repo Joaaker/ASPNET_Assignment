@@ -139,11 +139,10 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
 
             await _memberRepository.BeginTransactionAsync();
 
-            MemberFactory.UpdateMemberEntity(memberToUpdate, updateForm, memberId);
-            await _memberRepository.UpdateAsync(x => x.Id == memberId, memberToUpdate);
-            var saveResult = await _memberRepository.SaveAsync();
-            if (saveResult == false)
-                throw new Exception("Error saving updated member");
+            MemberFactory.UpdateMemberEntity(memberToUpdate, updateForm);
+            var updateResult = await _userManager.UpdateAsync(memberToUpdate);
+            if (!updateResult.Succeeded)
+                throw new Exception("Error updating member");
 
             var memberAddress = await _memberAddressRepository.GetAsync(x => x.UserId == memberId);
             if(memberAddress.StreetName != updateForm.StreetName || 

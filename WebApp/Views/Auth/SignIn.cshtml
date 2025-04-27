@@ -34,19 +34,19 @@
         <label asp-for="RememberMe" class="form-check-label" for="flexCheckDefault"></label>
     </div>
 
+    @if (!string.IsNullOrEmpty(ViewBag?.ErrorMessage))
+    {
+        <div class="sign-error">
+            @ViewBag?.ErrorMessage
+        </div>
+    }
     <button type="submit" class="btn-base btn-blue">Log in</button>
 
 </form>
-@if (!string.IsNullOrEmpty(ViewBag?.ErrorMessage))
-{
-    <div class="sign-in-error">
-        @ViewBag?.ErrorMessage
-    </div>
-}
+
 <div class="auth-redirect">
     <span class="auth-text">Don't have an account?</span>
     <a asp-controller="Auth" asp-action="SignUp">
         <span class="a-text">Sign Up</span>
     </a>
 </div>
-
