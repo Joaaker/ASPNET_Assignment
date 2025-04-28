@@ -697,6 +697,18 @@ body.modal-open{
 
 
 /* FRÅN VIDEO TAGS SEARCH START*/
+/*#tag-search::before {
+    font-family: 'Font Awesome 6 Free';
+    content: '\f002';
+    font-size: 1.4em;
+    font-weight: 900;
+    color: var(--text);
+}*/
+
+.form-tag-select{
+    position: relative;
+}
+
 .form-tag-select.focused,
 .search-results.focused {
     border-color: var(--form-input-border-focus-color);

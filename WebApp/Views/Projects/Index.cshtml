@@ -5,7 +5,7 @@
 
 	var projectsResult = await projectService.GetAllProjectsAsync();
 	var projects = projectsResult.Data ?? [];
-	
+
 }
 
 <partial name="Partials/Projects/_AddProjectForm" model="new AddProjectViewModel()" />

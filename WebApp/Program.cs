@@ -101,8 +101,6 @@ builder.Services.AddAuthentication(options =>
         }
     };
 });
-builder.Logging.AddConsole();
-builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
 var app = builder.Build();
 
@@ -124,6 +122,5 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 app.MapHub<NotificationHub>("/notificationHub");
-
 
 app.Run();

@@ -1,4 +1,6 @@
-﻿.account-group {
+﻿
+
+.account-group {
     display: flex;
     align-items: center;
 }
@@ -34,6 +36,8 @@
         height: 40px;
         width: 40px;
     }
+
+
 
 /*Computer*/
 @media (min-width: 1340px) {

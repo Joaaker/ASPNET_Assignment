@@ -22,6 +22,15 @@
 		</div>
 
 		<form novalidate asp-action="Add" method="post" asp-controller="Projects" class="modal-form">
+            <input type="hidden" name="selectedUserIds" id="selectedUserIds" />
+            <div class="form-group">
+                <div class="form-label">Members</div>
+                <div id="tagged-users" class="form-input form-tag-select">
+                    <input type="text" id="user-search" class="form-control form-tag-input" placeholder="Add member..." />
+                    <label for="user-search" class="fa-solid fa-ellipsis"></label>
+                    <div id="user-search-results" class="search-results"></div>
+                </div>
+            </div>
 
 			<div class="image-previewer circle">
 				<img src="" class="image-preview" />
@@ -101,15 +110,6 @@
                     <span asp-validation-for="MembersIds"></span>
                 </div>
             </div>
-
-            @* <div class="form-group"> *@
-            @*     <div class="form-label">Members</div> *@
-            @*     <div id="tagged-users" class="form-input form-tag-select"> *@
-            @*         <input type="text" id="user-search" class="form-tag-input" placeholder="Add member..." /> *@
-            @*         <label for="user-search" class="fa-solid fa-ellipsis"></label> *@
-            @*         <div id="user-search-results" class="search-results"></div> *@
-            @*     </div> *@
-            @* </div> *@
 
             <div class="mb-3">
                 <label asp-for="Budget" class="form-label"></label>

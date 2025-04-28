@@ -1,5 +1,16 @@
 ﻿@model Project
 
+@{
+	var selectedUsersJson = JsonSerializer.Serialize(
+		Model.ProjectMembers.Select(m => new
+		{
+			id = m.Id,
+			imageUri = m.ImageUri,
+			fullName = m.FirstName + " " + m.LastName
+		})
+	);
+}
+
 <article class="project-card" data-status="@Model.StatusName.ToLowerInvariant()">
 
 	<div class="project-image">
@@ -35,3 +46,20 @@
 
 	</div>
 </article>
+
+<script>
+
+
+	const preSelectedTags = @Html.Raw(selectedUsersJson)
+
+	initTagSelector({
+		containerId: 'tags',
+		inputId: 'tag-search',
+		resultsId: 'tag-search-results',
+		searchUrl: (query) => '@Url.Action("SearchTags", "Tags")' + '?term=' + encodeURIComponent(query),
+		displayProperty: 'tagName',
+		tagClass: 'tag',
+		emptyMessage: 'No tags found.',
+		preselected: preSelectedTags
+	});
+</script>

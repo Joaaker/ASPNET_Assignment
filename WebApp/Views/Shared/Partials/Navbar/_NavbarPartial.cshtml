@@ -2,10 +2,21 @@
 	var userImg = User.FindFirstValue("ImageUri") ?? "https://aspnetassignment.blob.core.windows.net/images/1d0e95a8-e947-4877-8857-c15de4e55a87.svg";
 }
 
-<div class="search">
-	<i class="fa-solid fa-magnifying-glass"></i>
-	<input type="text" placeholder="Search anything.."/>
+<div id="tagging" class="search">
+    <div class="card">
+        <div class="card-body">
+            <div class="form-group">
+                <div id="tags" class="form-input form-tag-select">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="tag-search" class="form-tag-input" placeholder="Search anything.." />
+                    <label for="tag-search" class="fa-solid fa-ellipsis"></label>
+                    <div id="tag-search-results" class="search-results"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 <div class="account-group">
 	@await Html.PartialAsync("Partials/Navbar/_NotificationBell")
 

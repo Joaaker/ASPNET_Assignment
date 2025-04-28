@@ -1,177 +1,177 @@
-﻿//function initTagSelector(config) {
-//    let activeIndex = -1;
-//    let selectedIds = [];
+﻿function initTagSelector(config) {
+    let activeIndex = -1;
+    let selectedIds = [];
 
-//    const tagContainer = document.getElementById(config.containerId);
-//    const input = document.getElementById(config.inputId);
-//    const results = document.getElementById(config.resultsId);
-//    const selectedInputIds = document.getElementById(config.selectedInputIds);
+    const tagContainer = document.getElementById(config.containerId);
+    const input = document.getElementById(config.inputId);
+    const results = document.getElementById(config.resultsId);
+    const selectedInputIds = document.getElementById(config.selectedInputIds);
 
-//    if (Array.isArray(config.preselected)) {
-//        config.preselected.forEach(item => addTag(item));
-//    }
+    if (Array.isArray(config.preselected)) {
+        config.preselected.forEach(item => addTag(item));
+    }
 
-//    input.addEventListener('focus', () => {
-//        tagContainer.classList.add('focused');
-//        results.classList.add('focused');
-//    });
+    input.addEventListener('focus', () => {
+        tagContainer.classList.add('focused');
+        results.classList.add('focused');
+    });
 
-//    input.addEventListener('blur', () => {
-//        setTimeout(() => {
-//            tagContainer.classList.remove('focused');
-//            results.classList.remove('focused');
-//        }, 100);
-//    });
+    input.addEventListener('blur', () => {
+        setTimeout(() => {
+            tagContainer.classList.remove('focused');
+            results.classList.remove('focused');
+        }, 100);
+    });
 
-//    input.addEventListener('input', () => {
-//        const query = input.value.trim();
-//        activeIndex = -1;
+    input.addEventListener('input', () => {
+        const query = input.value.trim();
+        activeIndex = -1;
 
-//        if (query.length === 0) {
-//            results.style.display = 'none';
-//            results.innerHTML = '';
-//            return;
-//        }
+        if (query.length === 0) {
+            results.style.display = 'none';
+            results.innerHTML = '';
+            return;
+        }
 
-//        fetch(config.searchUrl(query))
-//            .then(r => r.json())
-//            .then(data => renderSearchResults(data));
-//    });
+        fetch(config.searchUrl(query))
+            .then(r => r.json())
+            .then(data => renderSearchResults(data));
+    });
 
-//    input.addEventListener('keydown', (e) => {
-//        const items = results.querySelectorAll('.search-item')
+    input.addEventListener('keydown', (e) => {
+        const items = results.querySelectorAll('.search-item')
 
-//        switch (e.key) {
-//            case 'ArrowDown':
-//                e.preventDefault()
-//                if (items.length > 0) {
-//                    activeIndex = (activeIndex + 1) % items.length
-//                    updateActiveItem(items)
-//                }
-//                break;
+        switch (e.key) {
+            case 'ArrowDown':
+                e.preventDefault()
+                if (items.length > 0) {
+                    activeIndex = (activeIndex + 1) % items.length
+                    updateActiveItem(items)
+                }
+                break;
 
-//            case 'ArrowUp':
-//                e.preventDefault()
-//                if (items.length > 0) {
-//                    activeIndex = (activeIndex - 1 + items.length) % items.length
-//                    updateActiveItem(items)
-//                }
-//                break;
+            case 'ArrowUp':
+                e.preventDefault()
+                if (items.length > 0) {
+                    activeIndex = (activeIndex - 1 + items.length) % items.length
+                    updateActiveItem(items)
+                }
+                break;
 
-//            case 'Enter':
-//                e.preventDefault()
-//                if (activeIndex >= 0 && items[activeIndex]) {
-//                    items[activeIndex].click()
-//                }
-//                break;
+            case 'Enter':
+                e.preventDefault()
+                if (activeIndex >= 0 && items[activeIndex]) {
+                    items[activeIndex].click()
+                }
+                break;
 
-//            case 'Backspace':
-//                if (input.value === '') {
-//                    removeLastTag()
-//                }
-//                break;
-//        }
-//    })
-//    function addTag(item) {
-//        const id = parseInt(item.id);
-//        if (selectedIds.includes(id)) return;
+            case 'Backspace':
+                if (input.value === '') {
+                    removeLastTag()
+                }
+                break;
+        }
+    })
+    function addTag(item) {
+        const id = parseInt(item.id);
+        if (selectedIds.includes(id)) return;
 
-//        selectedIds.push(id);
+        selectedIds.push(id);
 
-//        const tag = document.createElement('div');
-//        tag.classList.add(config.tagClass || 'tag');
+        const tag = document.createElement('div');
+        tag.classList.add(config.tagClass || 'tag');
 
-//        if (config.tagClass === 'user-tag') {
-//            tag.innerHTML = `
-//      <img class="user-avatar" src="${config.avatarFolder || ''}${item[config.imageProperty]}">
-//      <span>${item[config.displayProperty]}</span>
-//    `;
-//        } else {
-//            tag.innerHTML = `
-//      <span>${item[config.displayProperty]}</span>
-//    `;
-//        }
+        if (config.tagClass === 'user-tag') {
+            tag.innerHTML = `
+      <img class="user-avatar" src="${config.avatarFolder || ''}${item[config.imageProperty]}">
+      <span>${item[config.displayProperty]}</span>
+    `;
+        } else {
+            tag.innerHTML = `
+      <span>${item[config.displayProperty]}</span>
+    `;
+        }
 
-//        const removeBtn = document.createElement('span');
-//        removeBtn.textContent = '×';
-//        removeBtn.classList.add('btn-remove');
-//        removeBtn.dataset.id = id;
-//        removeBtn.addEventListener('click', (e) => {
-//            selectedIds = selectedIds.filter(i => i !== id);
-//            tag.remove();
-//            updateSelectedIdsInput();
-//            e.stopPropagation();
-//        });
+        const removeBtn = document.createElement('span');
+        removeBtn.textContent = '×';
+        removeBtn.classList.add('btn-remove');
+        removeBtn.dataset.id = id;
+        removeBtn.addEventListener('click', (e) => {
+            selectedIds = selectedIds.filter(i => i !== id);
+            tag.remove();
+            updateSelectedIdsInput();
+            e.stopPropagation();
+        });
 
-//        tag.appendChild(removeBtn);
-//        tagContainer.insertBefore(tag, input);
+        tag.appendChild(removeBtn);
+        tagContainer.insertBefore(tag, input);
 
-//        input.value = '';
-//        results.innerHTML = '';
-//        results.style.display = 'none'
-//        selectedIds.push(id)
-//        updateSelectedIdsInput()
-//    }
+        input.value = '';
+        results.innerHTML = '';
+        results.style.display = 'none'
+        selectedIds.push(id)
+        updateSelectedIdsInput()
+    }
 
-//    function renderSearchResults(data) {
-//        results.innerHTML = ''
+    function renderSearchResults(data) {
+        results.innerHTML = ''
 
-//        if (data.length === 0) {
-//            const noResult = document.createElement('div')
-//            noResult.classList.add('search-item')
-//            noResult.textContent = config.emptyMessage || 'No results.'
-//            results.appendChild(noResult)
-//        } else {
-//            data.forEach(item => {
-//                if (!selectedIds.includes(item.id)) {
-//                    const resultItem = document.createElement('div')
-//                    resultItem.classList.add('search-item')
-//                    resultItem.dataset.id = item.id
+        if (data.length === 0) {
+            const noResult = document.createElement('div')
+            noResult.classList.add('search-item')
+            noResult.textContent = config.emptyMessage || 'No results.'
+            results.appendChild(noResult)
+        } else {
+            data.forEach(item => {
+                if (!selectedIds.includes(item.id)) {
+                    const resultItem = document.createElement('div')
+                    resultItem.classList.add('search-item')
+                    resultItem.dataset.id = item.id
 
-//                    if (config.tagType === 'tag') {
-//                        tag.innerHTML = `<span>${item[config.displayProperty]}</span>`
-//                    } else if (config.tagType === 'user') {
-//                        tag.innerHTML =
-//                            `<img class="user-avatar" src="${config.avatarFolder || ''}${item[config.imageProperty]}">
-//                             <span>${item[config.displayProperty]}</span>`
-//                    }
+                    if (config.tagType === 'tag') {
+                        tag.innerHTML = `<span>${item[config.displayProperty]}</span>`
+                    } else if (config.tagType === 'user') {
+                        tag.innerHTML =
+                            `<img class="user-avatar" src="${config.avatarFolder || ''}${item[config.imageProperty]}">
+                             <span>${item[config.displayProperty]}</span>`
+                    }
 
-//                    resultItem.addEventListener('click', () => addTag(item))
-//                    results.appendChild(resultItem)
-//                }
-//            })
-//        }
+                    resultItem.addEventListener('click', () => addTag(item))
+                    results.appendChild(resultItem)
+                }
+            })
+        }
 
-//        results.style.display = 'block'
-//    }
+        results.style.display = 'block'
+    }
 
-//    function removeLastTag() {
-//        const tags = tagContainer.querySelectorAll(`.${config.tagClass}`)
-//        if (tags.length === 0) return;
+    function removeLastTag() {
+        const tags = tagContainer.querySelectorAll(`.${config.tagClass}`)
+        if (tags.length === 0) return;
 
-//        const lastTag = tags[tags.length - 1]
-//        const lastId = parseInt(lastTag.querySelector('.btn-remove').dataset.id)
+        const lastTag = tags[tags.length - 1]
+        const lastId = parseInt(lastTag.querySelector('.btn-remove').dataset.id)
 
-//        selectedIds = selectedIds.filter(id => id !== lastId)
-//        lastTag.remove()
-//        updateSelectedIdsInput()
-//    }
+        selectedIds = selectedIds.filter(id => id !== lastId)
+        lastTag.remove()
+        updateSelectedIdsInput()
+    }
 
-//    function updateSelectedIdsInput() {
-//        const hiddenInput = document.getElementById('SelectedIds')
-//        if (hiddenInput) {
-//            hiddenInput.value = JSON.stringify(selectedIds)
-//        }
-//    }
+    function updateSelectedIdsInput() {
+        const hiddenInput = document.getElementById('SelectedIds')
+        if (hiddenInput) {
+            hiddenInput.value = JSON.stringify(selectedIds)
+        }
+    }
 
-//    function updateActiveItem(items) {
-//        items.forEach(item => item.classList.remove('active'))
-//        if (items[activeIndex]) {
-//            items[activeIndex].classList.add('active')
-//            items[activeIndex].scrollIntoView({ block: 'nearest' });
-//        }
-//    }
-//}
+    function updateActiveItem(items) {
+        items.forEach(item => item.classList.remove('active'))
+        if (items[activeIndex]) {
+            items[activeIndex].classList.add('active')
+            items[activeIndex].scrollIntoView({ block: 'nearest' });
+        }
+    }
+}
 
 //const preSelectedUsers = [];
 
@@ -188,17 +188,6 @@
 //    preselected: preSelectedUsers
 //});
 
-//const preSelectedTags = []
 
-//initTagSelector({
-//    containerId: 'tags',
-//    inputId: 'tag-search',
-//    resultsId: 'tag-search-results',
-//    searchUrl: (query) => '@Url.Action("SearchTags", "Tags")' + '?term=' + encodeURIComponent(query),
-//    displayProperty: 'tagName',
-//    tagClass: 'tag',
-//    emptyMessage: 'No tags found.',
-//    preselected: preSelectedTags
-//});
 
 
