@@ -22,16 +22,6 @@
 		</div>
 
 		<form novalidate asp-action="Add" method="post" asp-controller="Projects" class="modal-form">
-            <input type="hidden" name="selectedUserIds" id="selectedUserIds" />
-            <div class="form-group">
-                <div class="form-label">Members</div>
-                <div id="tagged-users" class="form-input form-tag-select">
-                    <input type="text" id="user-search" class="form-control form-tag-input" placeholder="Add member..." />
-                    <label for="user-search" class="fa-solid fa-ellipsis"></label>
-                    <div id="user-search-results" class="search-results"></div>
-                </div>
-            </div>
-
 			<div class="image-previewer circle">
 				<img src="" class="image-preview" />
 				<input asp-for="ProjectImage" accept="image/*" class="hide"/>
@@ -97,16 +87,17 @@
                 </div>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="MembersIds" class="form-label"></label>
-                <div class="field-group">
-                    <select asp-for="MembersIds" class="form-control">
-                        <option selected disabled hidden>---- Select a member ----</option>
-                        @foreach (var member in members ?? [])
-                        {
-                            <option value="@member.Id">@member.FirstName @member.LastName</option>
-                        }
-                    </select>
+            <div class="mb-3 member-search-container">
+                <label class="form-label">Members</label>
+                <div class="field-group member-search-div">
+                    <div id="MembersIdsContainer"></div>
+                    <div id="tagged-members" class="form-input form-tag-select">
+                        <div class="tags-list"></div>
+                        <div class="input-wrapper">
+                            <input type="text" id="member-search" class="form-control form-tag-input" placeholder="Add members..." autocomplete="off" />
+                            <div id="member-search-results" class="search-results"></div>
+                        </div>
+                    </div>
                     <span asp-validation-for="MembersIds"></span>
                 </div>
             </div>
@@ -124,3 +115,23 @@
 
 	</div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      initTagSelector({
+        containerId: 'tagged-members',
+        inputId: 'member-search',
+        resultsId: 'member-search-results',
+        selectedInputIds: 'MembersIdsContainer',
+        selectedInputName: 'MembersIds',
+        searchUrl: function(term) {
+          return '@Url.Action("Search", "Members")?term=' + encodeURIComponent(term);
+        },
+        displayProperty: 'fullName',
+        imageProperty: 'imageUri',
+        tagClass: 'tag',
+        emptyMessage: 'No members found.',
+        preselected: []
+      });
+    });
+</script>

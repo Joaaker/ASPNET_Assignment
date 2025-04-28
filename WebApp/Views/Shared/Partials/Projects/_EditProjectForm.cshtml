@@ -1,5 +1,4 @@
 ﻿@model EditProjectViewModel
-
 @{
 	var statusesResult = await statusService.GetAllStatusesAsync();
 	var statuses = statusesResult.Data;
@@ -22,6 +21,22 @@
             <div class="image-previewer circle">
                 <img src="" class="image-preview" />
                 <input asp-for="ProjectImage" accept="image/*" class="hide" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Members</label>
+                <div class="field-group">
+                    <input type="hidden" asp-for="MembersIds" id="Edit_MembersIds" />
+                    <div id="tagged-users-edit" class="form-input form-tag-select">
+                        <input type="text"
+                               id="member-search-edit"
+                               class="form-control form-tag-input"
+                               placeholder="Add member..."
+                               autocomplete="off" />
+                        <div id="member-search-results-edit" class="search-results"></div>
+                    </div>
+                    <span asp-validation-for="MembersIds"></span>
+                </div>
             </div>
 
             <div class="mb-3">
@@ -97,44 +112,44 @@
 		</form>
 	</div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var pre = @Html.Raw(JsonSerializer.Serialize(Model.MembersIds ?? []));
+        var presel = pre.map(function(id) {
+            return { id: id, fullName: '', imageUri: '' }; 
+        });
 
-@* <script> *@
-@*     document.addEventListener('DOMContentLoaded', function () { *@
-@*       const editProjButtons = document.querySelectorAll('.edit-project-btn'); *@
+        initTagSelector({
+            containerId: 'tagged-users-edit',
+            inputId: 'member-search-edit',
+            resultsId: 'member-search-results-edit',
+            selectedInputIds: 'Edit_MembersIds',
+            searchUrl: function (query) {
+                return '@Url.Action("Search", "Members")' + '?term=' + encodeURIComponent(query);
+            },
+            displayProperty: 'fullName',
+            imageProperty: 'imageUri',
+            tagClass: 'tag',
+            emptyMessage: 'No users found.',
+            preselected: presel
+        });
+    });
 
-@*       editProjButtons.forEach(button => { *@
-@*         button.addEventListener('click', async function(e) { *@
-@*           e.preventDefault(); *@
-@*           const projectId = button.getAttribute('data-project-id'); *@
+    document.querySelectorAll('.edit-project-btn').forEach(button => {
+        button.addEventListener('click', async function (e) {
+            var projectId = button.getAttribute('data-project-id');
+            var res = await fetch('/Projects/GetProjectForEdit?id=' + projectId);
+            var data = await res.json();
+            var members = data.project.projectMembers;
 
-@*           try { *@
-@*             const res  = await fetch('/Projects/GetProjectForEdit?id=' + encodeURIComponent(projectId)); *@
-@*             if (!res.ok) throw new Error(res.statusText); *@
-
-@*             const data = await res.json(); *@
-
-@*             const project   = data.project; *@
-@*             const status   = data.status; *@
-@*             const client = data.client; *@
-
-@*             document.querySelector('#edit-project-modal input[name="Id"]').value          = project.id; *@
-@*             document.querySelector('#edit-project-modal input[name="Title"]').value       = project.title      || ''; *@
-@*             document.querySelector('#edit-project-modal input[name="Description"]').value = project.description || ''; *@
-@*             document.querySelector('#edit-project-modal input[name="StartDate"]').value   = project.startDate  || ''; *@
-@*             document.querySelector('#edit-project-modal input[name="EndDate"]').value     = project.endDate    || ''; *@
-@*             document.querySelector('#edit-project-modal input[name="Budget"]').value      = project.budget     != null ? project.budget : ''; *@
-
-@*             document.querySelector('#edit-project-modal select[name="ClientId"]').value = client.id; *@
-@*             document.querySelector('#edit-project-modal select[name="StatusId"]').value = status.id; *@
-
-@*             const modal = document.querySelector('#edit-project-modal'); *@
-@*             modal.style.display = 'flex'; *@
-@*             document.body.classList.add('modal-open'); *@
-@*           } *@
-@*           catch (err) { *@
-@*             console.error('Project not found:', err); *@
-@*           } *@
-@*         }); *@
-@*       }); *@
-@*     }); *@
-@* </script> *@
+            members.forEach(m => {
+                var item = {
+                    id: m.id,
+                    fullName: m.firstName + ' ' + m.lastName,
+                    imageUri: m.imageUri
+                };
+                initTagSelector().addTag(item);
+            });
+        });
+    });
+</script>

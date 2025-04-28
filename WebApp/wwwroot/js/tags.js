@@ -3,9 +3,11 @@
     let selectedIds = [];
 
     const tagContainer = document.getElementById(config.containerId);
+    const tagsList = tagContainer.querySelector('.tags-list');
     const input = document.getElementById(config.inputId);
     const results = document.getElementById(config.resultsId);
-    const selectedInputIds = document.getElementById(config.selectedInputIds);
+    const searchResults = document.querySelector('.search-results');
+    const selectedInputContainer = document.getElementById(config.selectedInputIds);
 
     if (Array.isArray(config.preselected)) {
         config.preselected.forEach(item => addTag(item));
@@ -16,178 +18,149 @@
         results.classList.add('focused');
     });
 
-    input.addEventListener('blur', () => {
-        setTimeout(() => {
-            tagContainer.classList.remove('focused');
-            results.classList.remove('focused');
-        }, 100);
-    });
-
     input.addEventListener('input', () => {
-        const query = input.value.trim();
+        const term = input.value.trim();
         activeIndex = -1;
 
-        if (query.length === 0) {
+        if (!term) {
             results.style.display = 'none';
             results.innerHTML = '';
             return;
         }
 
-        fetch(config.searchUrl(query))
+        fetch(config.searchUrl(term))
             .then(r => r.json())
-            .then(data => renderSearchResults(data));
+            .then(data => renderSearchResults(data))
+            .catch(() => {
+                results.innerHTML = '';
+                results.style.display = 'none';
+            });
     });
 
-    input.addEventListener('keydown', (e) => {
-        const items = results.querySelectorAll('.search-item')
-
+    input.addEventListener('keydown', e => {
+        const items = results.querySelectorAll('.search-item');
         switch (e.key) {
             case 'ArrowDown':
-                e.preventDefault()
-                if (items.length > 0) {
-                    activeIndex = (activeIndex + 1) % items.length
-                    updateActiveItem(items)
+                e.preventDefault();
+                if (items.length) {
+                    activeIndex = (activeIndex + 1) % items.length;
+                    updateActiveItem(items);
                 }
                 break;
-
             case 'ArrowUp':
-                e.preventDefault()
-                if (items.length > 0) {
-                    activeIndex = (activeIndex - 1 + items.length) % items.length
-                    updateActiveItem(items)
+                e.preventDefault();
+                if (items.length) {
+                    activeIndex = (activeIndex - 1 + items.length) % items.length;
+                    updateActiveItem(items);
                 }
                 break;
-
             case 'Enter':
-                e.preventDefault()
-                if (activeIndex >= 0 && items[activeIndex]) {
-                    items[activeIndex].click()
-                }
+                e.preventDefault();
+                if (activeIndex >= 0) items[activeIndex].click();
                 break;
-
             case 'Backspace':
-                if (input.value === '') {
-                    removeLastTag()
-                }
+                if (!input.value) removeLastTag();
                 break;
         }
-    })
-    function addTag(item) {
-        const id = parseInt(item.id);
-        if (selectedIds.includes(id)) return;
+    });
 
-        selectedIds.push(id);
+    function addTag(item) {
+        if (selectedIds.includes(item.id)) return;
+        selectedIds.push(item.id);
 
         const tag = document.createElement('div');
         tag.classList.add(config.tagClass || 'tag');
-
-        if (config.tagClass === 'user-tag') {
-            tag.innerHTML = `
-      <img class="user-avatar" src="${config.avatarFolder || ''}${item[config.imageProperty]}">
-      <span>${item[config.displayProperty]}</span>
-    `;
-        } else {
-            tag.innerHTML = `
-      <span>${item[config.displayProperty]}</span>
-    `;
-        }
+        tag.innerHTML = `
+            ${item[config.imageProperty]
+                ? `<img src="${item[config.imageProperty]}" class="search-user-avatar" />`
+                : ``
+            }
+            <span>${item[config.displayProperty]}</span>
+        `;
 
         const removeBtn = document.createElement('span');
-        removeBtn.textContent = '×';
-        removeBtn.classList.add('btn-remove');
-        removeBtn.dataset.id = id;
-        removeBtn.addEventListener('click', (e) => {
-            selectedIds = selectedIds.filter(i => i !== id);
+        removeBtn.classList.add('_btn-close');
+        removeBtn.dataset.id = item.id;
+        removeBtn.addEventListener('click', e => {
+            selectedIds = selectedIds.filter(i => i !== item.id);
             tag.remove();
             updateSelectedIdsInput();
             e.stopPropagation();
         });
 
         tag.appendChild(removeBtn);
-        tagContainer.insertBefore(tag, input);
+        tagsList.appendChild(tag);
 
         input.value = '';
         results.innerHTML = '';
-        results.style.display = 'none'
-        selectedIds.push(id)
-        updateSelectedIdsInput()
+        results.style.display = 'none';
+
+        updateSelectedIdsInput();
     }
 
     function renderSearchResults(data) {
-        results.innerHTML = ''
-
-        if (data.length === 0) {
-            const noResult = document.createElement('div')
-            noResult.classList.add('search-item')
-            noResult.textContent = config.emptyMessage || 'No results.'
-            results.appendChild(noResult)
+        results.innerHTML = '';
+        if (!Array.isArray(data) || !data.length) {
+            const d = document.createElement('div');
+            d.classList.add('search-item');
+            d.textContent = config.emptyMessage || 'No results.';
+            results.appendChild(d);
         } else {
             data.forEach(item => {
                 if (!selectedIds.includes(item.id)) {
-                    const resultItem = document.createElement('div')
-                    resultItem.classList.add('search-item')
-                    resultItem.dataset.id = item.id
-
-                    if (config.tagType === 'tag') {
-                        tag.innerHTML = `<span>${item[config.displayProperty]}</span>`
-                    } else if (config.tagType === 'user') {
-                        tag.innerHTML =
-                            `<img class="user-avatar" src="${config.avatarFolder || ''}${item[config.imageProperty]}">
-                             <span>${item[config.displayProperty]}</span>`
-                    }
-
-                    resultItem.addEventListener('click', () => addTag(item))
-                    results.appendChild(resultItem)
+                    const r = document.createElement('div');
+                    r.classList.add('search-item');
+                    r.dataset.id = item.id;
+                    r.innerHTML = `
+                        ${item[config.imageProperty]
+                            ? `<img src="${item[config.imageProperty]}" class="search-user-avatar" />`
+                            : ``
+                        }
+                        <span>${item[config.displayProperty]}</span>
+                    `;
+                    r.addEventListener('click', () => addTag(item));
+                    results.appendChild(r);
                 }
-            })
+            });
         }
-
-        results.style.display = 'block'
+        results.style.display = 'block';
     }
 
     function removeLastTag() {
-        const tags = tagContainer.querySelectorAll(`.${config.tagClass}`)
-        if (tags.length === 0) return;
-
-        const lastTag = tags[tags.length - 1]
-        const lastId = parseInt(lastTag.querySelector('.btn-remove').dataset.id)
-
-        selectedIds = selectedIds.filter(id => id !== lastId)
-        lastTag.remove()
-        updateSelectedIdsInput()
+        const allTags = tagsList.querySelectorAll(`.${config.tagClass || 'tag'}`);
+        if (!allTags.length) return;
+        const last = allTags[allTags.length - 1];
+        const id = last.querySelector('._btn-close').dataset.id;
+        selectedIds = selectedIds.filter(i => i !== id);
+        last.remove();
+        updateSelectedIdsInput();
     }
 
     function updateSelectedIdsInput() {
-        const hiddenInput = document.getElementById('SelectedIds')
-        if (hiddenInput) {
-            hiddenInput.value = JSON.stringify(selectedIds)
-        }
+        if (!selectedInputContainer) return;
+        selectedInputContainer.innerHTML = '';
+        const name = config.selectedInputName || config.selectedInputIds.replace(/Container$/, '');
+        selectedIds.forEach(id => {
+            const h = document.createElement('input');
+            h.type = 'hidden';
+            h.name = name;
+            h.value = id;
+            selectedInputContainer.appendChild(h);
+        });
     }
 
     function updateActiveItem(items) {
-        items.forEach(item => item.classList.remove('active'))
+        items.forEach(i => i.classList.remove('active'));
         if (items[activeIndex]) {
-            items[activeIndex].classList.add('active')
+            items[activeIndex].classList.add('active');
             items[activeIndex].scrollIntoView({ block: 'nearest' });
         }
     }
+
+    document.addEventListener('click', function (e) {
+        if (!searchResults.contains(e.target)) {
+            results.style.display = 'none';
+            tagContainer.classList.remove('focused');
+        }
+    });
 }
-
-//const preSelectedUsers = [];
-
-//initTagSelector({
-//    containerId: 'tagged-users',
-//    inputId: 'user-search',
-//    resultsId: 'user-search-results',
-//    searchUrl: (query) => '@Url.Action("SearchUsers", "Users")' + '?term=' + encodeURIComponent(query),
-//    displayProperty: 'fullName',
-//    imageProperty: 'imageUrl',
-//    tagClass: 'user-tag',
-//    avatarFolder: '/images/users/',
-//    emptyMessage: 'No users found.',
-//    preselected: preSelectedUsers
-//});
-
-
-
-

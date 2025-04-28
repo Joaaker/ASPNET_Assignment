@@ -31,7 +31,6 @@ public class NotificationService(INotificationRepository notificationRepository,
                         break;
                 }
             }
-
             var notificationEntity = NotificationFactory.CreateEntity(dto);
 
             await _notificationRepository.BeginTransactionAsync();
@@ -58,21 +57,12 @@ public class NotificationService(INotificationRepository notificationRepository,
         var member = ((ResponseResult<Member>)memberResult).Data;
         var entities = await _notificationRepository.GetNotificationsByUserId(userId);
 
-
-
-        
-
         if (member!.RoleName == "User")
         {
             var userNotifications = entities.Where(n => n.NotificationTargetGroupId == 1).ToList();
-
             return ResponseResult<IEnumerable<NotificationEntity>>.Ok(userNotifications);
-
         }
-
         return ResponseResult<IEnumerable<NotificationEntity>>.Ok(entities);
-
-
     }
 
     public async Task<IResponseResult> DismissNotificationAsync(string notificationId, string userId)
@@ -80,21 +70,19 @@ public class NotificationService(INotificationRepository notificationRepository,
         try
         {
             var alreadyDismissed = await _notificationDismissRepository.AlreadyExistsAsync(x => x.NotificationId == notificationId && x.UserId == userId);
-            if (alreadyDismissed == false)
-            {
-                var dismissed = NotificationDismissFactory.CreateEntity(notificationId, userId);
-                await _notificationDismissRepository.BeginTransactionAsync();
-
-                await _notificationDismissRepository.AddAsync(dismissed);
-                var saveResult = await _notificationDismissRepository.SaveAsync();
-                if (saveResult == false)
-                    throw new Exception("Error saving NotificationDismissEntity");
-
-                await _notificationDismissRepository.CommitTransactionAsync();
-                return ResponseResult.Ok();
-            }
-            else
+            if (alreadyDismissed)
                 throw new Exception("Already dismissed");
+
+            var dismissed = NotificationDismissFactory.CreateEntity(notificationId, userId);
+            await _notificationDismissRepository.BeginTransactionAsync();
+
+            await _notificationDismissRepository.AddAsync(dismissed);
+            var saveResult = await _notificationDismissRepository.SaveAsync();
+            if (saveResult == false)
+                throw new Exception("Error saving NotificationDismissEntity");
+
+            await _notificationDismissRepository.CommitTransactionAsync();
+            return ResponseResult.Ok();    
         }
         catch (Exception ex)
         {

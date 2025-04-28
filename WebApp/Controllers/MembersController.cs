@@ -143,18 +143,20 @@ public class MembersController(IMemberService memberService, IHubContext<Notific
     }
 
     [HttpGet]
-    public async Task<JsonResult> SearchUsers(string term)
+    public async Task<IActionResult> Search(string term)
     {
-        if (string.IsNullOrWhiteSpace(term))
-            return Json(new List<object>());
+        var result = await _memberService.SearchMembersAsync(term);
+        if (!result.Success)
+            return BadRequest();
 
-        //var users = await _context.Users
-        //    .Where(x => x.FirstName.Contains(term) || x.LastName.Contains(term) || x.Email.Contains(term))
-        //    .Select(x => new { x.Id, x.ImageUrl, FullName = x.FirstName + " " + x.LastName })
-        //    .ToListAsync();
-        await Task.Delay(5000); 
+        var members = result.Data ?? [];
+        var data = members.Select(m => new
+        {
+            id = m.Id,
+            fullName = $"{m.FirstName} {m.LastName}",
+            imageUri = m.ImageUri
+        });
 
-        //return Json(users);
-        return Json(new List<object>());
+        return Json(data);
     }
 }

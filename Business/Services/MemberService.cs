@@ -178,4 +178,27 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
             return ResponseResult.Error($"Error updating project :: {ex.Message}");
         }
     }
+
+    public async Task<IResponseResult<IEnumerable<Member>>> SearchMembersAsync(string searchTerm)
+    {
+        try
+        {
+            var users = await _userManager.Users
+                .Where(u =>
+                    (u.FirstName ?? "").Contains(searchTerm) 
+                    ||
+                    (u.LastName ?? "").Contains(searchTerm)
+                )
+                .ToListAsync();
+
+            var members = users.Select(MemberFactory.CreateModel).ToList();
+            return ResponseResult<IEnumerable<Member>>.Ok(members);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error searching members :: {ex.Message}");
+            return ResponseResult<IEnumerable<Member>>.Error("Error searching members");
+        }
+    }
+
 }
