@@ -77,6 +77,7 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
         }
     }
 
+    //Hnatera roll för google / github
     public async Task<IResponseResult> GetMemberByExpressionAsync(Expression<Func<MemberEntity, bool>> expression)
     {
         try
@@ -144,16 +145,30 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
             if (!updateResult.Succeeded)
                 throw new Exception("Error updating member");
 
-            var memberAddress = await _memberAddressRepository.GetAsync(x => x.UserId == memberId);
-            if(memberAddress.StreetName != updateForm.StreetName || 
-                memberAddress.PostalCode != updateForm.PostalCode || 
-                memberAddress.City != updateForm.City)
+
+
+            var memberAddress = await _memberAddressRepository.GetAsync(x => x.UserId == memberId) ?? null;
+
+            if (memberAddress == null)
             {
-                MemberAddressFactory.UpdateMemberAddressEntity(memberAddress, updateForm, memberId);
-                await _memberAddressRepository.UpdateAsync(x => x.UserId == memberId, memberAddress);
+                var newMemberAddressEntity = MemberAddressFactory.CreateEntity(updateForm, memberId);
+                await _memberAddressRepository.AddAsync(newMemberAddressEntity);
                 bool saveAddressResult = await _memberAddressRepository.SaveAsync();
                 if (saveAddressResult == false)
                     throw new Exception("Failed to save member address.");
+
+            } else {
+                
+                if (memberAddress.StreetName != updateForm.StreetName ||
+                    memberAddress.PostalCode != updateForm.PostalCode ||
+                    memberAddress.City != updateForm.City)
+                {
+                    MemberAddressFactory.UpdateMemberAddressEntity(memberAddress, updateForm);
+                    await _memberAddressRepository.UpdateAsync(x => x.UserId == memberId, memberAddress);
+                    bool saveAddressResult = await _memberAddressRepository.SaveAsync();
+                    if (saveAddressResult == false)
+                        throw new Exception("Failed to save member address update.");
+                }
             }
 
             var currentRoles = await _userManager.GetRolesAsync(memberToUpdate);
