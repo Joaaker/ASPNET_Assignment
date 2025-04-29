@@ -163,4 +163,44 @@
             tagContainer.classList.remove('focused');
         }
     });
+
+    return { addTag };
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    //Add Project Tag Selector
+    const addEl = document.getElementById('tagged-members');
+    if (addEl) {
+        initTagSelector({
+            containerId: 'tagged-members',
+            inputId: 'member-search',
+            resultsId: 'member-search-results',
+            selectedInputIds: 'MembersIdsContainer',
+            selectedInputName: 'MembersIds',
+            searchUrl: term => addEl.dataset.searchUrl + '?term=' + encodeURIComponent(term),
+            displayProperty: 'fullName',
+            imageProperty: 'imageUri',
+            tagClass: 'tag',
+            emptyMessage: 'No members with that name found.',
+            preselected: []
+        });
+    }
+
+    //Edit Project Tag Selector 
+    const editEl = document.getElementById('tagged-users-edit');
+    if (editEl) {
+        window.editProjectSelector = initTagSelector({
+            containerId: 'tagged-users-edit',
+            inputId: 'member-search-edit',
+            resultsId: 'member-search-results-edit',
+            selectedInputIds: 'Edit_MembersIdsContainer',
+            selectedInputName: 'MembersIds',
+            searchUrl: term => editEl.dataset.searchUrl + '?term=' + encodeURIComponent(term),
+            displayProperty: 'fullName',
+            imageProperty: 'imageUri',
+            tagClass: 'tag',
+            emptyMessage: 'No members with that name found.',
+            preselected: []
+        });
+    }
+});

@@ -38,6 +38,7 @@ public class ProjectFactory
         Description = entity.Description,
         StartDate = entity.StartDate,
         EndDate = entity.EndDate,
+        Budget = entity.Budget,
         StatusName = entity.Status.StatusName,
         ClientName = entity.Client.ClientName,
         ProjectMembers = [.. entity.ProjectMembers

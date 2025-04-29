@@ -74,6 +74,7 @@
     --or-color: var(--gray-800);
     --or-hr-color: var(--gray-100);
     --external-sign-btn: var(--gray-100);
+    --form-input-placeholder-color: var(--gray-800);
 }
 
 .dark {
@@ -600,6 +601,7 @@ form .field-validation-error {
     margin: 2rem auto;
     cursor: pointer;
     overflow: hidden;   
+    position: relative;
 }
 
     .image-previewer::after {
@@ -623,7 +625,7 @@ form .field-validation-error {
     .image-previewer.selected::after {
         content: '\f044';
         position: absolute;
-        bottom: 5px;
+/*        bottom: 0px;*/
     }
 
     .image-previewer.circle{
@@ -714,14 +716,15 @@ body.modal-open{
     outline: none;
 }
 
+
 .form-tag-select label,
 .form-tag-select i {
     cursor: pointer;
-/*    position: absolute;*/
     font-size: 1.1em;
     right: 1rem;
     top: 0.8rem;
 }
+
 
 .form-input::placeholder,
 .form-select::placeholder,
@@ -762,6 +765,17 @@ body.modal-open{
     position: relative;
     width: 100%; 
 }
+    .input-wrapper::before {
+        position: absolute;
+        top: 12px;
+        right: 15px;
+        font-family: 'Font Awesome 6 Free';
+        content: '\f002';
+        font-size: 1em;
+        font-weight: 900;
+        color: var(--text);
+    }
+
 
 /* TO DO */
 /* FIX BORDER */

@@ -1,4 +1,5 @@
 ﻿@model EditProjectViewModel
+
 @{
 	var statusesResult = await statusService.GetAllStatusesAsync();
 	var statuses = statusesResult.Data;
@@ -21,22 +22,6 @@
             <div class="image-previewer circle">
                 <img src="" class="image-preview" />
                 <input asp-for="ProjectImage" accept="image/*" class="hide" />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Members</label>
-                <div class="field-group">
-                    <input type="hidden" asp-for="MembersIds" id="Edit_MembersIds" />
-                    <div id="tagged-users-edit" class="form-input form-tag-select">
-                        <input type="text"
-                               id="member-search-edit"
-                               class="form-control form-tag-input"
-                               placeholder="Add member..."
-                               autocomplete="off" />
-                        <div id="member-search-results-edit" class="search-results"></div>
-                    </div>
-                    <span asp-validation-for="MembersIds"></span>
-                </div>
             </div>
 
             <div class="mb-3">
@@ -100,6 +85,21 @@
             </div>
 
             <div class="mb-3">
+                <label class="form-label">Members</label>
+                <div class="field-group">
+                    <div id="Edit_MembersIdsContainer"></div>
+                    <div id="tagged-users-edit" class="form-input form-tag-select" data-search-url="@Url.Action("Search", "Members")">
+                        <div class="tags-list"></div>
+                        <div class="input-wrapper">
+                            <input type="text" id="member-search-edit" class="form-control form-tag-input" placeholder="Search for members to add..." autocomplete="off" />
+                            <div id="member-search-results-edit" class="search-results"></div>
+                        </div>
+                    </div>
+                    <span asp-validation-for="MembersIds"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
                 <label asp-for="Budget" class="form-label"></label>
                 <div class="field-group">
                     <input asp-for="Budget" class="form-control text-input">
@@ -108,48 +108,6 @@
             </div>
 
             <button class="btn-base btn-blue btn-submit" type="submit">Save</button>
-
 		</form>
 	</div>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var pre = @Html.Raw(JsonSerializer.Serialize(Model.MembersIds ?? []));
-        var presel = pre.map(function(id) {
-            return { id: id, fullName: '', imageUri: '' }; 
-        });
-
-        initTagSelector({
-            containerId: 'tagged-users-edit',
-            inputId: 'member-search-edit',
-            resultsId: 'member-search-results-edit',
-            selectedInputIds: 'Edit_MembersIds',
-            searchUrl: function (query) {
-                return '@Url.Action("Search", "Members")' + '?term=' + encodeURIComponent(query);
-            },
-            displayProperty: 'fullName',
-            imageProperty: 'imageUri',
-            tagClass: 'tag',
-            emptyMessage: 'No users found.',
-            preselected: presel
-        });
-    });
-
-    document.querySelectorAll('.edit-project-btn').forEach(button => {
-        button.addEventListener('click', async function (e) {
-            var projectId = button.getAttribute('data-project-id');
-            var res = await fetch('/Projects/GetProjectForEdit?id=' + projectId);
-            var data = await res.json();
-            var members = data.project.projectMembers;
-
-            members.forEach(m => {
-                var item = {
-                    id: m.id,
-                    fullName: m.firstName + ' ' + m.lastName,
-                    imageUri: m.imageUri
-                };
-                initTagSelector().addTag(item);
-            });
-        });
-    });
-</script>

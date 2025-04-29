@@ -91,10 +91,10 @@
                 <label class="form-label">Members</label>
                 <div class="field-group member-search-div">
                     <div id="MembersIdsContainer"></div>
-                    <div id="tagged-members" class="form-input form-tag-select">
+                    <div id="tagged-members" class="form-input form-tag-select" data-search-url="@Url.Action("Search", "Members")">
                         <div class="tags-list"></div>
                         <div class="input-wrapper">
-                            <input type="text" id="member-search" class="form-control form-tag-input" placeholder="Add members..." autocomplete="off" />
+                            <input type="text" id="member-search" class="form-control form-tag-input" placeholder="Search for members to add..." autocomplete="off" />
                             <div id="member-search-results" class="search-results"></div>
                         </div>
                     </div>
@@ -115,23 +115,3 @@
 
 	</div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-      initTagSelector({
-        containerId: 'tagged-members',
-        inputId: 'member-search',
-        resultsId: 'member-search-results',
-        selectedInputIds: 'MembersIdsContainer',
-        selectedInputName: 'MembersIds',
-        searchUrl: function(term) {
-          return '@Url.Action("Search", "Members")?term=' + encodeURIComponent(term);
-        },
-        displayProperty: 'fullName',
-        imageProperty: 'imageUri',
-        tagClass: 'tag',
-        emptyMessage: 'No members found.',
-        preselected: []
-      });
-    });
-</script>
