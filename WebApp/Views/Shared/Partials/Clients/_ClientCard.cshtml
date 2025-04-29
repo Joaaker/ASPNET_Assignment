@@ -1,10 +1,17 @@
 ﻿@model Client
 
-<article class="client-card">
+<article class="client-card" data-search-target="client"
+		 data-search-value-1="@Model.ClientName"
+		 data-search-value-2="@Model.Email"
+		 data-search-value-3="@Model.PhoneNumber">
+
 	<h3 class="client-name">@Model.ClientName</h3>
+
 	@await Html.PartialAsync("Partials/Clients/_ClientMoreOptions", Model)
+
 	<div class="client-contact">
 		<h4 class="client-email">@Model.Email</h4>
 		<h4 class="client-phone">@Model.PhoneNumber</h4>
 	</div>
+
 </article>

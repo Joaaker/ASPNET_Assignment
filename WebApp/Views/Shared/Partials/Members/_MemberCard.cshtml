@@ -1,6 +1,13 @@
 ﻿@model MembersViewModel
 
-<article class="member-card">
+@{
+	var fullName = Model.FirstName + " " + Model.LastName;
+}
+
+<article class="member-card" data-search-target="member"
+		 data-search-value-1="@fullName"
+		 data-search-value-2="@Model.Email"
+		 data-search-value-3="@Model.PhoneNumber">
 
 	<div class="_container-btn-image">
 

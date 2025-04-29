@@ -82,7 +82,6 @@ const validateField = (field) => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Koppla på input-event på alla valideringsfält i *alla* formulär
     document
         .querySelectorAll("input[data-val='true']")
         .forEach(field => {

@@ -1,6 +1,20 @@
 ﻿@model Project
 
-<article class="project-card" data-status="@Model.StatusName.ToLowerInvariant()">
+@{
+	var projectMembersNameList = string.Join(", ",
+		Model.ProjectMembers
+			.Select(m => $"{m.FirstName ?? string.Empty} {m.LastName ?? string.Empty}".Trim())
+			.Where(name => !string.IsNullOrEmpty(name))
+		);
+}
+
+<article class="project-card" data-status="@Model.StatusName.ToLowerInvariant()" 
+	data-search-target="project"
+	data-search-value-1="@Model.Title"
+	data-search-value-2="@Model.ClientName"	
+	data-search-value-3="@Model.Description"
+	data-search-value-4="@Model.StatusName"
+	data-search-value-5="@projectMembersNameList">
 
 	<div class="project-image">
 		<img src="@Model.ProjectImageUri" alt="Project image" />
@@ -27,9 +41,9 @@
 		<div class="project-members">
 			@foreach (var member in Model.ProjectMembers.Take(4))
 			{
-			<div class="avatar-img-container">
-				<img src="@member.ImageUri" alt="Member Avatar" />
-			</div>
+				<div class="avatar-img-container">
+					<img src="@member.ImageUri" alt="Member Avatar" />
+				</div>
 			}
 		</div>
 
