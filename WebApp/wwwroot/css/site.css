@@ -636,6 +636,8 @@ form .field-validation-error {
         border-radius: 16px;
     }
 
+
+
 /*Modal*/
 /* Body scroll lock when Modal is open */
 body.modal-open{
@@ -690,9 +692,27 @@ body.modal-open{
     border-radius: 10px;
 }
 
+
+
+.budget {
+    position: relative;
+}
+
+    .budget::after {
+        content: '\f153';
+        font-family: 'Font Awesome 6 Free';
+        font-style: normal;
+        font-weight: 900;
+        position: relative;
+        left: 10px;
+        bottom: 37px;
+    }
+
+.budget > .text-input{
+    padding-left: 1.8rem;
+} 
+
 /* FRÅN VIDEO TAGS SEARCH START*/
-
-
 .member-search-container > .form-label {
     margin-bottom: 0rem;
 }

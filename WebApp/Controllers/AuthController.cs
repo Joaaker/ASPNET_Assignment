@@ -130,7 +130,11 @@ public class AuthController(IAuthService authService, IMemberService memberServi
             var user = new MemberEntity { UserName = username, Email = email, FirstName = firstName, LastName = lastName, ImageUri = "https://aspnetassignment.blob.core.windows.net/images/1d0e95a8-e947-4877-8857-c15de4e55a87.svg" };
 
             var identityResult = await _userManager.CreateAsync(user);
-            if (identityResult.Succeeded)
+
+            var memberEntity = await _userManager.FindByEmailAsync(email);
+            var roleResult = await _userManager.AddToRoleAsync(memberEntity!, "User");
+
+            if (identityResult.Succeeded && roleResult.Succeeded)
             {
                 await _userManager.AddLoginAsync(user, info);
                 await _signInManager.SignInAsync(user, isPersistent: false);
