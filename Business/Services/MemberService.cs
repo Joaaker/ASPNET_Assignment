@@ -144,8 +144,6 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
             if (!updateResult.Succeeded)
                 throw new Exception("Error updating member");
 
-
-
             var memberAddress = await _memberAddressRepository.GetAsync(x => x.UserId == memberId) ?? null;
 
             if (memberAddress == null)

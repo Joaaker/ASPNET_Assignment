@@ -123,18 +123,26 @@ public class ProjectService(IProjectRepository projectRepository, IProjectMember
         if (updateForm == null)
             return ResponseResult.BadRequest("Invalid form");
 
-        try
-        {
-            var projectToUpdate = await _projectRepository.GetAsync(x => x.Id == id);
-            if (projectToUpdate == null)
-                return ResponseResult.NotFound("Project not found");
+        var projectToUpdate = await _projectRepository.GetAsync(x => x.Id == id);
+        if (projectToUpdate == null)
+            return ResponseResult.NotFound("Project not found");
 
-            await _projectRepository.BeginTransactionAsync();
-            ProjectFactory.UpdateEntity(projectToUpdate, updateForm);
-            await _projectRepository.UpdateAsync(x => x.Id == id, projectToUpdate);
-            var saveResult = await _projectRepository.SaveAsync();
-            if (saveResult == false)
-                throw new Exception("Error saving updated project");
+        bool projectNeedsUpdate = updateForm.ProjectImageUri != null || projectToUpdate.Title != updateForm.Title || projectToUpdate.Description != updateForm.Description || projectToUpdate.StartDate != updateForm.StartDate || projectToUpdate.EndDate != updateForm.EndDate || projectToUpdate.Budget != updateForm.Budget || projectToUpdate.ClientId != updateForm.ClientId || projectToUpdate.StatusId != updateForm.StatusId;
+
+        try 
+        {
+            
+            if (projectNeedsUpdate)
+            {
+                await _projectRepository.BeginTransactionAsync();
+                ProjectFactory.UpdateEntity(projectToUpdate, updateForm);
+                await _projectRepository.UpdateAsync(x => x.Id == id, projectToUpdate);
+                var saveResult = await _projectRepository.SaveAsync();
+                if (saveResult == false)
+                    throw new Exception("Error saving updated project");
+
+                await _projectRepository.CommitTransactionAsync();
+            }
 
             var existingMemberIds = projectToUpdate.ProjectMembers
                 .Select(junctionTable => junctionTable.UserId)
@@ -146,7 +154,7 @@ public class ProjectService(IProjectRepository projectRepository, IProjectMember
                 if (projectMembersUpdate.Success == false)
                     throw new Exception("Error updating ProjectServices");
             }
-            await _projectRepository.CommitTransactionAsync();
+            
             return ResponseResult.Ok();
         }
         catch (Exception ex)

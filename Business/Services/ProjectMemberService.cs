@@ -12,7 +12,7 @@ public class ProjectMemberService(IProjectMemberRepository projectMemberReposito
 
     public async Task<IResponseResult> DeleteProjectMembersAsync(int projectId, string memberId)
     {
-        //Transactions are handled in ProjectService.UpdateProjectAsync()
+        //Transactions are handled in UpdateProjectMembersAsync()
         try
         {
             var projectMembersJunctionEntity = await _projectMemberRepository.GetAsync(x => x.ProjectId == projectId && x.UserId == memberId);
@@ -35,7 +35,6 @@ public class ProjectMemberService(IProjectMemberRepository projectMemberReposito
 
     public async Task<IResponseResult> UpdateProjectMembersAsync(int projectId, List<string> currentMemberIds, List<string> newMemberIds)
     {
-        //Transactions are handled in ProjectService.UpdateProjectAsync()
         try
         {
             if (currentMemberIds.SequenceEqual(newMemberIds))
@@ -43,6 +42,8 @@ public class ProjectMemberService(IProjectMemberRepository projectMemberReposito
 
             var toRemove = currentMemberIds.Except(newMemberIds).ToList();
             var toAdd = newMemberIds.Except(currentMemberIds).ToList();
+
+            await _projectMemberRepository.BeginTransactionAsync();
 
             foreach (string memberId in toRemove)
             {
@@ -58,10 +59,12 @@ public class ProjectMemberService(IProjectMemberRepository projectMemberReposito
                 if (psAddSaveResult == false)
                     throw new Exception($"Error saving updated ProjectMember");
             }
+            await _projectMemberRepository.CommitTransactionAsync();
             return ResponseResult.Ok();
         }
         catch (Exception ex)
         {
+            await _projectMemberRepository.RollbackTransactionAsync();
             Debug.WriteLine(ex.Message);
             return ResponseResult.Error($"Error updating ProjectMembers :: {ex.Message}");
         }
