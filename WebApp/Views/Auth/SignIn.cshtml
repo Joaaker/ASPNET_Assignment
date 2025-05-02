@@ -30,8 +30,8 @@
     </div>
 
     <div class="form-check">
-        <input asp-for="RememberMe" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label asp-for="RememberMe" class="form-check-label" for="flexCheckDefault"></label>
+        <input asp-for="RememberMe" class="form-check-input" type="checkbox">
+        <label asp-for="RememberMe" class="form-check-label" for="RememberMe"></label>
     </div>
 
     @if (!string.IsNullOrEmpty(ViewBag?.ErrorMessage))
