@@ -51,9 +51,9 @@ Webbapplikationen kan vara av typen ASP.NET - Razor Pages eller ASP.NET - MVC oc
 
 
 
-- FÖR VÄL GODKÄNT KRÄVS FÖLJANDE:
+FÖR VÄL GODKÄNT KRÄVS FÖLJANDE:
 
-- Webbapplikationen måste vara av typen ASP.NET - MVC och ska innehålla följande krav som specificeras upp här. Du kommer här behöva fatta självständiga beslut över hur du ska genomföra vissa delar samt vad som ska finnas med även om inte allt specificeras upp i detalj här. Det är en del av VG-nivån enligt kursplanen:
+Webbapplikationen måste vara av typen ASP.NET - MVC och ska innehålla följande krav som specificeras upp här. Du kommer här behöva fatta självständiga beslut över hur du ska genomföra vissa delar samt vad som ska finnas med även om inte allt specificeras upp i detalj här. Det är en del av VG-nivån enligt kursplanen:
 
 - Du ska samtliga sidor för väl godkänt som finns med i designfilen.
   
