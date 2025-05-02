@@ -51,11 +51,9 @@ Webbapplikationen kan vara av typen ASP.NET - Razor Pages eller ASP.NET - MVC oc
 
 
 
-FÖR VÄL GODKÄNT KRÄVS FÖLJANDE:
+- FÖR VÄL GODKÄNT KRÄVS FÖLJANDE:
 
-Webbapplikationen måste vara av typen ASP.NET - MVC och ska innehålla följande krav som specificeras upp här. Du kommer här behöva fatta självständiga beslut över hur du ska genomföra vissa delar samt vad som ska finnas med även om inte allt specificeras upp i detalj här. Det är en del av VG-nivån enligt kursplanen:
-
-
+- Webbapplikationen måste vara av typen ASP.NET - MVC och ska innehålla följande krav som specificeras upp här. Du kommer här behöva fatta självständiga beslut över hur du ska genomföra vissa delar samt vad som ska finnas med även om inte allt specificeras upp i detalj här. Det är en del av VG-nivån enligt kursplanen:
 
 - Du ska samtliga sidor för väl godkänt som finns med i designfilen.
   
@@ -64,7 +62,7 @@ Webbapplikationen måste vara av typen ASP.NET - MVC och ska innehålla följand
 - Du ska utifrån designfilen självständigt kunna se vad som behöver byggas upp och finnas med för att få sidan att fungera enligt designfilen.
   
 - Om data måste läggas in såsom olika statuslägen så måste det finnas en extra sida, som bara en administratör kan komma åt, där denna information läggs in och administreras.
-- 
+  
 - All formulärdata måste valideras med hjälp av både Javascript och ModelState.
   
 - Webbapplikationen måste använda sig av Cookie Consent.
@@ -74,11 +72,11 @@ Webbapplikationen måste vara av typen ASP.NET - MVC och ska innehålla följand
 - All data ska hanteras i en valfri lagringslösning och du ska använda Entity Framework Core och ska självständigt tillämpa lämpliga designmönster.
   
 - Du ska använda dig av Microsoft Identity (Individual Account) för åtkomst- och behörighetskontroll, samt sidor måste skyddas på lämpligt sätt.
-- 
+  
 - Användare ska ha en standard roll och endast användare som är administratörer ska kunna lägga till och ta bort data bortsett från projekt.
   
 - Alternativt inloggningssätt måste finnas, som exempelvis Google, Meta och X.
-- 
+  
 - Det måste gå att växla mellan mörkt och ljus tema.
   
 - Det ska vara möjligt att få notifieringar när nya projekt har lagts till. Samt användare för administratörer.
