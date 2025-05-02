@@ -92,7 +92,7 @@ public class ClientsController(IClientService clientService, INotificationServic
     {
         var deleteResult = await _clientService.DeleteClientAsync(id);
         return deleteResult.Success
-            ? Ok(new { success = true })
+            ? RedirectToAction(nameof(Index))
             : StatusCode(deleteResult.StatusCode, new { success = false, message = deleteResult.ErrorMessage });
     }
 }

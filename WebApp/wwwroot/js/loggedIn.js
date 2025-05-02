@@ -81,6 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         modal.style.display = 'none';
                         document.body.classList.remove('modal-open');
                     }
+                    window.location.reload();
+
                 }
                 else if (res.status === 400) {
                     const data = await res.json();

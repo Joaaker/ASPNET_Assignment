@@ -122,7 +122,7 @@ public class ProjectsController(IProjectService projectService, IHubContext<Noti
     {
         var deleteResult = await _projectService.DeleteProjectAsync(id);
         return deleteResult.Success
-            ? Ok(new { success = true })
+            ? RedirectToAction(nameof(Index))
             : StatusCode(deleteResult.StatusCode, new { success = false, message = deleteResult.ErrorMessage });
     }
 }

@@ -138,7 +138,7 @@ public class MembersController(IMemberService memberService, IHubContext<Notific
         }
 
         return deleteResult.Success
-            ? Ok(new { success = true })
+            ? RedirectToAction(nameof(Index))
             : StatusCode(deleteResult.StatusCode, new { success = false, message = deleteResult.ErrorMessage });
     }
 

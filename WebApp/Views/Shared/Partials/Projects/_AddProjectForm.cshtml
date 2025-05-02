@@ -21,7 +21,7 @@
 			<button class="_btn-close" type="button" data-close="true"></button>
 		</div>
 
-		<form novalidate asp-action="Add" method="post" asp-controller="Projects" class="modal-form">
+		<form novalidate asp-action="Add" method="post" asp-controller="Projects" class="modal-form" enctype="multipart/form-data">
 			<div class="image-previewer circle">
 				<img src="" class="image-preview" />
 				<input asp-for="ProjectImage" accept="image/*" class="hide"/>
