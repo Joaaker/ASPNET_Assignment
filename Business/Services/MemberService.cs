@@ -77,7 +77,6 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
         }
     }
 
-    //Hnatera roll för google / github
     public async Task<IResponseResult> GetMemberByExpressionAsync(Expression<Func<MemberEntity, bool>> expression)
     {
         try
@@ -203,8 +202,7 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
                     (u.FirstName ?? "").Contains(searchTerm) 
                     ||
                     (u.LastName ?? "").Contains(searchTerm)
-                )
-                .ToListAsync();
+                ).ToListAsync();
 
             var members = users.Select(MemberFactory.CreateModel).ToList();
             return ResponseResult<IEnumerable<Member>>.Ok(members);
@@ -215,5 +213,4 @@ public class MemberService(UserManager<MemberEntity> userManager, IMemberAddress
             return ResponseResult<IEnumerable<Member>>.Error("Error searching members");
         }
     }
-
 }

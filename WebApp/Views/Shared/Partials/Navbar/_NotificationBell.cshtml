@@ -2,17 +2,19 @@
     var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "anonymous";
     var notificationsResult = await notificationService.GetNotificationsAsync(userId);
     var notifications = notificationsResult.Data ?? [];
+    var bellId = ViewData["id"] as string ?? "notification-dropdown-button";
+    var dropdownId = bellId.Replace("-button", "");
 }
 
 <div class="notification-dropdown-container">
-
-    <button id="notification-dropdown-button" class="notification-bell" data-type="dropdown-btn" data-target="#notification-dropdown">
+    <button id="@bellId" class="notification-bell" data-type="dropdown-btn" data-target="#@dropdownId">
         <i class="fa-solid fa-bell bell">
             <i class="fa-solid fa-circle notification-circle"></i>
         </i>
     </button>
 
-    <div id="notification-dropdown" class="notification-dropdown">
+    <div id="@dropdownId" class="notification-dropdown">
+        <div class="mobile-handle"></div>
         <div class="notification-header">
             <h4>Notifications</h4>
             <div class="_number-container">
@@ -39,4 +41,5 @@
             }
         </div>
     </div>
+    <div class="notification-dropdown-backdrop"></div>
 </div>

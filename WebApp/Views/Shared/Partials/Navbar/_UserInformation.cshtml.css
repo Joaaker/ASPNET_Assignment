@@ -23,4 +23,17 @@
         .user-avatar > img {
             height: 40px;
             width: 40px;
+            border-radius: 50%;
         }
+
+/* Hamburger menu specific styles */
+.expandable-menu .user-information {
+    justify-content: flex-end;
+    padding-right: 0;
+    width: auto;
+}
+
+.expandable-menu .user-information > span {
+    text-align: right;
+    padding-right: .5rem;
+}

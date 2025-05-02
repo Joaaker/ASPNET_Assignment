@@ -1,41 +1,54 @@
-﻿
-.dark-mode-container {
+﻿.dark-mode-container {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    padding: .7rem 1rem 0rem 1.2rem;
     border-radius: 12px;
-    padding: .7rem 1rem;
-
+    width: 100%;
 }
 
 .cog-span {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    margin-right: 36px;
+    gap: .8rem;
 }
 
-    .cog-span > span {
-        display: flex;
-        align-items: center;
-        min-width: 90px;
-        color: var(--headline);
+    .cog-span > i {
+        font-size: 1.1rem;
+        color: var(--icon-color);
     }
 
-
-
+    .cog-span > span {
+        color: var(--headline);
+        white-space: nowrap;
+    }
 
 .dark-mode-toggle {
+    position: relative;
     display: flex;
     align-items: center;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-right: 0;
-    margin-left: auto;
-    width: 100%;
-
 }
 
+/* Hamburger menu specific styles */
+.expandable-menu .dark-mode-container {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    padding: 0.7rem 0;
+    background-color: transparent;
+    gap: 1.2rem;
+}
+
+.expandable-menu .dark-mode-container .cog-span {
+    margin-right: 0;
+    order: 2;
+}
+
+.expandable-menu .dark-mode-toggle {
+    margin: 0;
+    order: 1;
+}
+
+/* Toggle switch styles */
 .toggle-checkbox {
     display: none;
 }
@@ -44,7 +57,7 @@
     position: relative;
     width: 42px;
     height: 24px;
-    background-color: lightgray;
+    background-color: var(--gray-400);
     border-radius: 15px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -71,3 +84,9 @@
     .toggle-checkbox:checked + .toggle-label::after {
         transform: translateX(20px);
     }
+
+@media (max-width: 768px) {
+    .expandable-menu .dark-mode-container {
+        padding-right: 1rem;
+    }
+}

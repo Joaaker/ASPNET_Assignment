@@ -15,10 +15,9 @@
         @await Html.PartialAsync("Partials/Navbar/_UserInformation")
         @await Html.PartialAsync("Partials/Navbar/_LogOutButton")
         @await Html.PartialAsync("Partials/Navbar/_DarkModeToggle")
-        <div class="notification-center">
+        <div class="notification-center hamburger-notifications">
             <span>Notifications</span>
-            @await Html.PartialAsync("Partials/Navbar/_NotificationBell")
+            @await Html.PartialAsync("Partials/Navbar/_NotificationBell", new { id = "hamburger-notification-bell" })
         </div>
-        
     </nav>
 </div>

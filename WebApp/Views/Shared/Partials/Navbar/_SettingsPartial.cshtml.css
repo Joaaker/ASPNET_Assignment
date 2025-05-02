@@ -19,6 +19,10 @@ ul.dropdown-menu.dropdown-menu-end.show {
     min-width: 250px;
 }
 
+.dropdown-menu > li > .log-out:hover {
+    background-color: var(--blue-accent-opacity);
+}
+
 li{
     display: flex;
     align-items: center;
