@@ -30,15 +30,23 @@ Webbapplikationen kan vara av typen ASP.NET - Razor Pages eller ASP.NET - MVC oc
 
 
 
-Du ska samtliga sidor för godkänt som finns med i designfilen.
-Det ska gå att visa samtliga projekt och det ska gå att visa dessa beroende på om det är startade eller slutförda. Vilket gör att du kommer behöva hantera status själv trots att det inte är med i designen.
-Du kan behöva lägga till andra fält för ett projekt om det behövs.
-Det ska gå att skapa ett nytt projekt och det ska gå att uppdatera ett projekt.
-Du kan lägga till viss data manuellt i databasen om det skulle behövas men projekt och användare ska läggas in via formulären.
-All formulärdata måste valideras med hjälp av Javascript, välj lämplig valideringsmetod för att säkerställa att datat som skickas är korrekt.
-All data ska hanteras i en valfri lagringslösning och du ska använda Entity Framework Core och ska tillämpa lämpliga designmönster som exempelvis Service Pattern.
-Du ska använda dig av Microsoft Identity (Individual Account) för grundläggande åtkomst- och behörighetskontroll, vilket innebär att det ska kunna gå att registrera sig och att logga in, samt användarspecifika sidor måste skyddas med hjälp av authorize-attributet. Ingen rollhantering behövs.
-Du kommer själv behöva lista ut med dina tidigare kunskaper och färdigheter från tidigare kurser hur man löser vissa delar. Viss handledning kommer ges via lektioner och tips och trix.
+- Du ska samtliga sidor för godkänt som finns med i designfilen.
+
+- Det ska gå att visa samtliga projekt och det ska gå att visa dessa beroende på om det är startade eller slutförda. Vilket gör att du kommer behöva hantera status själv trots att det inte är med i designen.
+
+- Du kan behöva lägga till andra fält för ett projekt om det behövs.
+  
+- Det ska gå att skapa ett nytt projekt och det ska gå att uppdatera ett projekt.
+  
+- Du kan lägga till viss data manuellt i databasen om det skulle behövas men projekt och användare ska läggas in via formulären.
+  
+- All formulärdata måste valideras med hjälp av Javascript, välj lämplig valideringsmetod för att säkerställa att datat som skickas är korrekt.
+  
+- All data ska hanteras i en valfri lagringslösning och du ska använda Entity Framework Core och ska tillämpa lämpliga designmönster som exempelvis Service Pattern.
+  
+- Du ska använda dig av Microsoft Identity (Individual Account) för grundläggande åtkomst- och behörighetskontroll, vilket innebär att det ska kunna gå att registrera sig och att logga in, samt användarspecifika sidor måste skyddas med hjälp av authorize-attributet. Ingen rollhantering behövs.
+  
+- Du kommer själv behöva lista ut med dina tidigare kunskaper och färdigheter från tidigare kurser hur man löser vissa delar. Viss handledning kommer ges via lektioner och tips och trix.
 
 
 
@@ -49,17 +57,30 @@ Webbapplikationen måste vara av typen ASP.NET - MVC och ska innehålla följand
 
 
 
-Du ska samtliga sidor för väl godkänt som finns med i designfilen.
-Du ska använda dig av Views och Partial Views samt ViewModels där det är lämpligt.
-Du ska utifrån designfilen självständigt kunna se vad som behöver byggas upp och finnas med för att få sidan att fungera enligt designfilen.
-Om data måste läggas in såsom olika statuslägen så måste det finnas en extra sida, som bara en administratör kan komma åt, där denna information läggs in och administreras.
-All formulärdata måste valideras med hjälp av både Javascript och ModelState.
-Webbapplikationen måste använda sig av Cookie Consent.
-Det ska finnas ett separat data-lager och separat business-lager.
-All data ska hanteras i en valfri lagringslösning och du ska använda Entity Framework Core och ska självständigt tillämpa lämpliga designmönster.
-Du ska använda dig av Microsoft Identity (Individual Account) för åtkomst- och behörighetskontroll, samt sidor måste skyddas på lämpligt sätt.
-Användare ska ha en standard roll och endast användare som är administratörer ska kunna lägga till och ta bort data bortsett från projekt.
-Alternativt inloggningssätt måste finnas, som exempelvis Google, Meta och X.
-Det måste gå att växla mellan mörkt och ljus tema.
-Det ska vara möjligt att få notifieringar när nya projekt har lagts till. Samt användare för administratörer.
-Det måste gå att lägga till en bild för ett projekt och det måste gå att lägga till tillgängliga medlemmar på ett projekt.
+- Du ska samtliga sidor för väl godkänt som finns med i designfilen.
+  
+- Du ska använda dig av Views och Partial Views samt ViewModels där det är lämpligt.
+  
+- Du ska utifrån designfilen självständigt kunna se vad som behöver byggas upp och finnas med för att få sidan att fungera enligt designfilen.
+  
+- Om data måste läggas in såsom olika statuslägen så måste det finnas en extra sida, som bara en administratör kan komma åt, där denna information läggs in och administreras.
+- 
+- All formulärdata måste valideras med hjälp av både Javascript och ModelState.
+  
+- Webbapplikationen måste använda sig av Cookie Consent.
+  
+- Det ska finnas ett separat data-lager och separat business-lager.
+  
+- All data ska hanteras i en valfri lagringslösning och du ska använda Entity Framework Core och ska självständigt tillämpa lämpliga designmönster.
+  
+- Du ska använda dig av Microsoft Identity (Individual Account) för åtkomst- och behörighetskontroll, samt sidor måste skyddas på lämpligt sätt.
+- 
+- Användare ska ha en standard roll och endast användare som är administratörer ska kunna lägga till och ta bort data bortsett från projekt.
+  
+- Alternativt inloggningssätt måste finnas, som exempelvis Google, Meta och X.
+- 
+- Det måste gå att växla mellan mörkt och ljus tema.
+  
+- Det ska vara möjligt att få notifieringar när nya projekt har lagts till. Samt användare för administratörer.
+  
+- Det måste gå att lägga till en bild för ett projekt och det måste gå att lägga till tillgängliga medlemmar på ett projekt.
