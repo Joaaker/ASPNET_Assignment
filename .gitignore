@@ -366,3 +366,6 @@ MigrationBackup/
 FodyWeavers.xsd
 /WebApp/appsettings.json
 /WebApp/appsettings.json
+/Data/Migrations/20250502120714_From restrict to cascade on clients.cs
+/Data/Migrations/20250502120714_From restrict to cascade on clients.Designer.cs
+/Data/Migrations/DataContextModelSnapshot.cs
