@@ -17,14 +17,25 @@ using Domain.Handlers;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+//SignalR
 builder.Services.AddSignalR();
 
+//Cookie policy
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.CheckConsentNeeded = context => !context.Request.Cookies.ContainsKey("cookieConsent");
+    options.MinimumSameSitePolicy = SameSiteMode.Lax;
+});
+
+//Azure Blob Storage
 var connectionString = builder.Configuration.GetConnectionString("AzureBlobStorage");
 var containerName = "images";
 builder.Services.AddScoped<IFileHandler>(_ => new AzureFileHandler(connectionString!, containerName));
 
+//Database
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+//Dependency Injection Services
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
@@ -34,6 +45,7 @@ builder.Services.AddScoped<IStatusService, StatusService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 
+//Dependency Injection Repositories
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<INotificationDismissRepository, NotificationDismissRepository>();
 builder.Services.AddScoped<IMemberAddressRepository, MemberAddressRepository>();
@@ -43,6 +55,7 @@ builder.Services.AddScoped<IProjectMemberRepository, ProjectMemberRepository>();
 builder.Services.AddScoped<IStatusRepository, StatusRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
+//Microsoft Identity
 builder.Services.AddIdentity<MemberEntity, IdentityRole>(options =>
 {
     options.User.RequireUniqueEmail = true;
@@ -54,6 +67,7 @@ builder.Services.AddIdentity<MemberEntity, IdentityRole>(options =>
 
 builder.Services.AddScoped<IUserClaimsPrincipalFactory<MemberEntity>, MemberClaimsPrincipalFactory>();
 
+//Authorization
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/sign-in";
@@ -62,6 +76,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 
+//External Authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -108,14 +123,17 @@ app.UseHsts();
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseCookiePolicy();
 app.UseAuthentication();
 app.UseAuthorization();
 
+//Database seeding
 await DatabaseSeeder.SeedRolesAsync(app.Services);
 await DatabaseSeeder.SeedAdminAsync(app.Services);
 
 app.MapStaticAssets();
 
+//Default route
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Auth}/{action=SignUp}")

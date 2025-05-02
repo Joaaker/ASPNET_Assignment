@@ -15,6 +15,9 @@
     <div class="wrapper">
         @RenderBody()
     </div>
+
+    @await Html.PartialAsync("Partials/Components/_CookieConsent")
+
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
